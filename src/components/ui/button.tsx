@@ -18,11 +18,17 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // HMR Custom Variants
+        premium: "btn-premium border-0 shadow-premium hover:shadow-gold transition-all duration-300",
+        gold: "btn-gold border-0 shadow-gold hover:shadow-premium transition-all duration-300",
+        hero: "bg-gradient-hero text-white font-semibold shadow-premium hover:scale-105 transition-all duration-300 border-0",
+        investment: "bg-gradient-primary text-white font-medium shadow-soft hover:shadow-premium hover:scale-[1.02] transition-all duration-200",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-12 rounded-lg px-10 text-base font-semibold",
         icon: "h-10 w-10",
       },
     },

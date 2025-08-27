@@ -1,6 +1,8 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+interface IndexProps {
+  language: 'en' | 'ur';
+}
 
-const Index = () => {
+const Index = ({ language }: IndexProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center">

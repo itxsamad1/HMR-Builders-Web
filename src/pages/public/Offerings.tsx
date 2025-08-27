@@ -56,7 +56,17 @@ const PropertyCard = ({ property, language }: { property: Property; language: 'e
   return (
     <Card className="card-premium hover:shadow-premium transition-all duration-300 group">
       <div className="relative">
-        <div className="aspect-video bg-gradient-to-r from-primary/10 to-accent/10 rounded-t-lg flex items-center justify-center text-6xl">
+        <img 
+          src={property.images[0]} 
+          alt={property.name}
+          className="aspect-video w-full object-cover rounded-t-lg"
+          onError={(e) => {
+            // Fallback to emoji if image fails to load
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+          }}
+        />
+        <div className="aspect-video bg-gradient-to-r from-primary/10 to-accent/10 rounded-t-lg flex items-center justify-center text-6xl hidden">
           {getTypeIcon(property.type)}
         </div>
         <Badge className={`absolute top-3 right-3 ${getStatusColor(property.status)}`}>

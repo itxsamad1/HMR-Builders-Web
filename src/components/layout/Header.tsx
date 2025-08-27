@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/lib/auth';
 import { useTranslation } from '@/lib/i18n';
-import { Menu, Globe, User, LogOut, Settings, DollarSign } from 'lucide-react';
+import { Menu, Globe, User, LogOut, Settings, DollarSign, Building2 } from 'lucide-react';
 
 interface HeaderProps {
   language: 'en' | 'ur';
@@ -81,8 +81,18 @@ export const Header = ({ language, onLanguageChange }: HeaderProps) => {
       <div className="container flex h-16 max-w-screen-2xl items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-            <DollarSign className="h-5 w-5 text-white" />
+          <img 
+            src="/src/assets/hmr-logo.jpg" 
+            alt="HMR Logo" 
+            className="h-8 w-8 rounded-lg object-cover"
+            onError={(e) => {
+              // Fallback to Building2 icon if image fails to load
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling?.classList.remove('hidden');
+            }}
+          />
+          <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center hidden">
+            <Building2 className="h-5 w-5 text-white" />
           </div>
           <span className="font-bold text-xl">
             HMR<span className="text-primary">.pk</span>

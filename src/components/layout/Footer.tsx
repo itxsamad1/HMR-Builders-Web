@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from '@/lib/i18n';
-import { DollarSign, Mail, Phone, MapPin } from 'lucide-react';
+import { DollarSign, Mail, Phone, MapPin, Building2 } from 'lucide-react';
 
 interface FooterProps {
   language: 'en' | 'ur';
@@ -16,8 +16,17 @@ export const Footer = ({ language }: FooterProps) => {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center">
-                <DollarSign className="h-5 w-5 text-white" />
+              <img 
+                src="/src/assets/hmr-logo.jpg" 
+                alt="HMR Logo" 
+                className="h-8 w-8 rounded-lg object-cover"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="h-8 w-8 rounded-lg bg-gradient-primary flex items-center justify-center hidden">
+                <Building2 className="h-5 w-5 text-white" />
               </div>
               <span className="font-bold text-xl">
                 HMR<span className="text-primary">.pk</span>

@@ -111,7 +111,12 @@ export default {
         'float': 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'fade-in': 'fade-in 0.3s ease-out',
-        'scale-in': 'scale-in 0.2s ease-out'
+        'scale-in': 'scale-in 0.2s ease-out',
+        'fade-up': 'fadeUp 0.8s ease-out forwards',
+        'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
+        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
+        'scale-up': 'scaleUp 0.6s ease-out forwards',
+        'bounce-slow': 'bounceCustom 2s ease-in-out infinite'
       },
 		}
 	},

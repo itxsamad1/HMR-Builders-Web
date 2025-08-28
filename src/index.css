@@ -8,58 +8,59 @@
 
 @layer base {
   :root {
-    /* Core Brand Colors - Pakistan Real Estate Theme */
+    /* Core Brand Colors - Professional Dark Blue & Gold Theme */
     --background: 0 0% 100%;
-    --foreground: 215 25% 20%;
+    --foreground: 220 18% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 20%;
+    --card-foreground: 220 18% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 20%;
+    --popover-foreground: 220 18% 20%;
 
-    /* Primary: Emerald (Growth, Prosperity) */
-    --primary: 158 64% 52%;
+    /* Primary: Professional Dark Blue (Trust, Authority) */
+    --primary: 220 39% 11%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 158 64% 75%;
-    --primary-dark: 158 64% 35%;
+    --primary-light: 220 39% 25%;
+    --primary-dark: 220 39% 8%;
 
-    /* Secondary: Navy Blue (Trust, Stability) */
-    --secondary: 215 84% 15%;
+    /* Secondary: Slate Blue (Modern, Professional) */
+    --secondary: 215 25% 27%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 215 45% 85%;
+    --secondary-light: 215 25% 85%;
 
-    /* Accent: Gold (Luxury, Premium) */
-    --accent: 43 96% 56%;
-    --accent-foreground: 215 25% 20%;
-    --accent-light: 43 96% 85%;
+    /* Accent: Warm Gold (Premium, Luxury) */
+    --accent: 38 92% 50%;
+    --accent-foreground: 220 18% 20%;
+    --accent-light: 38 92% 85%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 158 64% 52%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 39% 11%;
 
     --radius: 0.75rem;
 
-    /* Premium Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(158 64% 52%), hsl(158 64% 65%));
-    --gradient-hero: linear-gradient(135deg, hsl(158 64% 52%) 0%, hsl(43 96% 56%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(158 64% 98%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(43 96% 56%), hsl(43 96% 65%));
+    /* Professional Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 39% 11%), hsl(220 39% 18%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 39% 11%) 0%, hsl(215 25% 27%) 50%, hsl(38 92% 50%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%) 0%, hsl(220 14% 98%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%), hsl(38 92% 58%));
     
-    /* Shadows */
-    --shadow-soft: 0 2px 10px -3px hsl(158 64% 52% / 0.1);
-    --shadow-premium: 0 8px 30px -12px hsl(158 64% 52% / 0.25);
-    --shadow-gold: 0 4px 20px -8px hsl(43 96% 56% / 0.3);
+    /* Professional Shadows */
+    --shadow-soft: 0 2px 10px -3px hsl(220 39% 11% / 0.08);
+    --shadow-premium: 0 8px 30px -12px hsl(220 39% 11% / 0.15);
+    --shadow-gold: 0 4px 20px -8px hsl(38 92% 50% / 0.2);
+    --shadow-elegant: 0 20px 40px -12px hsl(220 39% 11% / 0.25);
 
-    /* Islamic Pattern Colors */
-    --pattern-light: 158 64% 96%;
-    --pattern-medium: 158 64% 90%;
+    /* Professional Pattern Colors */
+    --pattern-light: 220 14% 96%;
+    --pattern-medium: 220 14% 92%;
 
     --sidebar-background: 0 0% 98%;
 
@@ -79,49 +80,50 @@
   }
 
   .dark {
-    --background: 215 25% 8%;
+    --background: 220 18% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 215 25% 10%;
+    --card: 220 18% 10%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 215 25% 10%;
+    --popover: 220 18% 10%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 158 64% 52%;
+    --primary: 220 39% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 158 64% 65%;
-    --primary-dark: 158 64% 40%;
+    --primary-light: 220 39% 55%;
+    --primary-dark: 220 39% 35%;
 
-    --secondary: 215 84% 15%;
+    --secondary: 215 25% 35%;
     --secondary-foreground: 0 0% 100%;
     --secondary-light: 215 25% 25%;
 
-    --accent: 43 96% 56%;
-    --accent-foreground: 215 25% 8%;
-    --accent-light: 43 96% 20%;
+    --accent: 38 92% 58%;
+    --accent-foreground: 220 18% 8%;
+    --accent-light: 38 92% 20%;
 
-    --muted: 215 25% 15%;
-    --muted-foreground: 215 10% 65%;
+    --muted: 220 18% 15%;
+    --muted-foreground: 215 16% 65%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 215 25% 20%;
-    --input: 215 25% 15%;
-    --ring: 158 64% 52%;
+    --border: 220 18% 20%;
+    --input: 220 18% 15%;
+    --ring: 220 39% 45%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(158 64% 45%), hsl(158 64% 58%));
-    --gradient-hero: linear-gradient(135deg, hsl(158 64% 45%) 0%, hsl(43 96% 50%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(215 25% 12%) 0%, hsl(158 64% 8%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(43 96% 50%), hsl(43 96% 58%));
+    --gradient-primary: linear-gradient(135deg, hsl(220 39% 25%), hsl(220 39% 35%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 39% 15%) 0%, hsl(215 25% 25%) 50%, hsl(38 92% 45%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(220 18% 12%) 0%, hsl(220 18% 8%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(38 92% 45%), hsl(38 92% 55%));
     
-    --shadow-soft: 0 2px 10px -3px hsl(0 0% 0% / 0.3);
-    --shadow-premium: 0 8px 30px -12px hsl(0 0% 0% / 0.4);
-    --shadow-gold: 0 4px 20px -8px hsl(43 96% 56% / 0.2);
+    --shadow-soft: 0 2px 10px -3px hsl(0 0% 0% / 0.4);
+    --shadow-premium: 0 8px 30px -12px hsl(0 0% 0% / 0.5);
+    --shadow-gold: 0 4px 20px -8px hsl(38 92% 50% / 0.3);
+    --shadow-elegant: 0 20px 40px -12px hsl(0 0% 0% / 0.6);
 
-    --pattern-light: 158 64% 15%;
-    --pattern-medium: 158 64% 20%;
+    --pattern-light: 220 18% 15%;
+    --pattern-medium: 220 18% 20%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -197,9 +199,96 @@
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
+  .animate-fade-up {
+    animation: fadeUp 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slideInLeft 0.8s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.8s ease-out forwards;
+  }
+
+  .animate-scale-up {
+    animation: scaleUp 0.6s ease-out forwards;
+  }
+
+  .animate-bounce-slow {
+    animation: bounceCustom 2s ease-in-out infinite;
+  }
+
+  .hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .hover-scale {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
+  }
+
+  @keyframes fadeUp {
+    0% { 
+      opacity: 0; 
+      transform: translateY(30px); 
+    }
+    100% { 
+      opacity: 1; 
+      transform: translateY(0); 
+    }
+  }
+
+  @keyframes slideInLeft {
+    0% { 
+      opacity: 0; 
+      transform: translateX(-50px); 
+    }
+    100% { 
+      opacity: 1; 
+      transform: translateX(0); 
+    }
+  }
+
+  @keyframes slideInRight {
+    0% { 
+      opacity: 0; 
+      transform: translateX(50px); 
+    }
+    100% { 
+      opacity: 1; 
+      transform: translateX(0); 
+    }
+  }
+
+  @keyframes scaleUp {
+    0% { 
+      opacity: 0; 
+      transform: scale(0.8); 
+    }
+    100% { 
+      opacity: 1; 
+      transform: scale(1); 
+    }
+  }
+
+  @keyframes bounceCustom {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
   }
 
   /* Scrollbar Styling */

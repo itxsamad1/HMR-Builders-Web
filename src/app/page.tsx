@@ -16,9 +16,9 @@ const HomePage = () => {
       title: "2 Bedroom Apartment, DHA Phase 8",
       location: "DHA Phase 8, Karachi",
       price: "PKR 1.7 million",
-      marketValue: "PKR 1.875 million",
-      appreciation: "10.29%",
-      roi: "11.55%",
+      marketValue: "PKR 1.95 million",
+      appreciation: "14.7%",
+      roi: "18.2%",
       type: "Residential",
       image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
       status: "FULLY FUNDED",
@@ -31,9 +31,9 @@ const HomePage = () => {
       title: "Commercial Tower, Gulberg III",
       location: "Gulberg III, Lahore",
       price: "PKR 1.2 million",
-      marketValue: "PKR 1.35 million",
-      appreciation: "12.5%",
-      roi: "13.2%",
+      marketValue: "PKR 1.41 million",
+      appreciation: "17.5%",
+      roi: "19.8%",
       type: "Commercial",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
       status: "ACTIVE",
@@ -46,9 +46,9 @@ const HomePage = () => {
       title: "Boutique Hotel, Clifton",
       location: "Clifton, Karachi",
       price: "PKR 2.1 million",
-      marketValue: "PKR 2.4 million",
-      appreciation: "14.3%",
-      roi: "15.8%",
+      marketValue: "PKR 2.52 million",
+      appreciation: "20.0%",
+      roi: "22.5%",
       type: "Hospitality",
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
       status: "ACTIVE",
@@ -101,32 +101,32 @@ const HomePage = () => {
 
   const stats = [
     { value: "PKR 50K", label: "Minimum Investment" },
-    { value: "8-12%", label: "Expected Returns" },
+    { value: "15-22%", label: "Expected Returns" },
     { value: "1,000+", label: "Active Investors" },
     { value: "25+", label: "Properties Listed" }
   ];
 
   return (
-    <div className="min-h-screen hero-gradient">
+    <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-4 z-50 mx-4 sm:mx-6 lg:mx-8">
+      <header className="sticky top-2 z-50 mx-2 sm:mx-4 lg:mx-8">
         <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Mobile Menu Button */}
             <button 
-              className="md:hidden text-white"
+              className="md:hidden text-white p-1"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             
             {/* Navigation */}
-            <nav className="hidden md:flex space-x-8">
-              <a href="#how-it-works" className="text-white hover:text-[#315dca] font-medium transition-colors">How it works</a>
-              <a href="#properties" className="text-white hover:text-[#315dca] font-medium transition-colors">Properties</a>
-              <a href="#faqs" className="text-white hover:text-[#315dca] font-medium transition-colors">FAQs</a>
-              <a href="#media" className="text-white hover:text-[#315dca] font-medium transition-colors">Media</a>
+            <nav className="hidden md:flex space-x-6 lg:space-x-8">
+              <a href="#how-it-works" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">How it works</a>
+              <a href="#properties" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Properties</a>
+              <a href="#faqs" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">FAQs</a>
+              <a href="#media" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Media</a>
             </nav>
 
             {/* Logo */}
@@ -134,24 +134,27 @@ const HomePage = () => {
               <Image 
                 src="/hmr-group.svg" 
                 alt="HMR Group" 
-                width={40} 
-                height={40}
-                className="mr-2"
+                width={32} 
+                height={32}
+                className="mr-2 sm:w-10 sm:h-10"
               />
-              <div className="text-2xl font-bold text-white">
+              <div className="text-base sm:text-lg lg:text-xl font-bold text-white">
                 HMR <span className="text-[#315dca]">BUILDERS</span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <ThemeToggle />
-              <a href="/login" className="text-white bg-[#203a74] hover:bg-[#315dca] px-4 py-2 rounded-lg font-medium transition-colors">
-                Login
-              </a>
-              <a href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
-                Get started
-              </a>
+              {/* Desktop buttons */}
+              <div className="hidden md:flex items-center space-x-4">
+                <a href="/login" className="text-white bg-[#203a74] hover:bg-[#315dca] px-4 py-2 rounded-lg font-medium transition-colors">
+                  Login
+                </a>
+                <a href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
+                  Get started
+                </a>
+              </div>
             </div>
           </div>
 
@@ -163,6 +166,16 @@ const HomePage = () => {
                   <a href="#properties" className="text-white hover:text-[#315dca] font-medium">Properties</a>
                   <a href="#faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</a>
                   <a href="#media" className="text-white hover:text-[#315dca] font-medium">Media</a>
+                  
+                  {/* Mobile Action Buttons */}
+                  <div className="flex flex-col space-y-3 pt-4 border-t border-[#203a74]/30">
+                    <a href="/login" className="text-white bg-[#203a74] hover:bg-[#315dca] px-4 py-3 rounded-lg font-medium transition-colors text-center">
+                      Login
+                    </a>
+                    <a href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-3 rounded-lg font-medium transition-colors text-center">
+                      Get started
+                    </a>
+                  </div>
                 </nav>
               </div>
             )}
@@ -171,36 +184,36 @@ const HomePage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
             {/* Left Content */}
-            <div className="text-white space-y-8">
-              <div className="space-y-4">
-                <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+            <div className="text-white space-y-4 sm:space-y-6 lg:space-y-8">
+              <div className="space-y-2 sm:space-y-3 lg:space-y-4">
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-bold leading-tight">
                   Missed our latest drop?{' '}
                   <span className="text-[#315dca]">MORE TOKENIZED PROPERTIES COMING SOON!</span>
                 </h1>
-                <p className="text-xl text-[#dee0e5]">
+                <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#dee0e5] leading-relaxed">
                   Start investing in premium Pakistani real estate from just PKR 50,000. Fractional ownership made simple.
                 </p>
               </div>
               
               <div className="flex items-center space-x-4">
-                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center">
+                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors flex items-center">
                   Get started
-                  <div className="ml-2 w-6 h-6 bg-[#dee0e5] rounded flex items-center justify-center">
-                    <div className="w-3 h-3 bg-[#315dca] rounded-sm"></div>
+                  <div className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-[#dee0e5] rounded flex items-center justify-center">
+                    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 lg:w-3 lg:h-3 bg-[#315dca] rounded-sm"></div>
                   </div>
                 </a>
               </div>
             </div>
 
             {/* Right Content - Property Card */}
-            <div className="relative">
+            <div className="relative mt-8 lg:mt-0">
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                 {/* Property Image */}
-                <div className="relative h-64">
+                <div className="relative h-48 sm:h-56 lg:h-64">
                   <Image
                     src={properties[0].image}
                     alt={properties[0].title}
@@ -208,24 +221,24 @@ const HomePage = () => {
                     className="object-cover"
                   />
                   {/* Status Badge */}
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-[#315dca] text-white px-3 py-1 rounded-full text-sm font-bold flex items-center">
-                      <div className="w-2 h-2 bg-[#dee0e5] rounded-full mr-2"></div>
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                    <div className="bg-[#315dca] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold flex items-center">
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#dee0e5] rounded-full mr-1.5 sm:mr-2"></div>
                       {properties[0].status}
                     </div>
                   </div>
                 </div>
                 
                 {/* Property Details */}
-                <div className="p-6 space-y-4">
+                <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                   <div className="flex items-center text-gray-600">
-                    <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
-                    <span className="text-sm">{properties[0].location}</span>
+                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5 sm:mr-2" />
+                    <span className="text-xs sm:text-sm">{properties[0].location}</span>
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900">{properties[0].title}</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">{properties[0].title}</h3>
                   
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-2 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">HMR Builders price:</span>
                       <span className="font-semibold">{properties[0].price}</span>
@@ -251,19 +264,19 @@ const HomePage = () => {
       </section>
 
       {/* Portfolio Section */}
-      <section id="properties" className="py-20">
+      <section id="properties" className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
               A glimpse of our <span className="text-[#315dca]">tokenized portfolio</span>
             </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {properties.map((property, index) => (
               <div key={property.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-300 group">
                 {/* Property Image */}
-                <div className="relative h-48">
+                <div className="relative h-40 sm:h-48">
                   <Image
                     src={property.image}
                     alt={property.title}
@@ -271,24 +284,24 @@ const HomePage = () => {
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Location Badge */}
-                  <div className="absolute top-4 left-4">
-                    <div className="bg-white/90 text-gray-800 px-3 py-1 rounded-full text-sm font-medium flex items-center">
-                      <MapPin className="w-3 h-3 text-[#315dca] mr-1" />
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+                    <div className="bg-white/90 text-gray-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center">
+                      <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#315dca] mr-1" />
                       {property.location}
                     </div>
                   </div>
                 </div>
                 
                 {/* Property Details */}
-                <div className="p-6 space-y-4">
-                  <h3 className="text-lg font-semibold text-white">{property.title}</h3>
+                <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold text-white">{property.title}</h3>
                   
-                  <div className="bg-[#0e1521]/50 rounded-lg p-4 space-y-2">
-                    <div className="flex justify-between text-sm">
+                  <div className="bg-[#0e1521]/50 rounded-lg p-3 sm:p-4 space-y-2">
+                    <div className="flex justify-between text-xs sm:text-sm">
                       <span className="text-[#dee0e5]">Projected ROI</span>
                       <span className="text-[#315dca] font-semibold">{property.roi}</span>
                     </div>
-                    <div className="flex justify-between text-sm">
+                    <div className="flex justify-between text-xs sm:text-sm">
                       <span className="text-[#dee0e5]">Gross yield</span>
                       <span className="text-[#315dca] font-semibold">{property.appreciation}</span>
                     </div>

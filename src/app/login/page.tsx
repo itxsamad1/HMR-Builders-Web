@@ -27,14 +27,14 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen hero-gradient">
+    <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-4 z-50 mx-4 sm:mx-6 lg:mx-8">
+      <header className="sticky top-2 z-50 mx-2 sm:mx-4 lg:mx-8">
         <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center text-white hover:text-[#315dca] transition-colors">
-              <ArrowLeft size={20} className="mr-2" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-14 sm:h-16">
+            <Link href="/" className="flex items-center text-white hover:text-[#315dca] transition-colors text-sm sm:text-base">
+              <ArrowLeft size={16} className="mr-1.5 sm:mr-2 sm:w-5 sm:h-5" />
               Back to Home
             </Link>
 
@@ -42,11 +42,11 @@ const LoginPage = () => {
               <Image 
                 src="/hmr-group.svg" 
                 alt="HMR Group" 
-                width={40} 
-                height={40}
-                className="mr-2"
+                width={32} 
+                height={32}
+                className="mr-2 sm:w-10 sm:h-10"
               />
-              <div className="text-2xl font-bold text-white">
+              <div className="text-lg sm:text-xl lg:text-2xl font-bold text-white">
                 HMR <span className="text-[#315dca]">BUILDERS</span>
               </div>
             </div>

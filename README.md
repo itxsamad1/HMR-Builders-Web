@@ -1,73 +1,119 @@
-# Welcome to your Lovable project
+# HMR Builders - Next.js Website
 
-## Project info
+A modern, responsive website for HMR Builders, Pakistan's premier real estate investment platform. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
-**URL**: https://lovable.dev/projects/fa691bdd-d697-4653-82c9-7d41810fe8b1
+## Features
 
-## How can I edit this code?
+- 🏗️ **Modern Design**: Clean, professional design inspired by PRYPCO Mint
+- 📱 **Fully Responsive**: Works perfectly on desktop, tablet, and mobile
+- 🚀 **Next.js 14**: Built with the latest Next.js features and App Router
+- 🎨 **Tailwind CSS**: Modern utility-first CSS framework
+- ⚡ **Performance**: Optimized for speed and SEO
+- 🔒 **SECP Compliant**: Regulatory compliance messaging for Pakistani market
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Framework**: Next.js 14
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Animations**: CSS animations with Tailwind
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fa691bdd-d697-4653-82c9-7d41810fe8b1) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ 
+- npm or yarn
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-Follow these steps:
+2. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. **Open your browser**:
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Build for Production
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm run build
+npm start
 ```
 
-**Edit a file directly in GitHub**
+## Project Structure
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Homepage
+│   └── globals.css       # Global styles
+├── components/            # Reusable components
+└── lib/                  # Utility functions
+```
 
-**Use GitHub Codespaces**
+## Key Sections
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- **Hero Section**: Compelling introduction with Pakistan focus
+- **Features**: Why choose HMR Builders
+- **Properties**: Investment opportunities with Pakistani real estate
+- **How It Works**: Simple 3-step process
+- **Statistics**: Platform metrics and achievements
+- **Regulatory**: SECP compliance information
+- **CTA**: Call-to-action for investors
+- **Newsletter**: Email subscription
+- **Footer**: Complete site navigation
 
-## What technologies are used for this project?
+## Customization
 
-This project is built with:
+### Colors
+The website uses a blue and yellow color scheme that can be customized in `tailwind.config.ts`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Content
+All content is easily editable in `src/app/page.tsx`:
+- Property listings
+- Company information
+- Statistics and metrics
+- Contact details
 
-## How can I deploy this project?
+### Images
+Replace placeholder images with actual property photos and company assets
 
-Simply open [Lovable](https://lovable.dev/projects/fa691bdd-d697-4653-82c9-7d41810fe8b1) and click on Share -> Publish.
+## Deployment
 
-## Can I connect a custom domain to my Lovable project?
+### Vercel (Recommended)
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Deploy automatically
 
-Yes, you can!
+### Other Platforms
+- Netlify
+- AWS Amplify
+- DigitalOcean App Platform
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Browser Support
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
+
+This project is proprietary to HMR Builders.
+
+## Support
+
+For technical support or questions about the website, please contact the development team.
+
+---
+
+**HMR Builders** - Building Pakistan's Future, One Investment at a Time 🇵🇰

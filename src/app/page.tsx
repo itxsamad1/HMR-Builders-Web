@@ -109,9 +109,10 @@ const HomePage = () => {
   return (
     <div className="min-h-screen hero-gradient">
       {/* Header */}
-      <header className="bg-[#0e1521]/90 backdrop-blur-sm sticky top-0 z-50 border-b border-[#203a74]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <header className="sticky top-4 z-50 mx-4 sm:mx-6 lg:mx-8">
+        <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
             {/* Mobile Menu Button */}
             <button 
               className="md:hidden text-white"
@@ -154,17 +155,18 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-700">
-              <nav className="flex flex-col space-y-4">
-                <a href="#how-it-works" className="text-white hover:text-green-400 font-medium">How it works</a>
-                <a href="#properties" className="text-white hover:text-green-400 font-medium">Properties</a>
-                <a href="#faqs" className="text-white hover:text-green-400 font-medium">FAQs</a>
-                <a href="#media" className="text-white hover:text-green-400 font-medium">Media</a>
-              </nav>
-            </div>
-          )}
+            {/* Mobile Menu */}
+            {mobileMenuOpen && (
+              <div className="md:hidden py-4 border-t border-[#203a74]/50">
+                <nav className="flex flex-col space-y-4">
+                  <a href="#how-it-works" className="text-white hover:text-[#315dca] font-medium">How it works</a>
+                  <a href="#properties" className="text-white hover:text-[#315dca] font-medium">Properties</a>
+                  <a href="#faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</a>
+                  <a href="#media" className="text-white hover:text-[#315dca] font-medium">Media</a>
+                </nav>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 

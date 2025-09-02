@@ -29,9 +29,10 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen hero-gradient">
       {/* Header */}
-      <header className="bg-[#0e1521]/90 backdrop-blur-sm sticky top-0 z-50 border-b border-[#203a74]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+      <header className="sticky top-4 z-50 mx-4 sm:mx-6 lg:mx-8">
+        <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center text-white hover:text-[#315dca] transition-colors">
               <ArrowLeft size={20} className="mr-2" />
               Back to Home
@@ -51,6 +52,7 @@ const LoginPage = () => {
             </div>
 
             <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>

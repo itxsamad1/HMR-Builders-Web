@@ -113,6 +113,10 @@
     box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
   }
   
+  .shadow-navbar {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
   .shadow-gradient {
     box-shadow: 0 10px 25px -5px rgba(49, 93, 202, 0.3), 0 10px 10px -5px rgba(32, 58, 116, 0.2);
   }

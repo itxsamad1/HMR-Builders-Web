@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X } from 'lucide-react';
+import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X, Home, RefreshCw, Eye, Globe, Zap, Smartphone } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
 
 const HomePage = () => {
@@ -85,24 +85,30 @@ const HomePage = () => {
   const steps = [
     {
       step: "01",
-      title: "Browse Tokenized Properties",
-      description: "Explore our curated selection of HMR flagship projects - residential, commercial, and hospitality properties."
+      title: "Buy",
+      description: "Browse and select from our curated portfolio of premium Pakistani properties. Invest from just PKR 1 Million.",
+      icon: <Smartphone className="w-8 h-8" />,
+      detail: "Choose your property and investment amount through our secure platform"
     },
     {
       step: "02",
-      title: "Purchase Digital Tokens",
-      description: "Buy fractional ownership tokens starting from PKR 50,000. Each token represents a fraction of the property."
+      title: "Earn",
+      description: "Receive monthly rental distributions and benefit from property appreciation. Track your returns in real-time.",
+      icon: <DollarSign className="w-8 h-8" />,
+      detail: "Earn 15-20% annual returns through rental income and capital gains"
     },
     {
       step: "03",
-      title: "Earn Rental Yields + Appreciation",
-      description: "Receive your share of rental income and property appreciation automatically through our platform."
+      title: "Sell",
+      description: "Trade your property tokens on our secondary market anytime. Full liquidity with transparent pricing.",
+      icon: <RefreshCw className="w-8 h-8" />,
+      detail: "Exit your investment anytime through our liquid secondary market"
     }
   ];
 
   const stats = [
-    { value: "PKR 50K", label: "Minimum Investment" },
-    { value: "15-22%", label: "Expected Returns" },
+    { value: "PKR 1M", label: "Minimum Investment" },
+    { value: "15-20%", label: "Expected Returns" },
     { value: "1,000+", label: "Active Investors" },
     { value: "25+", label: "Properties Listed" }
   ];
@@ -185,65 +191,89 @@ const HomePage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-20 sm:pt-24 lg:pt-28">
+      <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
             {/* Left Content */}
-            <div className="text-white space-y-4 sm:space-y-6 lg:space-y-8">
-              <div className="space-y-2 sm:space-y-3 lg:space-y-4">
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl font-bold leading-tight">
-                  Missed our latest drop?{' '}
-                  <span className="text-[#315dca]">MORE TOKENIZED PROPERTIES COMING SOON!</span>
+            <div className="text-white dark:text-white space-y-4 sm:space-y-6">
+              <div className="space-y-3 sm:space-y-4">
+                <div className="inline-flex items-center bg-[#315dca]/20 border border-[#315dca]/30 rounded-full px-3 py-1.5 text-xs font-medium text-[#315dca] animate-pulse">
+                  <div className="w-1.5 h-1.5 bg-[#315dca] rounded-full mr-2 animate-ping"></div>
+                  LIVE PROPERTIES
+                </div>
+                
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+                  <span className="text-white dark:text-white">MORE TOKENIZED</span><br />
+                  <span className="text-[#315dca]">PROPERTIES COMING SOON!</span>
                 </h1>
-                <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-[#dee0e5] leading-relaxed">
-                  Start investing in premium Pakistani real estate from just PKR 50,000. Fractional ownership made simple.
+                
+                <p className="text-sm sm:text-base lg:text-lg text-[#dee0e5] dark:text-gray-300 leading-relaxed max-w-xl">
+                  Start investing in premium Pakistani real estate from just PKR 1 Million. Fractional ownership made simple.
                 </p>
               </div>
               
-              <div className="flex items-center space-x-4">
-                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <a href="/get-started" className="group bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center">
                   Get started
+                  <div className="ml-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                  </div>
                 </a>
+                
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 text-xs sm:text-sm text-[#dee0e5] dark:text-gray-300">
+                  <div className="flex items-center">
+                    <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5" />
+                    SECP Regulated
+                  </div>
+                  <div className="flex items-center">
+                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5" />
+                    15-20% Returns
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Right Content - Property Card */}
             <div className="relative mt-6 sm:mt-8 lg:mt-0">
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                {/* Property Image */}
-                <div className="relative h-40 sm:h-48 md:h-56 lg:h-64">
+              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300" style={{borderRadius: '24px 24px 32px 32px'}}>
+                <div className="relative h-40 sm:h-48 md:h-56">
                   <Image
                     src={properties[0].image}
                     alt={properties[0].title}
                     fill
                     className="object-cover"
                   />
-                  {/* Status Badge */}
-                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4">
-                    <div className="bg-[#315dca] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold flex items-center">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1.5 sm:mr-2"></div>
-                      {properties[0].status}
+                  {/* Live Badge */}
+                  <div className="absolute top-3 right-3">
+                    <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
+                      LIVE
+                    </div>
+                  </div>
+                  {/* Property Type Badge */}
+                  <div className="absolute top-3 left-3">
+                    <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
+                      {properties[0].type}
                     </div>
                   </div>
                 </div>
                 
-                {/* Property Details */}
-                <div className="p-3 sm:p-4 md:p-6 space-y-2 sm:space-y-3 md:space-y-4">
+                <div className="p-4 sm:p-6 space-y-4">
                   <div className="flex items-center text-gray-600">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5 sm:mr-2" />
-                    <span className="text-xs sm:text-sm">{properties[0].location}</span>
+                    <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
+                    <span className="text-sm">{properties[0].location}</span>
                   </div>
                   
-                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{properties[0].title}</h3>
+                  <h3 className="text-lg font-bold text-gray-900">{properties[0].title}</h3>
                   
-                  <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
+                  <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">HMR Builders price:</span>
-                      <span className="font-semibold">{properties[0].price}</span>
+                      <span className="font-semibold text-[#315dca]">{properties[0].price}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Estimated market value:</span>
-                      <span className="font-semibold">{properties[0].marketValue}</span>
+                      <span className="font-semibold text-gray-900">{properties[0].marketValue}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Estimated instant appreciation:</span>
@@ -254,9 +284,80 @@ const HomePage = () => {
                       <span className="font-semibold text-[#315dca]">{properties[0].roi}</span>
                     </div>
                   </div>
+                  
+                  <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
+                    View Property
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* Background Elements */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-[#315dca]/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#203a74]/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </div>
+      </section>
+
+      {/* Key Features Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/50 dark:bg-gray-900/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
+              Enter the future of <span className="text-[#315dca]">real estate</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-[#dee0e5] dark:text-gray-300 max-w-3xl mx-auto">
+              Experience the power of tokenized real estate with HMR Builders
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                icon: <Home className="w-8 h-8" />,
+                title: "Fractional Ownership",
+                description: "Own a piece of premium Pakistani real estate with as little as PKR 1 Million"
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: "High Returns",
+                description: "Earn 15-20% annual returns through rental income and property appreciation"
+              },
+              {
+                icon: <RefreshCw className="w-8 h-8" />,
+                title: "Liquidity",
+                description: "Trade your property tokens on our secondary market anytime"
+              },
+              {
+                icon: <Eye className="w-8 h-8" />,
+                title: "Transparency",
+                description: "Full transparency with blockchain-secured ownership and transactions"
+              },
+              {
+                icon: <Globe className="w-8 h-8" />,
+                title: "Diversification",
+                description: "Invest across multiple properties and locations in Pakistan"
+              },
+              {
+                icon: <Zap className="w-8 h-8" />,
+                title: "Global Access",
+                description: "Access premium Pakistani real estate from anywhere in the world"
+              }
+            ].map((feature, index) => (
+              <div key={index} className="group bg-white/5 dark:bg-gray-800/50 backdrop-blur-sm border border-white/10 dark:border-gray-700/50 rounded-2xl p-6 sm:p-8 hover:bg-white/10 dark:hover:bg-gray-800/70 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+                <div className="w-16 h-16 bg-[#315dca]/20 rounded-2xl flex items-center justify-center text-[#315dca] mb-6 group-hover:bg-[#315dca]/30 transition-colors">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-white dark:text-white mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-[#dee0e5] dark:text-gray-300 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -272,7 +373,7 @@ const HomePage = () => {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {properties.map((property, index) => (
-              <div key={property.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-300 group">
+              <div key={property.id} className="bg-white rounded-3xl shadow-2xl overflow-hidden hover:scale-105 transition-all duration-300 group" style={{borderRadius: '24px 24px 32px 32px'}}>
                 {/* Property Image */}
                 <div className="relative h-40 sm:h-48">
                   <Image
@@ -281,29 +382,52 @@ const HomePage = () => {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  {/* Location Badge */}
-                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
-                    <div className="bg-white/90 text-gray-800 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center">
-                      <MapPin className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#315dca] mr-1" />
-                      {property.location}
+                  {/* Live Badge */}
+                  <div className="absolute top-3 right-3">
+                    <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
+                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
+                      LIVE
+                    </div>
+                  </div>
+                  {/* Property Type Badge */}
+                  <div className="absolute top-3 left-3">
+                    <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
+                      {property.type}
                     </div>
                   </div>
                 </div>
                 
                 {/* Property Details */}
-                <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
-                  <h3 className="text-base sm:text-lg font-semibold text-white">{property.title}</h3>
+                <div className="p-4 sm:p-6 space-y-4">
+                  <div className="flex items-center text-gray-600">
+                    <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
+                    <span className="text-sm">{property.location}</span>
+                  </div>
                   
-                  <div className="bg-[#0e1521]/50 rounded-lg p-3 sm:p-4 space-y-2">
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-[#dee0e5]">Projected ROI</span>
-                      <span className="text-[#315dca] font-semibold">{property.roi}</span>
+                  <h3 className="text-lg font-bold text-gray-900">{property.title}</h3>
+                  
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">HMR Builders price:</span>
+                      <span className="font-semibold text-[#315dca]">{property.price}</span>
                     </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-[#dee0e5]">Gross yield</span>
-                      <span className="text-[#315dca] font-semibold">{property.appreciation}</span>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Estimated market value:</span>
+                      <span className="font-semibold text-gray-900">{property.marketValue}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Estimated instant appreciation:</span>
+                      <span className="font-semibold text-[#315dca]">{property.appreciation}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Est. annualised net ROI over first 5 years:</span>
+                      <span className="font-semibold text-[#315dca]">{property.roi}</span>
                     </div>
                   </div>
+                  
+                  <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
+                    View Property
+                  </button>
                 </div>
               </div>
             ))}
@@ -317,28 +441,117 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* How it Works Section */}
-      <section id="how-it-works" className="py-20">
+      {/* Tokenization at a Glance Section */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">How It Works</h2>
-            <p className="text-xl text-[#dee0e5]">Simple steps to start your real estate investment journey</p>
+          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
+            <div className="space-y-6 sm:space-y-8">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white">
+                Tokenization at a <span className="text-[#315dca]">glance</span>
+              </h2>
+              <div className="space-y-4 text-[#dee0e5] dark:text-gray-300 text-lg leading-relaxed">
+                <p>
+                  Real estate tokenization transforms physical properties into digital tokens on the blockchain. 
+                  Each token represents fractional ownership of the underlying asset, making premium real estate 
+                  accessible to everyone.
+                </p>
+                <p>
+                  With HMR Builders, you can invest in luxury Pakistani properties starting from just PKR 1 Million, 
+                  earn rental income, and benefit from property appreciation - all while maintaining full transparency 
+                  and liquidity through our secure platform.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
+                  Enter the future of Pakistani real estate from just PKR 1 Million
+                </a>
+              </div>
+            </div>
+            
+            <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
+              <div className="text-center mb-6">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">What is a token?</h3>
+                <div className="relative rounded-2xl overflow-hidden">
+                  <video 
+                    className="w-full h-auto rounded-2xl"
+                    preload="auto"
+                    autoPlay
+                    loop
+                    playsInline
+                    muted
+                    onLoadedMetadata={(e) => e.currentTarget.muted = true}
+                  >
+                    <source src="/what_is_token.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+              
+              <div className="space-y-4 text-gray-700 dark:text-gray-300">
+                <div className="text-center">
+                  <p className="text-base leading-relaxed mb-3">
+                    A token is a digital unit of ownership stored on a blockchain.
+                  </p>
+                  <p className="text-sm leading-relaxed">
+                    For example, in real estate, a property can be divided into 1,000,000 tokens, and each token represents a fraction of ownership. Buying 10,000 tokens would give you 1% ownership of the property.
+                  </p>
+                </div>
+              </div>
+              
+              <button className="w-full mt-6 bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                Learn more
+                <div className="ml-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                </div>
+              </button>
+            </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-3 gap-8">
+      {/* How it Works Section */}
+      <section id="how-it-works" className="py-20 sm:py-24 lg:py-28 bg-[#0e1521]/20 dark:bg-gray-900/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16 sm:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
+              It's really this <span className="text-[#315dca]">simple</span>
+            </h2>
+            <p className="text-lg sm:text-xl text-[#dee0e5] dark:text-gray-300 max-w-3xl mx-auto">
+              Start your real estate investment journey in just three easy steps
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
             {steps.map((step, index) => (
-              <div key={index} className="text-center">
-                <div className="w-20 h-20 bg-[#315dca] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6">{step.step}</div>
-                <h3 className="text-xl font-semibold text-white mb-3">{step.title}</h3>
-                <p className="text-[#dee0e5]">{step.description}</p>
+              <div key={index} className="group text-center">
+                <div className="relative mb-8">
+                  <div className="bg-[#315dca] text-white w-20 h-20 rounded-2xl flex items-center justify-center font-bold text-2xl mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+                    {step.step}
+                  </div>
+                  <div className="w-16 h-16 bg-[#315dca]/20 rounded-xl flex items-center justify-center text-[#315dca] mx-auto mb-6 group-hover:bg-[#315dca]/30 transition-colors">
+                    {step.icon}
+                  </div>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold text-white dark:text-white mb-4">{step.title}</h3>
+                <p className="text-[#dee0e5] dark:text-gray-300 leading-relaxed mb-4">{step.description}</p>
+                <p className="text-sm text-[#315dca] font-medium">{step.detail}</p>
               </div>
             ))}
+          </div>
+          
+          <div className="text-center mt-16">
+            <a href="/get-started" className="inline-flex items-center bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
+              Get started
+              <div className="ml-3 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                <div className="w-2 h-2 bg-white rounded-full"></div>
+              </div>
+            </a>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0e1521] border-t border-[#203a74] py-8 sm:py-12 lg:py-16">
+      <footer className="bg-[#0e1521] dark:bg-gray-900 border-t border-[#203a74] dark:border-gray-700 py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="sm:col-span-2 lg:col-span-1">
@@ -350,24 +563,24 @@ const HomePage = () => {
                   height={32}
                   className="mr-2 sm:w-10 sm:h-10"
                 />
-                <div className="text-lg sm:text-xl font-bold text-white">
+                <div className="text-lg sm:text-xl font-bold text-white dark:text-white">
                   HMR <span className="text-[#315dca]">BUILDERS</span>
                 </div>
               </div>
-              <p className="text-[#dee0e5] mb-4 text-sm sm:text-base">
-                Pakistan's premier tokenized real estate investment platform, regulated and secure. Start from just PKR 50,000.
+              <p className="text-[#dee0e5] dark:text-gray-300 mb-4 text-sm sm:text-base">
+                Pakistan's premier tokenized real estate investment platform, regulated and secure. Start from just PKR 1 Million.
               </p>
               <div className="flex flex-wrap gap-3 sm:gap-4">
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Facebook</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Twitter</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">LinkedIn</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Instagram</a>
+                <a href="#" className="text-[#dee0e5] dark:text-gray-300 hover:text-white transition-colors text-sm">Facebook</a>
+                <a href="#" className="text-[#dee0e5] dark:text-gray-300 hover:text-white transition-colors text-sm">Twitter</a>
+                <a href="#" className="text-[#dee0e5] dark:text-gray-300 hover:text-white transition-colors text-sm">LinkedIn</a>
+                <a href="#" className="text-[#dee0e5] dark:text-gray-300 hover:text-white transition-colors text-sm">Instagram</a>
               </div>
             </div>
             
             <div>
-              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Platform</h4>
-              <ul className="space-y-2 text-[#dee0e5]">
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white dark:text-white">Platform</h4>
+              <ul className="space-y-2 text-[#dee0e5] dark:text-gray-300">
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Properties</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Portfolio</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Dashboard</a></li>
@@ -376,8 +589,8 @@ const HomePage = () => {
             </div>
             
             <div>
-              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Resources</h4>
-              <ul className="space-y-2 text-[#dee0e5]">
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white dark:text-white">Resources</h4>
+              <ul className="space-y-2 text-[#dee0e5] dark:text-gray-300">
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Help Center</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Documentation</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Blog</a></li>
@@ -386,8 +599,8 @@ const HomePage = () => {
             </div>
             
             <div>
-              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Company</h4>
-              <ul className="space-y-2 text-[#dee0e5]">
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white dark:text-white">Company</h4>
+              <ul className="space-y-2 text-[#dee0e5] dark:text-gray-300">
                 <li><a href="#" className="hover:text-white transition-colors text-sm">About Us</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Careers</a></li>
                 <li><a href="#" className="hover:text-white transition-colors text-sm">Press</a></li>

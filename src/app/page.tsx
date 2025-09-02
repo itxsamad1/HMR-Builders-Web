@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X } from 'lucide-react';
 import ThemeToggle from '@/components/ThemeToggle';
@@ -17,8 +18,8 @@ const HomePage = () => {
       location: "DHA Phase 8, Karachi",
       price: "PKR 1.7 million",
       marketValue: "PKR 1.95 million",
-      appreciation: "14.7%",
-      roi: "18.2%",
+      appreciation: "17.5%",
+      roi: "19.8%",
       type: "Residential",
       image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
       status: "FULLY FUNDED",
@@ -109,7 +110,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-2 z-50 mx-2 sm:mx-4 lg:mx-8">
+      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
         <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16">
@@ -123,10 +124,10 @@ const HomePage = () => {
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-6 lg:space-x-8">
-              <a href="#how-it-works" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">How it works</a>
-              <a href="#properties" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Properties</a>
-              <a href="#faqs" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">FAQs</a>
-              <a href="#media" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Media</a>
+              <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">How it works</Link>
+              <Link href="/properties" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Properties</Link>
+              <Link href="/faqs" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">FAQs</Link>
+              <Link href="/media" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Media</Link>
             </nav>
 
             {/* Logo */}
@@ -162,10 +163,10 @@ const HomePage = () => {
             {mobileMenuOpen && (
               <div className="md:hidden py-4 border-t border-[#203a74]/50">
                 <nav className="flex flex-col space-y-4">
-                  <a href="#how-it-works" className="text-white hover:text-[#315dca] font-medium">How it works</a>
-                  <a href="#properties" className="text-white hover:text-[#315dca] font-medium">Properties</a>
-                  <a href="#faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</a>
-                  <a href="#media" className="text-white hover:text-[#315dca] font-medium">Media</a>
+                  <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium">How it works</Link>
+                  <Link href="/properties" className="text-white hover:text-[#315dca] font-medium">Properties</Link>
+                  <Link href="/faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</Link>
+                  <Link href="/media" className="text-white hover:text-[#315dca] font-medium">Media</Link>
                   
                   {/* Mobile Action Buttons */}
                   <div className="flex flex-col space-y-3 pt-4 border-t border-[#203a74]/30">
@@ -184,7 +185,7 @@ const HomePage = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24">
+      <section className="relative min-h-screen flex items-center pt-20 sm:pt-24 lg:pt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-center">
             {/* Left Content */}
@@ -200,20 +201,17 @@ const HomePage = () => {
               </div>
               
               <div className="flex items-center space-x-4">
-                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors flex items-center">
+                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors">
                   Get started
-                  <div className="ml-2 w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 bg-[#dee0e5] rounded flex items-center justify-center">
-                    <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 lg:w-3 lg:h-3 bg-[#315dca] rounded-sm"></div>
-                  </div>
                 </a>
               </div>
             </div>
 
             {/* Right Content - Property Card */}
-            <div className="relative mt-8 lg:mt-0">
+            <div className="relative mt-6 sm:mt-8 lg:mt-0">
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                 {/* Property Image */}
-                <div className="relative h-48 sm:h-56 lg:h-64">
+                <div className="relative h-40 sm:h-48 md:h-56 lg:h-64">
                   <Image
                     src={properties[0].image}
                     alt={properties[0].title}
@@ -221,24 +219,24 @@ const HomePage = () => {
                     className="object-cover"
                   />
                   {/* Status Badge */}
-                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4">
+                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4">
                     <div className="bg-[#315dca] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold flex items-center">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-[#dee0e5] rounded-full mr-1.5 sm:mr-2"></div>
+                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1.5 sm:mr-2"></div>
                       {properties[0].status}
                     </div>
                   </div>
                 </div>
                 
                 {/* Property Details */}
-                <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
+                <div className="p-3 sm:p-4 md:p-6 space-y-2 sm:space-y-3 md:space-y-4">
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5 sm:mr-2" />
                     <span className="text-xs sm:text-sm">{properties[0].location}</span>
                   </div>
                   
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">{properties[0].title}</h3>
+                  <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-900">{properties[0].title}</h3>
                   
-                  <div className="space-y-2 text-xs sm:text-sm">
+                  <div className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-600">HMR Builders price:</span>
                       <span className="font-semibold">{properties[0].price}</span>
@@ -312,11 +310,8 @@ const HomePage = () => {
           </div>
           
           <div className="text-center mt-12">
-            <button className="bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors flex items-center mx-auto">
+            <button className="bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors mx-auto">
               Explore more
-              <div className="ml-2 w-6 h-6 bg-[#dee0e5] rounded flex items-center justify-center">
-                <div className="w-3 h-3 bg-[#315dca] rounded-sm"></div>
-              </div>
             </button>
           </div>
         </div>
@@ -343,70 +338,70 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0e1521] border-t border-[#203a74] py-16">
+      <footer className="bg-[#0e1521] border-t border-[#203a74] py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center mb-4">
                 <Image 
                   src="/hmr-group.svg" 
                   alt="HMR Group" 
                   width={32} 
                   height={32}
-                  className="mr-2"
+                  className="mr-2 sm:w-10 sm:h-10"
                 />
-                <div className="text-xl font-bold text-white">
+                <div className="text-lg sm:text-xl font-bold text-white">
                   HMR <span className="text-[#315dca]">BUILDERS</span>
                 </div>
               </div>
-              <p className="text-[#dee0e5] mb-4">
+              <p className="text-[#dee0e5] mb-4 text-sm sm:text-base">
                 Pakistan's premier tokenized real estate investment platform, regulated and secure. Start from just PKR 50,000.
               </p>
-              <div className="flex space-x-4">
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Facebook</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Twitter</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">LinkedIn</a>
-                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Instagram</a>
+              <div className="flex flex-wrap gap-3 sm:gap-4">
+                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Facebook</a>
+                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Twitter</a>
+                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">LinkedIn</a>
+                <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-sm">Instagram</a>
               </div>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Platform</h4>
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Platform</h4>
               <ul className="space-y-2 text-[#dee0e5]">
-                <li><a href="#" className="hover:text-white transition-colors">Properties</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Portfolio</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Dashboard</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Analytics</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Properties</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Portfolio</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Dashboard</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Analytics</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Resources</h4>
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Resources</h4>
               <ul className="space-y-2 text-[#dee0e5]">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Webinars</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Help Center</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Documentation</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Blog</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Webinars</a></li>
               </ul>
             </div>
             
             <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Company</h4>
+              <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-white">Company</h4>
               <ul className="space-y-2 text-[#dee0e5]">
-                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Press</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">About Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Careers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Press</a></li>
+                <li><a href="#" className="hover:text-white transition-colors text-sm">Contact</a></li>
               </ul>
             </div>
           </div>
           
-          <div className="border-t border-[#203a74] mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-[#dee0e5]">&copy; 2025 HMR Builders. All rights reserved.</p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors">Risk Disclosure</a>
+          <div className="border-t border-[#203a74] mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center">
+            <p className="text-[#dee0e5] text-xs sm:text-sm text-center sm:text-left">&copy; 2025 HMR Builders. All rights reserved. | Licensed by SECP | Start from just PKR 50,000</p>
+            <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-6 mt-4 sm:mt-0">
+              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-xs sm:text-sm">Privacy Policy</a>
+              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-xs sm:text-sm">Terms of Service</a>
+              <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-xs sm:text-sm">Risk Disclosure</a>
             </div>
           </div>
         </div>

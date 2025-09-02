@@ -16,79 +16,82 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    /* HMR Dark Theme (Default) - Your Original Colors */
+    --background: 14 21 33; /* #0e1521 */
+    --foreground: 222 222 229; /* #dee0e5 */
+    --card: 255 255 255; /* white for property cards */
+    --card-foreground: 14 21 33; /* #0e1521 for card text */
+    --popover: 14 21 33; /* #0e1521 */
+    --popover-foreground: 222 222 229; /* #dee0e5 */
+    --primary: 49 93 202; /* #315dca - Your blue */
+    --primary-foreground: 255 255 255; /* white */
+    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary-foreground: 255 255 255; /* white */
+    --muted: 222 222 229; /* #dee0e5 */
+    --muted-foreground: 107 114 128; /* #6b7280 */
+    --accent: 32 58 116; /* #203a74 */
+    --accent-foreground: 255 255 255; /* white */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255; /* white */
+    --border: 32 58 116; /* #203a74 */
+    --input: 32 58 116; /* #203a74 */
+    --ring: 49 93 202; /* #315dca */
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    /* Same as root - HMR Dark Theme */
+    --background: 14 21 33; /* #0e1521 */
+    --foreground: 222 222 229; /* #dee0e5 */
+    --card: 255 255 255; /* white for property cards */
+    --card-foreground: 14 21 33; /* #0e1521 for card text */
+    --popover: 14 21 33; /* #0e1521 */
+    --popover-foreground: 222 222 229; /* #dee0e5 */
+    --primary: 49 93 202; /* #315dca - Your blue */
+    --primary-foreground: 255 255 255; /* white */
+    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary-foreground: 255 255 255; /* white */
+    --muted: 222 222 229; /* #dee0e5 */
+    --muted-foreground: 107 114 128; /* #6b7280 */
+    --accent: 32 58 116; /* #203a74 */
+    --accent-foreground: 255 255 255; /* white */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255; /* white */
+    --border: 32 58 116; /* #203a74 */
+    --input: 32 58 116; /* #203a74 */
+    --ring: 49 93 202; /* #315dca */
   }
 
   .light {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
+    /* HMR Light Theme - Your Original Colors */
+    --background: 255 255 255; /* white */
+    --foreground: 14 21 33; /* #0e1521 */
+    --card: 255 255 255; /* white */
+    --card-foreground: 14 21 33; /* #0e1521 */
+    --popover: 255 255 255; /* white */
+    --popover-foreground: 14 21 33; /* #0e1521 */
+    --primary: 49 93 202; /* #315dca - Your blue */
+    --primary-foreground: 255 255 255; /* white */
+    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary-foreground: 255 255 255; /* white */
+    --muted: 248 249 250; /* #f8f9fa */
+    --muted-foreground: 107 114 128; /* #6b7280 */
+    --accent: 229 231 235; /* #e5e7eb */
+    --accent-foreground: 14 21 33; /* #0e1521 */
+    --destructive: 239 68 68; /* red-500 */
+    --destructive-foreground: 255 255 255; /* white */
+    --border: 229 231 235; /* #e5e7eb */
+    --input: 229 231 235; /* #e5e7eb */
+    --ring: 49 93 202; /* #315dca */
   }
-}
 
-@layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
+
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 
@@ -96,72 +99,19 @@ body {
   .hero-gradient {
     background: linear-gradient(135deg, #0e1521 0%, #203a74 50%, #315dca 100%);
   }
-  
+
   .light .hero-gradient {
-    background: linear-gradient(135deg, #dee0e5 0%, #315dca 50%, #203a74 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   }
-  
-  .hero-gradient-light {
-    background: linear-gradient(135deg, #dee0e5 0%, #315dca 50%, #203a74 100%);
-  }
-  
-  .card-premium {
-    @apply bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300;
-  }
-  
-  .card-premium-light {
-    @apply bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300;
-  }
-  
-  .hover-lift {
-    @apply transform hover:-translate-y-1 transition-all duration-300;
-  }
-  
-  .shadow-premium {
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .shadow-elegant {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-  }
-  
+
   .shadow-navbar {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
   }
-  
-  .shadow-gradient {
-    box-shadow: 0 10px 25px -5px rgba(49, 93, 202, 0.3), 0 10px 10px -5px rgba(32, 58, 116, 0.2);
+
+  .light .shadow-navbar {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05);
   }
-  
-  .gradient-primary {
-    background: linear-gradient(135deg, #0e1521 0%, #203a74 50%, #315dca 100%);
-  }
-  
-  .gradient-primary-light {
-    background: linear-gradient(135deg, #dee0e5 0%, #315dca 50%, #203a74 100%);
-  }
-  
-  .pattern-bg {
-    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
-    background-size: 20px 20px;
-  }
-  
-  .animate-fade-up {
-    animation: fadeUp 0.8s ease-out forwards;
-  }
-  
-  .animate-slide-in-left {
-    animation: slideInLeft 0.8s ease-out forwards;
-  }
-  
-  .animate-slide-in-right {
-    animation: slideInRight 0.8s ease-out forwards;
-  }
-  
-  .animate-scale-up {
-    animation: scaleUp 0.6s ease-out forwards;
-  }
-  
+
   .animate-bounce-slow {
     animation: bounce 2s infinite;
   }
@@ -169,97 +119,10 @@ body {
   .hover-scale:hover {
     transform: scale(1.05);
   }
-  
-  /* Light mode overrides */
-  .light {
-    --text-primary: #0e1521;
-    --text-secondary: #203a74;
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f9fa;
-    --bg-card: rgba(255, 255, 255, 0.8);
-    --border-primary: #e5e7eb;
-    --border-secondary: #d1d5db;
-  }
-  
-  .light .text-white {
-    color: var(--text-primary) !important;
-  }
-  
-  .light .text-[#dee0e5] {
-    color: var(--text-secondary) !important;
-  }
-  
-  .light .bg-[#0e1521] {
-    background-color: var(--bg-primary) !important;
-  }
-  
-  .light .bg-[#203a74] {
-    background-color: #315dca !important;
-  }
-  
-  .light .border-[#203a74] {
-    border-color: #315dca !important;
-  }
-  
-  .light .bg-white\/10 {
-    background-color: var(--bg-card) !important;
-  }
-  
-  .light .border-white\/20 {
-    border-color: var(--border-primary) !important;
-  }
-  
-  .light .bg-white\/20 {
-    background-color: rgba(255, 255, 255, 0.6) !important;
-  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleUp {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }

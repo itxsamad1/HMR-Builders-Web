@@ -73,7 +73,7 @@ const GetStartedPage = () => {
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
-      <header className="sticky top-2 z-50 mx-2 sm:mx-4 lg:mx-8">
+      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
         <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16">

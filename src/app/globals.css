@@ -154,25 +154,47 @@
     transform: scale(1.05);
   }
   
-  /* Light mode text colors */
+  /* Light mode overrides */
+  .light {
+    --text-primary: #0e1521;
+    --text-secondary: #203a74;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --border-primary: #e5e7eb;
+    --border-secondary: #d1d5db;
+  }
+  
   .light .text-white {
-    color: #0e1521;
+    color: var(--text-primary) !important;
   }
   
   .light .text-[#dee0e5] {
-    color: #203a74;
+    color: var(--text-secondary) !important;
   }
   
   .light .bg-[#0e1521] {
-    background-color: #dee0e5;
+    background-color: var(--bg-primary) !important;
   }
   
   .light .bg-[#203a74] {
-    background-color: #315dca;
+    background-color: #315dca !important;
   }
   
   .light .border-[#203a74] {
-    border-color: #315dca;
+    border-color: #315dca !important;
+  }
+  
+  .light .bg-white\/10 {
+    background-color: var(--bg-card) !important;
+  }
+  
+  .light .border-white\/20 {
+    border-color: var(--border-primary) !important;
+  }
+  
+  .light .bg-white\/20 {
+    background-color: rgba(255, 255, 255, 0.6) !important;
   }
 }
 

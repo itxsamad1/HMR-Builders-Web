@@ -13,117 +13,136 @@ const PropertiesPage = () => {
   const properties = [
     {
       id: 1,
-      title: "2 Bedroom Apartment, DHA Phase 8",
-      location: "DHA Phase 8, Karachi",
-      price: "PKR 1.7 million",
-      marketValue: "PKR 1.95 million",
-      appreciation: "14.7%",
-      roi: "18.2%",
+      title: "H1 Tower",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 15 million",
+      marketValue: "PKR 18 million",
+      appreciation: "20.0%",
+      roi: "18-22%",
       type: "Residential",
-      status: "FULLY FUNDED",
-      tokens: 500,
-      availableTokens: 0,
-      minInvestment: "PKR 50,000",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
-      description: "Premium 2-bedroom apartment in the heart of DHA Phase 8, featuring modern amenities and excellent connectivity.",
-      features: ["Swimming Pool", "Gym", "Parking", "Security", "Garden"]
+      status: "ACTIVE",
+      tokens: 1500,
+      availableTokens: 847,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/h1-tower/main.jpg",
+      description: "H1 Tower is the Flagship Tower of HMR Waterfront. A stunning skyline that will inspire residents and visitors from around the world. It is a profound architecture, comprising of Ground + 34 floors of luxury living with a grand lobby to welcome you.",
+      features: ["Elegant Reception", "24 hours Concierge", "Sea and Boulevard Apartments", "Infinity Pool", "Multi-Purpose Hall", "Fully Equipped Gym", "Spacious Bedrooms", "Modern Bathrooms", "Built in Kitchen", "Maid's Room", "High Speed Elevators", "Retail Outlets", "Fire life safety certified lifts", "Evacuation System", "24/7 CCTV Surveillance", "8 Floors Parking", "2 Emergency exit Staircases", "Driver's room on each parking floor"],
+      floors: "Ground + 34",
+      units: ["Townhouse", "1 Bedroom", "2 Bedroom", "3 Bedroom", "4 Bedroom", "Penthouse"]
     },
     {
       id: 2,
-      title: "Commercial Tower, Gulberg III",
-      location: "Gulberg III, Lahore",
-      price: "PKR 1.2 million",
-      marketValue: "PKR 1.41 million",
-      appreciation: "17.5%",
-      roi: "19.8%",
-      type: "Commercial",
-      status: "ACTIVE",
-      tokens: 240,
-      availableTokens: 134,
-      minInvestment: "PKR 75,000",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-      description: "Modern commercial tower in the business district of Gulberg III, perfect for office spaces and retail.",
-      features: ["Elevator", "Parking", "Security", "Cafeteria", "Conference Rooms"]
+      title: "Saima Tower",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 12 million",
+      marketValue: "PKR 14.5 million",
+      appreciation: "20.8%",
+      roi: "17-21%",
+      type: "Residential",
+      status: "COMING SOON",
+      tokens: 1200,
+      availableTokens: 1200,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/saima-tower/main.jpg",
+      description: "Saima Tower is a Ground + 40 storey residential project of iconic significance coming up right in front of sea at HMR Waterfront. The project comprises of ultra-luxury apartments provided with almost every conceivable amenity of the modern era.",
+      features: ["24 ft Height Lobby", "Lounge Area", "Concierge", "West Open Sea front Apartments", "Exclusive Swimming Pool", "State of the art Gym", "Prayer Area", "Spacious Bedroom", "Children Play area", "7 floors of Car Parking", "24 ft Height Retail Outlets", "24/7 CCTV Surveillance", "Backup Generators", "Variable Refrigerant Flow Units"],
+      floors: "Ground + 40",
+      units: ["Townhouses", "1 Bedroom", "2 Bedroom", "3 Bedroom", "4 Bedroom", "Penthouses with Infinity Pool"]
     },
     {
       id: 3,
-      title: "Boutique Hotel, Clifton",
-      location: "Clifton, Karachi",
-      price: "PKR 2.1 million",
-      marketValue: "PKR 2.52 million",
-      appreciation: "20.0%",
-      roi: "22.5%",
-      type: "Hospitality",
-      status: "ACTIVE",
-      tokens: 420,
-      availableTokens: 256,
-      minInvestment: "PKR 100,000",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
-      description: "Luxury boutique hotel in the prestigious Clifton area, offering premium hospitality services.",
-      features: ["Restaurant", "Spa", "Pool", "Room Service", "Concierge"]
+      title: "AA Waterfront",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 10 million",
+      marketValue: "PKR 12.2 million",
+      appreciation: "22.0%",
+      roi: "16-20%",
+      type: "Residential",
+      status: "COMING SOON",
+      tokens: 1000,
+      availableTokens: 1000,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/aa-waterfront/main.jpg",
+      description: "Our passion for extraordinary living at HMR Waterfront. The Ground + 37 storey project comprises of stunning apartments and expensive views of the sea, the smart luxurious apartments and smart duplex penthouses are rewriting comfortable lifestyles.",
+      features: ["Reception Area", "Smart Apartments", "Lounge Area", "Community Hall", "Swimming Pool", "Showrooms", "Meeting Room", "Prayer Area", "Sauna", "Steam Room", "Children's Play Area", "Gaming Zone", "Gym", "Parking Area"],
+      floors: "Ground + 37",
+      units: ["1 Bedroom", "2 Bedroom", "3 Bedroom", "4 Bedroom", "6 Bedroom Penthouses with Pool"]
     },
     {
       id: 4,
-      title: "3 Bedroom Villa, Bahria Town",
-      location: "Bahria Town, Rawalpindi",
-      price: "PKR 1.8 million",
-      marketValue: "PKR 2.16 million",
-      appreciation: "20.0%",
-      roi: "21.5%",
+      title: "H&S Residence",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 8.5 million",
+      marketValue: "PKR 10.5 million",
+      appreciation: "23.5%",
+      roi: "15-19%",
       type: "Residential",
       status: "COMING SOON",
-      tokens: 360,
-      availableTokens: 360,
-      minInvestment: "PKR 60,000",
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=600&fit=crop",
-      description: "Spacious 3-bedroom villa in the gated community of Bahria Town, featuring modern design and amenities.",
-      features: ["Garden", "Garage", "Security", "Community Center", "Playground"]
+      tokens: 850,
+      availableTokens: 850,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/hs-residence/main.jpg",
+      description: "Welcome to H&S Residence, a coastal haven standing 39 storeys tall along Karachi's vibrant shoreline. Inspired by the Japanese Nami design philosophy, our architecture reflects the fluidity of ocean waves.",
+      features: ["Architectural Designed By Nicken Sekkei", "3 & 4 Bedrooms Apartment With Plunged Pools", "Infinity Pools", "Creative Workspaces", "Car Parking", "Gym", "High Speed Elevators", "Snooker Lounge", "Double Height Shops", "Double Height Lobby", "Kids Play & Pool Area", "Social Area 8 Lifts (1 Fls & 1 Cargo)", "Spa & Sauna"],
+      floors: "Ground + 39",
+      units: ["1 Bedroom", "2 Bedroom", "3 Bedroom", "4 Bedroom", "Penthouse"]
     },
     {
       id: 5,
-      title: "Office Complex, Blue Area",
-      location: "Blue Area, Islamabad",
-      price: "PKR 1.5 million",
-      marketValue: "PKR 1.8 million",
-      appreciation: "20.0%",
-      roi: "20.8%",
-      type: "Commercial",
-      status: "ACTIVE",
-      tokens: 300,
-      availableTokens: 180,
-      minInvestment: "PKR 80,000",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-      description: "Premium office complex in the heart of Islamabad's business district, Blue Area.",
-      features: ["Parking", "Security", "Cafeteria", "Meeting Rooms", "High-Speed Internet"]
+      title: "Saima Marina Residence",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 7.2 million",
+      marketValue: "PKR 9.1 million",
+      appreciation: "26.4%",
+      roi: "14-18%",
+      type: "Residential",
+      status: "COMING SOON",
+      tokens: 720,
+      availableTokens: 720,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/saima-marina-residence/main.jpg",
+      description: "Saima Marina Residence offers an unparalleled living experience comprises of Ground + 40 floors at HMR Waterfront. Awaken to breathtaking sea views from your modern residence, where every detail exudes sophistication.",
+      features: ["Changing Rooms", "Yoga Area (Open Air)", "Showers", "Salon", "Gym", "Prayer Area", "Kids Play Area", "7 Floors for Parking", "Double Height Shops", "Double Height Lobby", "5 Passenger Lifts (1 FLS & 1 Cargo)", "Indoor Games", "Open & Covered Dining Area", "Sauna & Jacuzzi"],
+      floors: "Ground + 40",
+      units: ["1 Bedroom", "2 Bedroom", "3 Bedroom", "4 Bedroom", "Penthouses"]
     },
     {
       id: 6,
-      title: "Retail Plaza, F-8",
-      location: "F-8, Islamabad",
-      price: "PKR 1.3 million",
-      marketValue: "PKR 1.56 million",
-      appreciation: "20.0%",
-      roi: "19.2%",
-      type: "Commercial",
-      status: "ACTIVE",
-      tokens: 260,
-      availableTokens: 156,
-      minInvestment: "PKR 70,000",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&h=600&fit=crop",
-      description: "Modern retail plaza in F-8 sector, offering excellent foot traffic and commercial potential.",
-      features: ["Parking", "Security", "Food Court", "ATM", "Restrooms"]
+      title: "Gold Crest Bay Sands",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 6.8 million",
+      marketValue: "PKR 8.7 million",
+      appreciation: "27.9%",
+      roi: "13-17%",
+      type: "Residential",
+      status: "COMING SOON",
+      tokens: 680,
+      availableTokens: 680,
+      minInvestment: "PKR 1,000,000",
+      image: "/projects/gold-crest-bay-sands/main.jpg",
+      description: "Goldcrest Bay Sands, where luxury meets elegance. As you approach the resort, you are greeted by an attractive roundabout adorned with lush tropical foliage, befitting the magnificent 33 storeys beachfront towers.",
+      features: ["Infinity Pool", "Alluring Floor", "Community Hall", "Cafeteria", "Gym", "Business Centre", "Sauna", "Day Care Center", "Prayer Hall", "Indoor Games", "Kids Play Area", "Double Height Shops"],
+      floors: "Ground + 33",
+      units: ["1 Bedroom", "2 Bedroom", "3 Bedroom", "Townhouse", "Penthouse"]
     }
   ];
 
   const filters = [
-    { id: 'all', label: 'All Properties' },
-    { id: 'residential', label: 'Residential' },
-    { id: 'commercial', label: 'Commercial' },
-    { id: 'hospitality', label: 'Hospitality' }
+    { id: 'all', label: 'All Projects' },
+    { id: 'active', label: 'Active' },
+    { id: 'coming-soon', label: 'Coming Soon' },
+    { id: 'flagship', label: 'Flagship' }
   ];
 
   const filteredProperties = properties.filter(property => {
-    const matchesFilter = activeFilter === 'all' || property.type.toLowerCase() === activeFilter;
+    let matchesFilter = true;
+    if (activeFilter === 'active') {
+      matchesFilter = property.status === 'ACTIVE';
+    } else if (activeFilter === 'coming-soon') {
+      matchesFilter = property.status === 'COMING SOON';
+    } else if (activeFilter === 'flagship') {
+      matchesFilter = property.id === 1; // H1 Tower is flagship
+    }
     const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          property.location.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesFilter && matchesSearch;
@@ -178,10 +197,10 @@ const PropertiesPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8 sm:mb-12">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
-              Our <span className="text-[#315dca]">Property Portfolio</span>
+              HMR <span className="text-[#315dca]">RWA Tokens</span>
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-[#dee0e5] max-w-3xl mx-auto">
-              Invest in carefully selected premium properties across Pakistan. Each property offers excellent returns and growth potential.
+              Invest in Pakistan's most prestigious waterfront development through Real World Asset (RWA) tokens. Six luxury projects offering premium residential units with stunning sea views and world-class amenities.
             </p>
           </div>
         </div>
@@ -228,26 +247,37 @@ const PropertiesPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredProperties.map((property) => (
-              <div key={property.id} className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-300 group">
+              <Link key={property.id} href={property.id === 1 ? "/properties/h1-tower" : "#"} className="block">
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white/20 transition-all duration-500 group cursor-pointer transform hover:scale-[1.02] hover:shadow-2xl">
                 {/* Property Image */}
-                <div className="relative h-48 sm:h-56">
+                <div className="relative h-48 sm:h-56 overflow-hidden">
                   <Image
                     src={property.image}
                     alt={property.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  {/* Status Badge */}
-                  <div className="absolute top-3 right-3">
-                    <div className={`${getStatusColor(property.status)} text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold flex items-center`}>
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full mr-1.5 sm:mr-2"></div>
-                      {property.status}
+                  {/* Corner Animation Lines */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#315dca] animate-pulse"></div>
+                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#315dca] animate-pulse"></div>
+                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#315dca] animate-pulse"></div>
+                    <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#315dca] animate-pulse"></div>
+                  </div>
+                  {/* RWA Token Badge */}
+                  <div className="absolute top-3 left-3">
+                    <div className="bg-gradient-to-r from-[#315dca] to-[#203a74] text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm shadow-lg">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
+                        RWA TOKEN
+                      </div>
                     </div>
                   </div>
-                  {/* Type Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-black/50 text-white px-2 py-1 rounded-full text-xs font-medium">
-                      {property.type}
+                  
+                  {/* Tower Info Badge */}
+                  <div className="absolute top-3 right-3">
+                    <div className="bg-black/70 text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+                      {property.floors} • {property.units?.length || 0} Types
                     </div>
                   </div>
                 </div>
@@ -266,13 +296,20 @@ const PropertiesPage = () => {
                   </p>
                   
                   {/* Financial Details */}
-                  <div className="bg-[#0e1521]/50 rounded-lg p-3 sm:p-4 space-y-2">
+                  <div className="bg-[#0e1521]/70 backdrop-blur-sm rounded-lg p-3 sm:p-4 space-y-2 border border-[#315dca]/20">
+                    <div className="flex justify-between items-center text-xs sm:text-sm mb-2">
+                      <span className="text-[#dee0e5]">Status:</span>
+                      <div className={`${getStatusColor(property.status)} text-white px-2 py-1 rounded-full text-xs font-bold flex items-center`}>
+                        <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5"></div>
+                        {property.status}
+                      </div>
+                    </div>
                     <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-[#dee0e5]">HMR Builders price:</span>
+                      <span className="text-[#dee0e5]">Tower Value:</span>
                       <span className="font-semibold text-white">{property.price}</span>
                     </div>
                     <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-[#dee0e5]">Market value:</span>
+                      <span className="text-[#dee0e5]">Market Value:</span>
                       <span className="font-semibold text-white">{property.marketValue}</span>
                     </div>
                     <div className="flex justify-between text-xs sm:text-sm">
@@ -306,11 +343,12 @@ const PropertiesPage = () => {
                   </div>
 
                   {/* Action Button */}
-                  <button className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-colors">
-                    {property.status === 'FULLY FUNDED' ? 'View Details' : 'Invest Now'}
+                  <button className="w-full bg-gradient-to-r from-[#315dca] to-[#203a74] hover:from-[#203a74] hover:to-[#315dca] text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    {property.status === 'ACTIVE' ? 'Invest Now' : 'View Details'}
                   </button>
                 </div>
               </div>
+              </Link>
             ))}
           </div>
 

@@ -235,61 +235,63 @@ const HomePage = () => {
 
             {/* Right Content - Property Card */}
             <div className="relative mt-6 sm:mt-8 lg:mt-0">
-              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300" style={{borderRadius: '24px 24px 32px 32px'}}>
-                <div className="relative h-40 sm:h-48 md:h-56">
-                  <Image
-                    src={properties[0].image}
-                    alt={properties[0].title}
-                    fill
-                    className="object-cover"
-                  />
-                  {/* Live Badge */}
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
-                      LIVE
+              <Link href="/properties/h1-tower" className="block">
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer" style={{borderRadius: '24px 24px 32px 32px'}}>
+                  <div className="relative h-40 sm:h-48 md:h-56">
+                    <Image
+                      src="/projects/h1-tower/main.jpg"
+                      alt="H1 Tower"
+                      fill
+                      className="object-cover"
+                    />
+                    {/* Live Badge */}
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
+                        <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
+                        ACTIVE
+                      </div>
+                    </div>
+                    {/* Property Type Badge */}
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
+                        Flagship Tower
+                      </div>
                     </div>
                   </div>
-                  {/* Property Type Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
-                      {properties[0].type}
+                  
+                  <div className="p-4 sm:p-6 space-y-4">
+                    <div className="flex items-center text-gray-600">
+                      <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
+                      <span className="text-sm">HMR Waterfront, Karachi</span>
                     </div>
+                    
+                    <h3 className="text-lg font-bold text-gray-900">H1 Tower</h3>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Tower Value:</span>
+                        <span className="font-semibold text-[#315dca]">PKR 15M</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Market Value:</span>
+                        <span className="font-semibold text-gray-900">PKR 18M</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Appreciation:</span>
+                        <span className="font-semibold text-[#315dca]">20.0%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Expected ROI:</span>
+                        <span className="font-semibold text-[#315dca]">18-22%</span>
+                      </div>
+                    </div>
+                    
+                    <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
+                      View Tower Details
+                    </button>
                   </div>
                 </div>
-                
-                <div className="p-4 sm:p-6 space-y-4">
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
-                    <span className="text-sm">{properties[0].location}</span>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-gray-900">{properties[0].title}</h3>
-                  
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">HMR Builders price:</span>
-                      <span className="font-semibold text-[#315dca]">{properties[0].price}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Estimated market value:</span>
-                      <span className="font-semibold text-gray-900">{properties[0].marketValue}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Estimated instant appreciation:</span>
-                      <span className="font-semibold text-[#315dca]">{properties[0].appreciation}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Est. annualised net ROI over first 5 years:</span>
-                      <span className="font-semibold text-[#315dca]">{properties[0].roi}</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
-                    View Property
-                  </button>
-                </div>
-              </div>
+              </Link>
             </div>
           </div>
         </div>

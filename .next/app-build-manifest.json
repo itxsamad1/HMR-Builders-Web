@@ -11,15 +11,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/page.js"
     ],
-    "/get-started/page": [
+    "/properties/h1-tower/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/get-started/page.js"
+      "static/chunks/app/properties/h1-tower/page.js"
     ],
-    "/not-found": [
+    "/properties/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/not-found.js"
+      "static/chunks/app/properties/page.js"
     ]
   }
 }

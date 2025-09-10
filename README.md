@@ -1,119 +1,69 @@
-# HMR Builders - Next.js Website
+# HMR Builders — RWA Tokenization Platform (Next.js 14)
 
-A modern, responsive website for HMR Builders, Pakistan's premier real estate investment platform. Built with Next.js 14, TypeScript, and Tailwind CSS.
+HMR Builders is a professional, mobile‑first platform for tokenized real estate investing in Pakistan. It showcases HMR Waterfront projects and explains how investors participate via fractional tokens.
 
-## Features
-
-- 🏗️ **Modern Design**: Clean, professional design inspired by PRYPCO Mint
-- 📱 **Fully Responsive**: Works perfectly on desktop, tablet, and mobile
-- 🚀 **Next.js 14**: Built with the latest Next.js features and App Router
-- 🎨 **Tailwind CSS**: Modern utility-first CSS framework
-- ⚡ **Performance**: Optimized for speed and SEO
-- 🔒 **SECP Compliant**: Regulatory compliance messaging for Pakistani market
+## Product Summary
+- **Business model**: Each apartment = 1,000 tokens. Token price = apartment value ÷ 1,000. Target returns: **15–20% annually** (rental + appreciation).
+- **Minimum investment**: Typically PKR 1M; pages show ranges per project/unit type.
+- **Geography**: HMR Waterfront, Abdul Sattar Edhi Ave, DHA Phase 8, Karachi. H1 Tower is marked **ACTIVE**.
+- **Theme**: Dark-only with HMR blues (`#315dca`, `#203a74`, `#0e1521`, `#dee0e5`).
 
 ## Tech Stack
+- Next.js 14 (App Router) + React + TypeScript
+- Tailwind CSS (with custom animations)
+- NextAuth.js (Google OAuth) with session/JWT callbacks
+- Vercel deployment
 
-- **Framework**: Next.js 14
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Animations**: CSS animations with Tailwind
+## Key Features
+- Responsive pages: Home, Properties, Property Detail, How it Works, FAQs, Media, Login, Get Started
+- Professional navbar with rounded container; mobile nav with full links
+- Project data uses pricing ranges for token price and minimum investment
+- Optimized images and accessible components
 
 ## Getting Started
-
-### Prerequisites
-
-- Node.js 18+ 
-- npm or yarn
-
-### Installation
-
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-2. **Run the development server**:
-   ```bash
-   npm run dev
-   ```
-
-3. **Open your browser**:
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Build for Production
-
+1. Install dependencies:
 ```bash
-npm run build
-npm start
+npm install
+```
+2. Create `.env.local` in project root:
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=YOUR_LONG_RANDOM_SECRET
+GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+```
+3. Run dev server:
+```bash
+npm run dev
 ```
 
-## Project Structure
+## Google OAuth Setup
+Authorized redirect URLs:
+- `http://localhost:3000/api/auth/callback/google`
+- `https://YOUR_DEPLOYMENT_URL/api/auth/callback/google`
 
+Vercel env vars:
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`
+
+## Structure (highlights)
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── layout.tsx        # Root layout
-│   ├── page.tsx          # Homepage
-│   └── globals.css       # Global styles
-├── components/            # Reusable components
-└── lib/                  # Utility functions
+src/app/
+  page.tsx                       # Home page
+  properties/page.tsx            # Portfolio
+  properties/h1-tower/page.tsx   # Property details
+  login/page.tsx                 # Sign in
+  get-started/page.tsx           # Concise Google onboarding
+  api/auth/[...nextauth]/route.ts# NextAuth config
+src/components/SessionProvider.tsx
+public/projects/...              # Project images
 ```
 
-## Key Sections
-
-- **Hero Section**: Compelling introduction with Pakistan focus
-- **Features**: Why choose HMR Builders
-- **Properties**: Investment opportunities with Pakistani real estate
-- **How It Works**: Simple 3-step process
-- **Statistics**: Platform metrics and achievements
-- **Regulatory**: SECP compliance information
-- **CTA**: Call-to-action for investors
-- **Newsletter**: Email subscription
-- **Footer**: Complete site navigation
-
-## Customization
-
-### Colors
-The website uses a blue and yellow color scheme that can be customized in `tailwind.config.ts`
-
-### Content
-All content is easily editable in `src/app/page.tsx`:
-- Property listings
-- Company information
-- Statistics and metrics
-- Contact details
-
-### Images
-Replace placeholder images with actual property photos and company assets
+## Token Economics Example
+- 2‑BR (H1 Tower) price range: PKR 8.92–10.30 Cr ⇒ token ≈ PKR 89,200–103,000
+- Cards and detail pages present ranges for transparency
 
 ## Deployment
-
-### Vercel (Recommended)
-1. Push code to GitHub
-2. Connect repository to Vercel
-3. Deploy automatically
-
-### Other Platforms
-- Netlify
-- AWS Amplify
-- DigitalOcean App Platform
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Deploy to Vercel. Ensure production env vars match Google OAuth client configuration.
 
 ## License
-
-This project is proprietary to HMR Builders.
-
-## Support
-
-For technical support or questions about the website, please contact the development team.
-
----
-
-**HMR Builders** - Building Pakistan's Future, One Investment at a Time 🇵🇰
+Proprietary to HMR Builders.

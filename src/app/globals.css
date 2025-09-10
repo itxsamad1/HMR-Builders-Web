@@ -16,19 +16,19 @@ body {
 
 @layer base {
   :root {
-    /* HMR Dark Theme (Default) - Your Original Colors */
-    --background: 14 21 33; /* #0e1521 */
-    --foreground: 222 222 229; /* #dee0e5 */
+    /* HMR Dark Theme (Default) - Clean White/Blue/Black */
+    --background: 14 21 33; /* #0e1521 - Clean dark blue */
+    --foreground: 255 255 255; /* #ffffff - Pure white */
     --card: 255 255 255; /* white for property cards */
     --card-foreground: 14 21 33; /* #0e1521 for card text */
     --popover: 14 21 33; /* #0e1521 */
-    --popover-foreground: 222 222 229; /* #dee0e5 */
-    --primary: 49 93 202; /* #315dca - Your blue */
+    --popover-foreground: 255 255 255; /* #ffffff */
+    --primary: 49 93 202; /* #315dca - HMR blue */
     --primary-foreground: 255 255 255; /* white */
-    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary: 32 58 116; /* #203a74 - HMR darker blue */
     --secondary-foreground: 255 255 255; /* white */
-    --muted: 222 222 229; /* #dee0e5 */
-    --muted-foreground: 107 114 128; /* #6b7280 */
+    --muted: 100 116 139; /* #64748b - Clean gray */
+    --muted-foreground: 100 116 139; /* #64748b */
     --accent: 32 58 116; /* #203a74 */
     --accent-foreground: 255 255 255; /* white */
     --destructive: 239 68 68; /* red-500 */
@@ -41,18 +41,18 @@ body {
 
   .dark {
     /* Same as root - HMR Dark Theme */
-    --background: 14 21 33; /* #0e1521 */
-    --foreground: 222 222 229; /* #dee0e5 */
+    --background: 14 21 33; /* #0e1521 - Clean dark blue */
+    --foreground: 255 255 255; /* #ffffff - Pure white */
     --card: 255 255 255; /* white for property cards */
     --card-foreground: 14 21 33; /* #0e1521 for card text */
     --popover: 14 21 33; /* #0e1521 */
-    --popover-foreground: 222 222 229; /* #dee0e5 */
-    --primary: 49 93 202; /* #315dca - Your blue */
+    --popover-foreground: 255 255 255; /* #ffffff */
+    --primary: 49 93 202; /* #315dca - HMR blue */
     --primary-foreground: 255 255 255; /* white */
-    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary: 32 58 116; /* #203a74 - HMR darker blue */
     --secondary-foreground: 255 255 255; /* white */
-    --muted: 222 222 229; /* #dee0e5 */
-    --muted-foreground: 107 114 128; /* #6b7280 */
+    --muted: 100 116 139; /* #64748b - Clean gray */
+    --muted-foreground: 100 116 139; /* #64748b */
     --accent: 32 58 116; /* #203a74 */
     --accent-foreground: 255 255 255; /* white */
     --destructive: 239 68 68; /* red-500 */
@@ -63,25 +63,25 @@ body {
   }
 
   .light {
-    /* HMR Light Theme - Your Original Colors */
-    --background: 255 255 255; /* white */
-    --foreground: 14 21 33; /* #0e1521 */
+    /* HMR Light Theme - Clean White/Blue/Black */
+    --background: 255 255 255; /* #ffffff - Pure white */
+    --foreground: 14 21 33; /* #0e1521 - Clean dark blue */
     --card: 255 255 255; /* white */
     --card-foreground: 14 21 33; /* #0e1521 */
     --popover: 255 255 255; /* white */
     --popover-foreground: 14 21 33; /* #0e1521 */
-    --primary: 49 93 202; /* #315dca - Your blue */
+    --primary: 49 93 202; /* #315dca - HMR blue */
     --primary-foreground: 255 255 255; /* white */
-    --secondary: 32 58 116; /* #203a74 - Your darker blue */
+    --secondary: 32 58 116; /* #203a74 - HMR darker blue */
     --secondary-foreground: 255 255 255; /* white */
-    --muted: 248 249 250; /* #f8f9fa */
-    --muted-foreground: 107 114 128; /* #6b7280 */
-    --accent: 229 231 235; /* #e5e7eb */
+    --muted: 248 249 250; /* #f8f9fa - Clean light gray */
+    --muted-foreground: 100 116 139; /* #64748b - Clean gray */
+    --accent: 229 231 235; /* #e5e7eb - Clean light gray */
     --accent-foreground: 14 21 33; /* #0e1521 */
     --destructive: 239 68 68; /* red-500 */
     --destructive-foreground: 255 255 255; /* white */
-    --border: 229 231 235; /* #e5e7eb */
-    --input: 229 231 235; /* #e5e7eb */
+    --border: 229 231 235; /* #e5e7eb - Clean light gray */
+    --input: 229 231 235; /* #e5e7eb - Clean light gray */
     --ring: 49 93 202; /* #315dca */
   }
 
@@ -101,7 +101,7 @@ body {
   }
 
   .light .hero-gradient {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #e2e8f0 100%);
   }
 
   .shadow-navbar {
@@ -248,6 +248,18 @@ body {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .transparent-navbar {
+    background: rgba(14, 21, 33, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(49, 93, 202, 0.2);
+  }
+
+  .light .transparent-navbar {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(49, 93, 202, 0.2);
   }
   
   .hover-glow:hover {

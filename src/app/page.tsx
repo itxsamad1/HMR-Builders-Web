@@ -4,58 +4,60 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X, Home, RefreshCw, Eye, Globe, Zap, Smartphone } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
+import { useSession } from 'next-auth/react';
 
 const HomePage = () => {
   const [email, setEmail] = useState('');
   const [activeTab, setActiveTab] = useState('featured');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const properties = [
     {
       id: 1,
-      title: "2 Bedroom Apartment, DHA Phase 8",
-      location: "DHA Phase 8, Karachi",
-      price: "PKR 1.7 million",
-      marketValue: "PKR 1.95 million",
-      appreciation: "17.5%",
-      roi: "19.8%",
-      type: "Residential",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&h=600&fit=crop",
-      status: "FULLY FUNDED",
-      tokens: 500,
-      availableTokens: 0,
-      minInvestment: "PKR 50,000"
+      title: "H1 Tower",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 8.92 - 39.11 Cr",
+      marketValue: "PKR 10.71 - 46.93 Cr",
+      appreciation: "20.0%",
+      roi: "18-22%",
+      type: "Flagship Tower",
+      image: "/projects/h1-tower/main.jpg",
+      status: "ACTIVE",
+      tokens: 1000,
+      availableTokens: 342,
+      minInvestment: "PKR 89,200 - 391,100"
     },
     {
       id: 2,
-      title: "Commercial Tower, Gulberg III",
-      location: "Gulberg III, Lahore",
-      price: "PKR 1.2 million",
-      marketValue: "PKR 1.41 million",
-      appreciation: "17.5%",
-      roi: "19.8%",
-      type: "Commercial",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop",
-      status: "ACTIVE",
-      tokens: 240,
-      availableTokens: 134,
-      minInvestment: "PKR 75,000"
+      title: "Saima Tower",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 7.50 - 28.50 Cr",
+      marketValue: "PKR 9.00 - 34.20 Cr",
+      appreciation: "20.8%",
+      roi: "17-21%",
+      type: "Ultra-Luxury",
+      image: "/projects/saima-tower/main.jpg",
+      status: "COMING SOON",
+      tokens: 1000,
+      availableTokens: 1000,
+      minInvestment: "PKR 75,000 - 285,000"
     },
     {
       id: 3,
-      title: "Boutique Hotel, Clifton",
-      location: "Clifton, Karachi",
-      price: "PKR 2.1 million",
-      marketValue: "PKR 2.52 million",
-      appreciation: "20.0%",
-      roi: "22.5%",
-      type: "Hospitality",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop",
-      status: "ACTIVE",
-      tokens: 420,
-      availableTokens: 256,
-      minInvestment: "PKR 100,000"
+      title: "AA Waterfront",
+      location: "HMR Waterfront, Karachi",
+      price: "PKR 6.80 - 25.20 Cr",
+      marketValue: "PKR 8.16 - 30.24 Cr",
+      appreciation: "22.0%",
+      roi: "16-20%",
+      type: "Smart Luxury",
+      image: "/projects/aa-waterfront/main.jpg",
+      status: "COMING SOON",
+      tokens: 1000,
+      availableTokens: 1000,
+      minInvestment: "PKR 68,000 - 252,000"
     }
   ];
 
@@ -63,7 +65,7 @@ const HomePage = () => {
     {
       icon: Building2,
       title: "Fractional Ownership",
-      description: "Own a fraction of premium Pakistani real estate starting from just PKR 50,000. Each token represents a fraction of a real-world asset."
+      description: "Own a fraction of premium Pakistani real estate starting from just PKR 1 Million. Each token represents a fraction of a real-world asset."
     },
     {
       icon: Shield,
@@ -117,7 +119,7 @@ const HomePage = () => {
     <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
       <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
+        <div className="transparent-navbar rounded-2xl shadow-navbar">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16">
             {/* Mobile Menu Button */}
@@ -128,15 +130,7 @@ const HomePage = () => {
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
             
-            {/* Navigation */}
-            <nav className="hidden md:flex space-x-6 lg:space-x-8">
-              <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">How it works</Link>
-              <Link href="/properties" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Properties</Link>
-              <Link href="/faqs" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">FAQs</Link>
-              <Link href="/media" className="text-white hover:text-[#315dca] font-medium transition-colors text-sm lg:text-base">Media</Link>
-            </nav>
-
-            {/* Logo */}
+            {/* Logo (Left) */}
             <div className="flex items-center">
               <Image 
                 src="/hmr-group.svg" 
@@ -150,17 +144,32 @@ const HomePage = () => {
               </div>
             </div>
 
+            {/* Navigation Links (Center) */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="/" className="text-white font-medium">Home</Link>
+              <Link href="/properties" className="text-white/80 hover:text-white font-medium transition-colors">Properties</Link>
+              <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How it Works</Link>
+              <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
+              <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
+              <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
+            </nav>
+
             {/* Action Buttons */}
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <ThemeToggle />
               {/* Desktop buttons */}
               <div className="hidden md:flex items-center space-x-4">
-                <a href="/login" className="text-white bg-[#203a74] hover:bg-[#315dca] px-4 py-2 rounded-lg font-medium transition-colors">
-                  Login
-                </a>
-                <a href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
-                  Get started
-                </a>
+                {session?.user ? (
+                  <UserProfileDropdown />
+                ) : (
+                  <>
+                    <Link href="/login" className="text-white/80 hover:text-white font-medium transition-colors">
+                      Sign In
+                    </Link>
+                    <Link href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
+                      Get Started
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -169,19 +178,29 @@ const HomePage = () => {
             {mobileMenuOpen && (
               <div className="md:hidden py-4 border-t border-[#203a74]/50">
                 <nav className="flex flex-col space-y-4">
-                  <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium">How it works</Link>
+                  <Link href="/" className="text-white hover:text-[#315dca] font-medium">Home</Link>
                   <Link href="/properties" className="text-white hover:text-[#315dca] font-medium">Properties</Link>
+                  <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium">How it Works</Link>
+                  <Link href="/about" className="text-white hover:text-[#315dca] font-medium">About</Link>
                   <Link href="/faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</Link>
                   <Link href="/media" className="text-white hover:text-[#315dca] font-medium">Media</Link>
                   
                   {/* Mobile Action Buttons */}
                   <div className="flex flex-col space-y-3 pt-4 border-t border-[#203a74]/30">
-                    <a href="/login" className="text-white bg-[#203a74] hover:bg-[#315dca] px-4 py-3 rounded-lg font-medium transition-colors text-center">
-                      Login
-                    </a>
-                    <a href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-3 rounded-lg font-medium transition-colors text-center">
-                      Get started
-                    </a>
+                    {session?.user ? (
+                      <div className="flex justify-center">
+                        <UserProfileDropdown />
+                      </div>
+                    ) : (
+                      <>
+                        <Link href="/login" className="text-white/80 hover:text-white font-medium text-center">
+                          Sign In
+                        </Link>
+                        <Link href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-3 rounded-lg font-medium transition-colors text-center">
+                          Get Started
+                        </Link>
+                      </>
+                    )}
                   </div>
                 </nav>
               </div>
@@ -270,11 +289,11 @@ const HomePage = () => {
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
                         <span className="text-gray-600">Tower Value:</span>
-                        <span className="font-semibold text-[#315dca]">PKR 15M</span>
+                        <span className="font-semibold text-[#315dca]">PKR 2B</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Market Value:</span>
-                        <span className="font-semibold text-gray-900">PKR 18M</span>
+                        <span className="font-semibold text-gray-900">PKR 2.4B</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Appreciation:</span>
@@ -374,71 +393,84 @@ const HomePage = () => {
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {properties.map((property, index) => (
-              <div key={property.id} className="bg-white rounded-3xl shadow-2xl overflow-hidden hover:scale-105 transition-all duration-300 group" style={{borderRadius: '24px 24px 32px 32px'}}>
-                {/* Property Image */}
-                <div className="relative h-40 sm:h-48">
-                  <Image
-                    src={property.image}
-                    alt={property.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {/* Live Badge */}
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
-                      <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
-                      LIVE
+            {properties.map((property, index) => {
+              const getPropertyLink = (id: number) => {
+                switch (id) {
+                  case 1: return "/properties/h1-tower";
+                  case 2: return "/properties/saima-tower";
+                  case 3: return "/properties/aa-waterfront";
+                  default: return "#";
+                }
+              };
+              
+              return (
+              <Link key={property.id} href={getPropertyLink(property.id)} className="block">
+                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden hover:scale-105 transition-all duration-300 group" style={{borderRadius: '24px 24px 32px 32px'}}>
+                  {/* Property Image */}
+                  <div className="relative h-40 sm:h-48">
+                    <Image
+                      src={property.image}
+                      alt={property.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {/* Status Badge */}
+                    <div className="absolute top-3 right-3">
+                      <div className={`${property.status === 'ACTIVE' ? 'bg-[#315dca]' : 'bg-orange-500'} text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center ${property.status === 'ACTIVE' ? 'animate-pulse' : ''}`}>
+                        {property.status === 'ACTIVE' && <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>}
+                        {property.status}
+                      </div>
+                    </div>
+                    {/* Property Type Badge */}
+                    <div className="absolute top-3 left-3">
+                      <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
+                        {property.type}
+                      </div>
                     </div>
                   </div>
-                  {/* Property Type Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
-                      {property.type}
+                  
+                  {/* Property Details */}
+                  <div className="p-4 sm:p-6 space-y-4">
+                    <div className="flex items-center text-gray-600">
+                      <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
+                      <span className="text-sm">{property.location}</span>
                     </div>
+                    
+                    <h3 className="text-lg font-bold text-gray-900">{property.title}</h3>
+                    
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">HMR Builders price:</span>
+                        <span className="font-semibold text-[#315dca]">{property.price}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Estimated market value:</span>
+                        <span className="font-semibold text-gray-900">{property.marketValue}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Estimated instant appreciation:</span>
+                        <span className="font-semibold text-[#315dca]">{property.appreciation}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Est. annualised net ROI over first 5 years:</span>
+                        <span className="font-semibold text-[#315dca]">{property.roi}</span>
+                      </div>
+                    </div>
+                    
+                    <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
+                      {property.status === 'ACTIVE' ? 'Invest Now' : 'View Details'}
+                    </button>
                   </div>
                 </div>
-                
-                {/* Property Details */}
-                <div className="p-4 sm:p-6 space-y-4">
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
-                    <span className="text-sm">{property.location}</span>
-                  </div>
-                  
-                  <h3 className="text-lg font-bold text-gray-900">{property.title}</h3>
-                  
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">HMR Builders price:</span>
-                      <span className="font-semibold text-[#315dca]">{property.price}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Estimated market value:</span>
-                      <span className="font-semibold text-gray-900">{property.marketValue}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Estimated instant appreciation:</span>
-                      <span className="font-semibold text-[#315dca]">{property.appreciation}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Est. annualised net ROI over first 5 years:</span>
-                      <span className="font-semibold text-[#315dca]">{property.roi}</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
-                    View Property
-                  </button>
-                </div>
-              </div>
-            ))}
+              </Link>
+              );
+            })}
           </div>
           
           <div className="text-center mt-12">
-            <button className="bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors mx-auto">
+            <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
               Explore more
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -612,7 +644,7 @@ const HomePage = () => {
           </div>
           
           <div className="border-t border-[#203a74] mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center">
-            <p className="text-[#dee0e5] text-xs sm:text-sm text-center sm:text-left">&copy; 2025 HMR Builders. All rights reserved. | Licensed by SECP | Start from just PKR 50,000</p>
+            <p className="text-[#dee0e5] text-xs sm:text-sm text-center sm:text-left">&copy; 2025 HMR Builders. All rights reserved. | Licensed by SECP | Start from just PKR 1 Million</p>
             <div className="flex flex-wrap justify-center sm:justify-end gap-3 sm:gap-6 mt-4 sm:mt-0">
               <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-xs sm:text-sm">Privacy Policy</a>
               <a href="#" className="text-[#dee0e5] hover:text-white transition-colors text-xs sm:text-sm">Terms of Service</a>

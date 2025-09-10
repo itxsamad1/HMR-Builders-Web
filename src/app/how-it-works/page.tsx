@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, CheckCircle, Building2, Users, TrendingUp, Shield } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
 
 const HowItWorksPage = () => {
   const steps = [
@@ -23,10 +22,10 @@ const HowItWorksPage = () => {
     {
       number: "02", 
       title: "Invest Securely",
-      description: "Choose your investment amount starting from just PKR 50,000. All transactions are secure and backed by blockchain technology.",
+      description: "Choose your investment amount starting from just PKR 1 Million. All transactions are secure and backed by blockchain technology.",
       icon: Shield,
       details: [
-        "Minimum investment: PKR 50,000",
+        "Minimum investment: PKR 1 Million",
         "Blockchain-secured transactions",
         "Instant ownership verification",
         "SECP regulatory compliance"
@@ -61,7 +60,7 @@ const HowItWorksPage = () => {
   const benefits = [
     {
       title: "Low Entry Barrier",
-      description: "Start investing with just PKR 50,000",
+      description: "Start investing with just PKR 1 Million",
       icon: "💰"
     },
     {
@@ -116,7 +115,6 @@ const HowItWorksPage = () => {
               </div>
             </div>
 
-            <ThemeToggle />
             </div>
           </div>
         </div>
@@ -130,7 +128,7 @@ const HowItWorksPage = () => {
               How <span className="text-[#315dca]">Tokenized Real Estate</span> Works
             </h1>
             <p className="text-base sm:text-lg lg:text-xl text-[#dee0e5] max-w-3xl mx-auto">
-              Invest in premium Pakistani real estate with as little as PKR 50,000. Our platform makes property investment accessible, secure, and profitable.
+              Invest in premium Pakistani real estate with as little as PKR 1 Million. Our platform makes property investment accessible, secure, and profitable.
             </p>
           </div>
         </div>

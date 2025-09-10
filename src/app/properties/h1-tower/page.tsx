@@ -21,11 +21,13 @@ import {
   Clock,
   DollarSign
 } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
+import { useSession } from 'next-auth/react';
 
 const H1TowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
+  const { data: session } = useSession();
 
   const propertyImages = [
     "/projects/h1-tower/main.jpg",
@@ -57,38 +59,83 @@ const H1TowerPage = () => {
   ];
 
   const unitTypes = [
-    { type: "Townhouse", area: "2,500 sq ft", price: "PKR 8.5M", bedrooms: 3, bathrooms: 4 },
-    { type: "1 Bedroom", area: "750 sq ft", price: "PKR 3.2M", bedrooms: 1, bathrooms: 1 },
-    { type: "2 Bedroom", area: "1,200 sq ft", price: "PKR 4.8M", bedrooms: 2, bathrooms: 2 },
-    { type: "3 Bedroom", area: "1,650 sq ft", price: "PKR 6.5M", bedrooms: 3, bathrooms: 3 },
-    { type: "4 Bedroom", area: "2,100 sq ft", price: "PKR 8.2M", bedrooms: 4, bathrooms: 4 },
-    { type: "Penthouse", area: "3,000 sq ft", price: "PKR 12.5M", bedrooms: 4, bathrooms: 5 }
+    { 
+      type: "1-Bedroom Apartment", 
+      area: "907-1,121 sq ft", 
+      price: "PKR 8.92 Cr", 
+      bedrooms: 1, 
+      bathrooms: 1,
+      tokens: 1000,
+      tokenPrice: "PKR 89,200"
+    },
+    { 
+      type: "2-Bedroom Apartment", 
+      area: "2,037-2,433 sq ft", 
+      price: "PKR 8.92-10.30 Cr", 
+      bedrooms: 2, 
+      bathrooms: 2,
+      tokens: 1000,
+      tokenPrice: "PKR 89,200-103,000"
+    },
+    { 
+      type: "3-Bedroom Apartment", 
+      area: "2,800-3,200 sq ft", 
+      price: "PKR 12.18-13.60 Cr", 
+      bedrooms: 3, 
+      bathrooms: 3,
+      tokens: 1000,
+      tokenPrice: "PKR 121,800-136,000"
+    },
+    { 
+      type: "4-Bedroom Apartment", 
+      area: "3,500-4,000 sq ft", 
+      price: "PKR 16.72-18.95 Cr", 
+      bedrooms: 4, 
+      bathrooms: 4,
+      tokens: 1000,
+      tokenPrice: "PKR 167,200-189,500"
+    },
+    { 
+      type: "Townhouse", 
+      area: "6,899-7,589 sq ft", 
+      price: "PKR 25.00+ Cr", 
+      bedrooms: 4, 
+      bathrooms: 5,
+      tokens: 1000,
+      tokenPrice: "PKR 250,000+"
+    },
+    { 
+      type: "Penthouse", 
+      area: "8,356-8,933 sq ft", 
+      price: "PKR 39.11 Cr", 
+      bedrooms: 4, 
+      bathrooms: 5,
+      tokens: 1000,
+      tokenPrice: "PKR 391,100"
+    }
   ];
 
   const investmentDetails = {
-    totalValue: "PKR 15 Million",
-    marketValue: "PKR 18 Million",
+    totalValue: "PKR 8.92 - 39.11 Cr",
+    marketValue: "PKR 10.71 - 46.93 Cr", 
     appreciation: "20.0%",
     expectedROI: "18-22%",
-    minInvestment: "PKR 1,000,000",
-    totalTokens: 1500,
-    availableTokens: 847,
-    pricePerToken: "PKR 10,000"
+    minInvestment: "PKR 89,200 - 391,100",
+    totalTokens: 1000,
+    availableTokens: 342,
+    pricePerToken: "PKR 89,200 - 391,100",
+    constructionProgress: "40%",
+    handover: "Late 2025"
   };
 
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
       {/* Header */}
       <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="bg-[#0e1521]/90 backdrop-blur-sm rounded-2xl shadow-navbar border border-[#203a74]/50">
+        <div className="transparent-navbar rounded-2xl shadow-navbar">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-14 sm:h-16">
-              <Link href="/properties" className="flex items-center text-white hover:text-[#315dca] transition-colors text-sm sm:text-base">
-                <ArrowLeft size={16} className="mr-1.5 sm:mr-2 sm:w-5 sm:h-5" />
-                Back to Properties
-              </Link>
-
-              <div className="flex items-center">
+              <Link href="/" className="flex items-center">
                 <Image 
                   src="/hmr-group.svg" 
                   alt="HMR Group" 
@@ -99,9 +146,39 @@ const H1TowerPage = () => {
                 <div className="text-base sm:text-lg lg:text-xl font-bold text-white">
                   HMR <span className="text-[#315dca]">BUILDERS</span>
                 </div>
+              </Link>
+
+              {/* Navigation Links */}
+              <nav className="hidden md:flex items-center space-x-8">
+                <Link href="/" className="text-white/80 hover:text-white font-medium transition-colors">Home</Link>
+                <Link href="/properties" className="text-white font-medium">Properties</Link>
+                <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How it Works</Link>
+                <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
+                <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
+                <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
+              </nav>
+
+              <div className="flex items-center space-x-4">
+                {session?.user ? (
+                  <UserProfileDropdown />
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      className="text-white/80 hover:text-white font-medium transition-colors"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      href="/get-started"
+                      className="bg-[#315dca] hover:bg-[#24246c] text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
               </div>
 
-              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -126,14 +203,14 @@ const H1TowerPage = () => {
                   </span>
                 </h1>
                 <p className="text-[#dee0e5] text-lg leading-relaxed">
-                  H1 Tower is the Flagship Tower of HMR Waterfront. A stunning skyline that will inspire residents and visitors from around the world. It is a profound architecture, comprising of Ground + 34 floors of luxury living with a grand lobby to welcome you.
+                  H1 Tower is the Flagship Tower of HMR Waterfront - a G+39 floors architectural masterpiece offering panoramic Arabian Sea views. Located at Abdul Sattar Edhi Ave, D.H.A. Phase 8 Zone D, right by the Arabian Sea corridor with easy walking access to HMR promenade. Excellent proximity to Do Darya (5-10 min), Clifton Beach, Dolmen Mall, top schools, hospitals, and Jinnah International Airport. Construction 40% complete, handover late 2025.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
                   <Building className="w-6 h-6 text-[#315dca] mx-auto mb-2" />
-                  <div className="text-white font-semibold text-sm">Ground + 34</div>
+                  <div className="text-white font-semibold text-sm">Ground + 39</div>
                   <div className="text-[#dee0e5] text-xs">Floors</div>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 text-center">
@@ -294,26 +371,37 @@ const H1TowerPage = () => {
             {activeTab === 'units' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
-                  <div key={index} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 hover:bg-white/20 transition-all duration-300">
+                  <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-white font-bold text-lg">{unit.type}</h4>
+                      <h4 className="text-gray-900 font-bold text-lg">{unit.type}</h4>
                       <div className="text-[#315dca] font-semibold">{unit.price}</div>
                     </div>
-                    <div className="space-y-2 text-sm">
+                    <div className="space-y-2 text-sm mb-4">
                       <div className="flex justify-between">
-                        <span className="text-[#dee0e5]">Area:</span>
-                        <span className="text-white">{unit.area}</span>
+                        <span className="text-gray-600">Area:</span>
+                        <span className="text-gray-900 font-medium">{unit.area}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#dee0e5]">Bedrooms:</span>
-                        <span className="text-white">{unit.bedrooms}</span>
+                        <span className="text-gray-600">Bedrooms:</span>
+                        <span className="text-gray-900 font-medium">{unit.bedrooms}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#dee0e5]">Bathrooms:</span>
-                        <span className="text-white">{unit.bathrooms}</span>
+                        <span className="text-gray-600">Bathrooms:</span>
+                        <span className="text-gray-900 font-medium">{unit.bathrooms}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Tokens:</span>
+                        <span className="text-[#315dca] font-semibold">{unit.tokens}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Token Price:</span>
+                        <span className="text-[#315dca] font-semibold">{unit.tokenPrice}</span>
                       </div>
                     </div>
-                    <button className="w-full mt-4 bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors">
+                    <button 
+                      onClick={() => alert(`Floor plan for ${unit.type} will be available soon!`)}
+                      className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors"
+                    >
                       View Floor Plan
                     </button>
                   </div>
@@ -342,9 +430,17 @@ const H1TowerPage = () => {
                       <span className="text-[#dee0e5]">Expected ROI:</span>
                       <span className="text-[#315dca] font-semibold text-lg">{investmentDetails.expectedROI}</span>
                     </div>
-                    <div className="flex justify-between items-center py-3">
+                    <div className="flex justify-between items-center py-3 border-b border-white/10">
                       <span className="text-[#dee0e5]">Minimum Investment:</span>
                       <span className="text-white font-semibold text-lg">{investmentDetails.minInvestment}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3 border-b border-white/10">
+                      <span className="text-[#dee0e5]">Construction Progress:</span>
+                      <span className="text-[#315dca] font-semibold text-lg">{investmentDetails.constructionProgress}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-3">
+                      <span className="text-[#dee0e5]">Expected Handover:</span>
+                      <span className="text-white font-semibold text-lg">{investmentDetails.handover}</span>
                     </div>
                   </div>
                 </div>

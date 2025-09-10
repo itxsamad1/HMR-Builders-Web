@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, ChevronDown, ChevronUp, HelpCircle, Shield, TrendingUp, Users } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
 
 const FAQsPage = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -19,7 +18,7 @@ const FAQsPage = () => {
         },
         {
           question: "How does HMR Builders work?",
-          answer: "HMR Builders is Pakistan's premier tokenized real estate platform. We acquire premium properties, divide them into digital tokens, and allow investors to purchase these tokens starting from just PKR 50,000. Investors receive their share of rental income and property appreciation based on their token ownership."
+          answer: "HMR Builders is Pakistan's premier tokenized real estate platform. We acquire premium properties, divide them into digital tokens, and allow investors to purchase these tokens starting from just PKR 1 Million. Investors receive their share of rental income and property appreciation based on their token ownership."
         },
         {
           question: "Is HMR Builders regulated?",
@@ -27,7 +26,7 @@ const FAQsPage = () => {
         },
         {
           question: "What is the minimum investment amount?",
-          answer: "The minimum investment amount is PKR 50,000. This low entry barrier makes real estate investment accessible to a wider range of investors, allowing you to start building your property portfolio with a modest initial investment."
+          answer: "The minimum investment amount is PKR 1 Million. This low entry barrier makes real estate investment accessible to a wider range of investors, allowing you to start building your property portfolio with a modest initial investment."
         }
       ]
     },
@@ -131,7 +130,6 @@ const FAQsPage = () => {
               </div>
             </div>
 
-            <ThemeToggle />
             </div>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Play, Calendar, User, ExternalLink, FileText, Video, Image as ImageIcon } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
 
 const MediaPage = () => {
   const [activeTab, setActiveTab] = useState('all');
@@ -48,7 +47,7 @@ const MediaPage = () => {
     },
     {
       id: 4,
-      title: "Property Investment Guide: Getting Started with PKR 50,000",
+      title: "Property Investment Guide: Getting Started with PKR 1 Million",
       type: "article",
       category: "education",
       date: "2024-01-05",
@@ -77,7 +76,7 @@ const MediaPage = () => {
       category: "success",
       date: "2024-01-01",
       author: "HMR Builders",
-      description: "Meet Sarah, a young investor who built a diverse property portfolio starting with just PKR 50,000.",
+      description: "Meet Sarah, a young investor who built a diverse property portfolio starting with just PKR 1 Million.",
       image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=800&h=600&fit=crop",
       url: "#",
       readTime: "6 min read"
@@ -161,7 +160,6 @@ const MediaPage = () => {
               </div>
             </div>
 
-            <ThemeToggle />
             </div>
           </div>
         </div>

@@ -67,7 +67,7 @@ export default function GoogleAuth({ onSuccess, text, variant = 'signin' }: Goog
       <GoogleLogin
         onSuccess={handleSuccess}
         onError={handleError}
-        text={text || (variant === 'signup' ? 'signup_with' : 'signin_with')}
+        text={text as any || (variant === 'signup' ? 'signup_with' : 'signin_with')}
         shape="rectangular"
         theme="outline"
         size="large"

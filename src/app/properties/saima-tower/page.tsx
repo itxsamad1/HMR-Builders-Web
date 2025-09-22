@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -20,12 +20,14 @@ import {
   DollarSign
 } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import BuyTokenDialog from '@/components/BuyTokenDialog';
+import { useAuth } from '@/components/AuthProvider';
 
 const SaimaTowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
-  const { data: session } = useSession();
+  const [buyOpen, setBuyOpen] = useState(false);
+  const { user } = useAuth();
 
   const propertyImages = [
     "/projects/saima-tower/main.jpg",
@@ -60,7 +62,8 @@ const SaimaTowerPage = () => {
       bedrooms: 1, 
       bathrooms: 1,
       tokens: 1000,
-      tokenPrice: "PKR 75,000"
+      tokenPrice: "PKR 75,000",
+      tokenSymbol: "HST-1"
     },
     { 
       type: "2-Bedroom Apartment", 
@@ -69,7 +72,8 @@ const SaimaTowerPage = () => {
       bedrooms: 2, 
       bathrooms: 2,
       tokens: 1000,
-      tokenPrice: "PKR 125,000-150,000"
+      tokenPrice: "PKR 125,000-150,000",
+      tokenSymbol: "HST-2"
     },
     { 
       type: "3-Bedroom Apartment", 
@@ -78,7 +82,8 @@ const SaimaTowerPage = () => {
       bedrooms: 3, 
       bathrooms: 3,
       tokens: 1000,
-      tokenPrice: "PKR 185,000-220,000"
+      tokenPrice: "PKR 185,000-220,000",
+      tokenSymbol: "HST-3"
     },
     { 
       type: "4-Bedroom Apartment", 
@@ -87,7 +92,8 @@ const SaimaTowerPage = () => {
       bedrooms: 4, 
       bathrooms: 4,
       tokens: 1000,
-      tokenPrice: "PKR 250,000-285,000"
+      tokenPrice: "PKR 250,000-285,000",
+      tokenSymbol: "HST-4"
     },
     { 
       type: "Townhouse", 
@@ -96,7 +102,8 @@ const SaimaTowerPage = () => {
       bedrooms: 4, 
       bathrooms: 5,
       tokens: 1000,
-      tokenPrice: "PKR 350,000+"
+      tokenPrice: "PKR 350,000+",
+      tokenSymbol: "HST-T"
     },
     { 
       type: "Penthouse with Infinity Pool", 
@@ -105,7 +112,8 @@ const SaimaTowerPage = () => {
       bedrooms: 4, 
       bathrooms: 5,
       tokens: 1000,
-      tokenPrice: "PKR 450,000+"
+      tokenPrice: "PKR 450,000+",
+      tokenSymbol: "HST-P"
     }
   ];
 
@@ -149,7 +157,7 @@ const SaimaTowerPage = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              {session?.user ? (
+              {user ? (
                 <UserProfileDropdown />
               ) : (
                 <>
@@ -271,7 +279,7 @@ const SaimaTowerPage = () => {
               {[
                 { id: 'overview', label: 'Overview' },
                 { id: 'features', label: 'Features & Amenities' },
-                { id: 'units', label: 'Unit Types' },
+                { id: 'tokens', label: 'Tokens' },
                 { id: 'investment', label: 'Investment Details' }
               ].map((tab) => (
                 <button
@@ -363,13 +371,14 @@ const SaimaTowerPage = () => {
               </div>
             )}
 
-            {activeTab === 'units' && (
+            {activeTab === 'tokens' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4">
+                      <div className="text-[#315dca] font-bold text-lg mb-1">{unit.tokenSymbol}</div>
                       <h4 className="text-gray-900 font-bold text-lg">{unit.type}</h4>
-                      <div className="text-[#315dca] font-semibold">{unit.price}</div>
+                      <div className="text-[#315dca] font-semibold text-right mt-2">{unit.price}</div>
                     </div>
                     <div className="space-y-2 text-sm mb-4">
                       <div className="flex justify-between">
@@ -394,10 +403,10 @@ const SaimaTowerPage = () => {
                       </div>
                     </div>
                     <button 
-                      onClick={() => alert(`Floor plan for ${unit.type} will be available soon!`)}
+                      onClick={() => setBuyOpen(true)}
                       className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors"
                     >
-                      View Floor Plan
+                      Buy Tokens
                     </button>
                   </div>
                 ))}
@@ -462,6 +471,15 @@ const SaimaTowerPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Buy Token Dialog */}
+      <BuyTokenDialog
+        open={buyOpen}
+        onClose={() => setBuyOpen(false)}
+        propertyId="saima-tower"
+        tokenSymbol="HST-1"
+        pricePerTokenNumber={75000}
+      />
     </div>
   );
 };

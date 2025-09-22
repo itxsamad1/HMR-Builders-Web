@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -20,12 +20,12 @@ import {
   DollarSign
 } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/components/AuthProvider';
 
 const SaimaMarinaResidencePage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
-  const { data: session } = useSession();
+  const { user } = useAuth();
 
   const propertyImages = [
     "/projects/saima-marina-residence/main.jpg"
@@ -136,7 +136,7 @@ const SaimaMarinaResidencePage = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              {session?.user ? (
+              {user ? (
                 <UserProfileDropdown />
               ) : (
                 <>

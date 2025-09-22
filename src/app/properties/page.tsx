@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, MapPin, Building, TrendingUp, Users, Filter, Search } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/components/AuthProvider';
 
 const PropertiesPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const { data: session } = useSession();
+  const { user } = useAuth();
 
   const properties = [
     {
@@ -52,7 +52,7 @@ const PropertiesPage = () => {
       appreciation: "20.8%",
       roi: "17-21%",
       type: "Ultra-Luxury Residential",
-      status: "COMING SOON",
+      status: "ACTIVE",
       tokens: 1000,
       availableTokens: 1000,
       minInvestment: "PKR 850,000 - 1,100,000",
@@ -74,7 +74,7 @@ const PropertiesPage = () => {
       appreciation: "22.0%",
       roi: "16-20%",
       type: "Smart Luxury Residential",
-      status: "COMING SOON",
+      status: "ACTIVE",
       tokens: 1000,
       availableTokens: 1000,
       minInvestment: "PKR 750,000 - 1,000,000",
@@ -96,7 +96,7 @@ const PropertiesPage = () => {
       appreciation: "23.5%",
       roi: "15-19%",
       type: "Japanese-Inspired Residential",
-      status: "COMING SOON",
+      status: "ACTIVE",
       tokens: 1000,
       availableTokens: 1000,
       minInvestment: "PKR 700,000 - 950,000",
@@ -118,7 +118,7 @@ const PropertiesPage = () => {
       appreciation: "26.4%",
       roi: "14-18%",
       type: "Modern Marina Residential",
-      status: "COMING SOON",
+      status: "ACTIVE",
       tokens: 1000,
       availableTokens: 1000,
       minInvestment: "PKR 650,000 - 900,000",
@@ -140,7 +140,7 @@ const PropertiesPage = () => {
       appreciation: "27.9%",
       roi: "13-17%",
       type: "Beachfront Resort Residential",
-      status: "COMING SOON",
+      status: "ACTIVE",
       tokens: 1000,
       availableTokens: 1000,
       minInvestment: "PKR 600,000 - 850,000",
@@ -220,7 +220,7 @@ const PropertiesPage = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              {session?.user ? (
+              {user ? (
                 <UserProfileDropdown />
               ) : (
                 <>

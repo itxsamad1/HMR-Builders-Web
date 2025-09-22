@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Building2, Users, Shield, TrendingUp, Award, Globe, Target, Heart } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/components/AuthProvider';
 
 const AboutPage = () => {
-  const { data: session } = useSession();
+  const { user } = useAuth();
 
   const stats = [
     { value: "1,000+", label: "Active Investors" },
@@ -72,7 +72,7 @@ const AboutPage = () => {
               </nav>
 
               <div className="flex items-center space-x-4">
-                {session?.user ? (
+                {user ? (
                   <UserProfileDropdown />
                 ) : (
                   <>

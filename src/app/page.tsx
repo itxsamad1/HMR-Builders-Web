@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X, Home, RefreshCw, Eye, Globe, Zap, Smartphone } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import { useAuth } from '@/components/AuthProvider';
 
 const HomePage = () => {
   const [email, setEmail] = useState('');
   const [activeTab, setActiveTab] = useState('featured');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { data: session } = useSession();
+  const { user } = useAuth();
 
   const properties = [
     {
@@ -158,7 +158,7 @@ const HomePage = () => {
             <div className="flex items-center space-x-2 sm:space-x-4">
               {/* Desktop buttons */}
               <div className="hidden md:flex items-center space-x-4">
-                {session?.user ? (
+                {user ? (
                   <UserProfileDropdown />
                 ) : (
                   <>
@@ -187,7 +187,7 @@ const HomePage = () => {
                   
                   {/* Mobile Action Buttons */}
                   <div className="flex flex-col space-y-3 pt-4 border-t border-[#203a74]/30">
-                    {session?.user ? (
+                    {user ? (
                       <div className="flex justify-center">
                         <UserProfileDropdown />
                       </div>

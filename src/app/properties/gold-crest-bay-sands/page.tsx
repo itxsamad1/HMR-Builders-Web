@@ -20,12 +20,14 @@ import {
   DollarSign
 } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import BuyTokenDialog from '@/components/BuyTokenDialog';
+import { useAuth } from '@/components/AuthProvider';
 
 const GoldCrestBaySandsPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
-  const { data: session } = useSession();
+  const [buyOpen, setBuyOpen] = useState(false);
+  const { user } = useAuth();
 
   const propertyImages = [
     "/projects/gold-crest-bay-sands/main.jpg"
@@ -54,7 +56,8 @@ const GoldCrestBaySandsPage = () => {
       bedrooms: 1, 
       bathrooms: 1,
       tokens: 1000,
-      tokenPrice: "PKR 55,000"
+      tokenPrice: "PKR 55,000",
+      tokenSymbol: "HGC-1"
     },
     { 
       type: "2-Bedroom Beachfront Apartment", 
@@ -63,7 +66,8 @@ const GoldCrestBaySandsPage = () => {
       bedrooms: 2, 
       bathrooms: 2,
       tokens: 1000,
-      tokenPrice: "PKR 90,000-120,000"
+      tokenPrice: "PKR 90,000-120,000",
+      tokenSymbol: "HGC-2"
     },
     { 
       type: "3-Bedroom Premium Apartment", 
@@ -72,7 +76,8 @@ const GoldCrestBaySandsPage = () => {
       bedrooms: 3, 
       bathrooms: 3,
       tokens: 1000,
-      tokenPrice: "PKR 135,000-170,000"
+      tokenPrice: "PKR 135,000-170,000",
+      tokenSymbol: "HGC-3"
     },
     { 
       type: "Beachfront Townhouse", 
@@ -81,7 +86,8 @@ const GoldCrestBaySandsPage = () => {
       bedrooms: 4, 
       bathrooms: 4,
       tokens: 1000,
-      tokenPrice: "PKR 185,000-210,000"
+      tokenPrice: "PKR 185,000-210,000",
+      tokenSymbol: "HGC-T"
     },
     { 
       type: "Resort Penthouse", 
@@ -90,7 +96,8 @@ const GoldCrestBaySandsPage = () => {
       bedrooms: 4, 
       bathrooms: 5,
       tokens: 1000,
-      tokenPrice: "PKR 280,000+"
+      tokenPrice: "PKR 280,000+",
+      tokenSymbol: "HGC-P"
     }
   ];
 
@@ -134,7 +141,7 @@ const GoldCrestBaySandsPage = () => {
             </nav>
 
             <div className="flex items-center space-x-4">
-              {session?.user ? (
+              {user ? (
                 <UserProfileDropdown />
               ) : (
                 <>
@@ -237,7 +244,7 @@ const GoldCrestBaySandsPage = () => {
               {[
                 { id: 'overview', label: 'Overview' },
                 { id: 'features', label: 'Features & Amenities' },
-                { id: 'units', label: 'Unit Types' },
+                { id: 'tokens', label: 'Tokens' },
                 { id: 'investment', label: 'Investment Details' }
               ].map((tab) => (
                 <button
@@ -329,13 +336,14 @@ const GoldCrestBaySandsPage = () => {
               </div>
             )}
 
-            {activeTab === 'units' && (
+            {activeTab === 'tokens' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4">
+                      <div className="text-[#315dca] font-bold text-lg mb-1">{unit.tokenSymbol}</div>
                       <h4 className="text-gray-900 font-bold text-lg">{unit.type}</h4>
-                      <div className="text-[#315dca] font-semibold">{unit.price}</div>
+                      <div className="text-[#315dca] font-semibold text-right mt-2">{unit.price}</div>
                     </div>
                     <div className="space-y-2 text-sm mb-4">
                       <div className="flex justify-between">
@@ -360,10 +368,10 @@ const GoldCrestBaySandsPage = () => {
                       </div>
                     </div>
                     <button 
-                      onClick={() => alert(`Floor plan for ${unit.type} will be available soon!`)}
+                      onClick={() => setBuyOpen(true)}
                       className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors"
                     >
-                      View Floor Plan
+                      Buy Tokens
                     </button>
                   </div>
                 ))}
@@ -428,6 +436,15 @@ const GoldCrestBaySandsPage = () => {
           </div>
         </div>
       </main>
+
+      {/* Buy Token Dialog */}
+      <BuyTokenDialog
+        open={buyOpen}
+        onClose={() => setBuyOpen(false)}
+        propertyId="gold-crest-bay-sands"
+        tokenSymbol="HGC-1"
+        pricePerTokenNumber={55000}
+      />
     </div>
   );
 };

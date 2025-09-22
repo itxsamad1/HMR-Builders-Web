@@ -22,12 +22,14 @@ import {
   DollarSign
 } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import { useSession } from 'next-auth/react';
+import BuyTokenDialog from '@/components/BuyTokenDialog';
+import { useAuth } from '@/components/AuthProvider';
 
 const H1TowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [activeTab, setActiveTab] = useState('overview');
-  const { data: session } = useSession();
+  const [buyOpen, setBuyOpen] = useState(false);
+  const { user } = useAuth();
 
   const propertyImages = [
     "/projects/h1-tower/main.jpg",
@@ -66,7 +68,8 @@ const H1TowerPage = () => {
       bedrooms: 1, 
       bathrooms: 1,
       tokens: 1000,
-      tokenPrice: "PKR 89,200"
+      tokenPrice: "PKR 89,200",
+      tokenSymbol: "HHT-1"
     },
     { 
       type: "2-Bedroom Apartment", 
@@ -75,7 +78,8 @@ const H1TowerPage = () => {
       bedrooms: 2, 
       bathrooms: 2,
       tokens: 1000,
-      tokenPrice: "PKR 89,200-103,000"
+      tokenPrice: "PKR 89,200-103,000",
+      tokenSymbol: "HHT-2"
     },
     { 
       type: "3-Bedroom Apartment", 
@@ -84,7 +88,8 @@ const H1TowerPage = () => {
       bedrooms: 3, 
       bathrooms: 3,
       tokens: 1000,
-      tokenPrice: "PKR 121,800-136,000"
+      tokenPrice: "PKR 121,800-136,000",
+      tokenSymbol: "HHT-3"
     },
     { 
       type: "4-Bedroom Apartment", 
@@ -93,7 +98,8 @@ const H1TowerPage = () => {
       bedrooms: 4, 
       bathrooms: 4,
       tokens: 1000,
-      tokenPrice: "PKR 167,200-189,500"
+      tokenPrice: "PKR 167,200-189,500",
+      tokenSymbol: "HHT-4"
     },
     { 
       type: "Townhouse", 
@@ -102,7 +108,8 @@ const H1TowerPage = () => {
       bedrooms: 4, 
       bathrooms: 5,
       tokens: 1000,
-      tokenPrice: "PKR 250,000+"
+      tokenPrice: "PKR 250,000+",
+      tokenSymbol: "HHT-T"
     },
     { 
       type: "Penthouse", 
@@ -111,7 +118,8 @@ const H1TowerPage = () => {
       bedrooms: 4, 
       bathrooms: 5,
       tokens: 1000,
-      tokenPrice: "PKR 391,100"
+      tokenPrice: "PKR 391,100",
+      tokenSymbol: "HHT-P"
     }
   ];
 
@@ -159,7 +167,7 @@ const H1TowerPage = () => {
               </nav>
 
               <div className="flex items-center space-x-4">
-                {session?.user ? (
+                {user ? (
                   <UserProfileDropdown />
                 ) : (
                   <>
@@ -279,7 +287,7 @@ const H1TowerPage = () => {
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 justify-center mb-8">
-            {['overview', 'features', 'units', 'investment'].map((tab) => (
+            {['overview', 'features', 'tokens', 'investment'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -368,13 +376,14 @@ const H1TowerPage = () => {
               </div>
             )}
 
-            {activeTab === 'units' && (
+            {activeTab === 'tokens' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="mb-4">
+                      <div className="text-[#315dca] font-bold text-lg mb-1">{unit.tokenSymbol}</div>
                       <h4 className="text-gray-900 font-bold text-lg">{unit.type}</h4>
-                      <div className="text-[#315dca] font-semibold">{unit.price}</div>
+                      <div className="text-[#315dca] font-semibold text-right mt-2">{unit.price}</div>
                     </div>
                     <div className="space-y-2 text-sm mb-4">
                       <div className="flex justify-between">
@@ -398,11 +407,11 @@ const H1TowerPage = () => {
                         <span className="text-[#315dca] font-semibold">{unit.tokenPrice}</span>
                       </div>
                     </div>
-                    <button 
-                      onClick={() => alert(`Floor plan for ${unit.type} will be available soon!`)}
+                    <button
+                      onClick={() => setBuyOpen(true)}
                       className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors"
                     >
-                      View Floor Plan
+                      Buy Tokens
                     </button>
                   </div>
                 ))}
@@ -475,7 +484,7 @@ const H1TowerPage = () => {
                     </div>
                   </div>
                   
-                  <button className="w-full bg-gradient-to-r from-[#315dca] to-[#203a74] hover:from-[#203a74] hover:to-[#315dca] text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                  <button onClick={() => setBuyOpen(true)} className="w-full bg-gradient-to-r from-[#315dca] to-[#203a74] hover:from-[#203a74] hover:to-[#315dca] text-white py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                     Invest in H1 Tower
                   </button>
                 </div>
@@ -495,7 +504,7 @@ const H1TowerPage = () => {
             Join hundreds of investors who have already secured their stake in Pakistan's most prestigious waterfront development.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-[#315dca] to-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+            <button onClick={() => setBuyOpen(true)} className="bg-gradient-to-r from-[#315dca] to-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               Start Investing Now
             </button>
             <button className="border-2 border-[#315dca] text-[#315dca] px-8 py-4 rounded-lg font-semibold text-lg hover:bg-[#315dca] hover:text-white transition-all duration-300">
@@ -504,6 +513,13 @@ const H1TowerPage = () => {
           </div>
         </div>
       </section>
+      <BuyTokenDialog
+        open={buyOpen}
+        onClose={() => setBuyOpen(false)}
+        propertyId={'h1-tower'}
+        tokenSymbol={'H-HT-1'}
+        pricePerTokenNumber={89200}
+      />
     </div>
   );
 };

@@ -1,27 +1,26 @@
 'use client';
 
 import React from 'react';
-import { useSession, signOut } from 'next-auth/react';
-import { User, LogOut } from 'lucide-react';
+import { User, LogOut, Wallet, BarChart3 } from 'lucide-react';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import Link from 'next/link';
+import { useAuth } from './AuthProvider';
 
 const UserProfileDropdown = () => {
-  const { data: session } = useSession();
+  const { user, logout } = useAuth();
 
-  if (!session?.user) {
-    return null;
-  }
+  if (!user) return null;
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: '/' });
+    logout();
   };
 
   const getFirstLetter = (name: string) => {
     return name.charAt(0).toUpperCase();
   };
 
-  const userName = session.user.name || session.user.email || 'User';
-  const userEmail = session.user.email || '';
+  const userName = user.name || user.email || 'User';
+  const userEmail = user.email || '';
   const firstLetter = getFirstLetter(userName);
 
   return (
@@ -43,6 +42,22 @@ const UserProfileDropdown = () => {
               <span className="font-medium">{userName}</span>
               <span className="text-xs text-[#64748b]">{userEmail}</span>
             </div>
+          </DropdownMenu.Item>
+          
+          <DropdownMenu.Separator className="h-px bg-[#203a74] my-1" />
+
+          <DropdownMenu.Item asChild>
+            <Link href="/wallet" className="flex items-center px-3 py-2 text-sm text-white hover:bg-[#203a74] rounded cursor-pointer focus:outline-none">
+              <Wallet className="w-4 h-4 mr-2" />
+              Wallet
+            </Link>
+          </DropdownMenu.Item>
+
+          <DropdownMenu.Item asChild>
+            <Link href="/portfolio" className="flex items-center px-3 py-2 text-sm text-white hover:bg-[#203a74] rounded cursor-pointer focus:outline-none">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Portfolio
+            </Link>
           </DropdownMenu.Item>
           
           <DropdownMenu.Separator className="h-px bg-[#203a74] my-1" />

@@ -1,4 +1,9 @@
 {
+  "/not-found": "app/not-found.js",
   "/page": "app/page.js",
+  "/login/page": "app/login/page.js",
+  "/portfolio/page": "app/portfolio/page.js",
+  "/properties/page": "app/properties/page.js",
+  "/wallet/page": "app/wallet/page.js",
   "/properties/h1-tower/page": "app/properties/h1-tower/page.js"
 }

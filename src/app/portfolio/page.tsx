@@ -236,7 +236,7 @@ const PortfolioPage = () => {
 
             {/* Connect Wallet Button */}
             <div className="flex items-center space-x-4">
-              <Button className="bg-[#1e293b] hover:bg-[#334155] text-white border border-gray-600 flex items-center space-x-2">
+              <Button className="bg-gradient-to-r from-[#1e293b] to-[#334155] hover:from-[#334155] hover:to-[#475569] text-white border border-gray-600 flex items-center space-x-2 shadow-lg shadow-gray-600/20 hover:shadow-gray-600/30 transition-all duration-300">
                 <Lock className="w-4 h-4" />
                 <span>Connect Wallet</span>
               </Button>
@@ -254,7 +254,7 @@ const PortfolioPage = () => {
           <div className="lg:col-span-3 space-y-6">
             
             {/* Portfolio Balance Card */}
-            <Card className="bg-[#1e293b] border-gray-700 relative overflow-hidden">
+            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10 before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10">
               <div className="absolute inset-0 opacity-5">
                 <FlickeringGrid
                   squareSize={3}
@@ -305,7 +305,7 @@ const PortfolioPage = () => {
             </Card>
 
             {/* Holdings Section */}
-            <Card className="bg-[#1e293b] border-gray-700">
+            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10 before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white text-lg font-medium">Holdings</CardTitle>
@@ -314,7 +314,7 @@ const PortfolioPage = () => {
                       variant={activeHoldingsTab === 'buy' ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setActiveHoldingsTab('buy')}
-                      className={activeHoldingsTab === 'buy' ? 'bg-[#14b8a6] hover:bg-[#0f9488]' : 'border-gray-600 text-white hover:bg-[#334155]'}
+                      className={activeHoldingsTab === 'buy' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30' : 'border-gray-600 text-white hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
                     >
                       Buy
                     </Button>
@@ -322,7 +322,7 @@ const PortfolioPage = () => {
                       variant={activeHoldingsTab === 'sell' ? 'default' : 'outline'}
                       size="sm"
                       onClick={() => setActiveHoldingsTab('sell')}
-                      className={activeHoldingsTab === 'sell' ? 'bg-[#14b8a6] hover:bg-[#0f9488]' : 'border-gray-600 text-white hover:bg-[#334155]'}
+                      className={activeHoldingsTab === 'sell' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30' : 'border-gray-600 text-white hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
                     >
                       Sell
                     </Button>
@@ -333,7 +333,7 @@ const PortfolioPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Property Cards */}
                   {propertiesData.length > 0 ? propertiesData.map((property: any, index: number) => (
-                    <div key={property.propertyId} className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                    <div key={property.propertyId} className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
                       <div className="flex items-start justify-between mb-3">
                         <Badge 
                           className={`text-xs ${
@@ -358,9 +358,9 @@ const PortfolioPage = () => {
                   )) : (
                     // Default property cards when no data
                     <>
-                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
                         <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-[#14b8a6] text-white text-xs">ACTIVE</Badge>
+                          <Badge className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white text-xs shadow-lg">ACTIVE</Badge>
                           <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
                         </div>
                         <div className="w-full h-32 bg-gradient-to-br from-[#14b8a6]/20 to-[#0f9488]/20 rounded-lg mb-3 flex items-center justify-center">
@@ -370,9 +370,9 @@ const PortfolioPage = () => {
                         <p className="text-white font-bold">PKR 2,500,000</p>
                       </div>
 
-                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
                         <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-[#14b8a6] text-white text-xs">ACTIVE</Badge>
+                          <Badge className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white text-xs shadow-lg">ACTIVE</Badge>
                           <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
                         </div>
                         <div className="w-full h-32 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-lg mb-3 flex items-center justify-center">
@@ -382,10 +382,10 @@ const PortfolioPage = () => {
                         <p className="text-white font-bold">PKR 1,750,000</p>
                       </div>
 
-                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#f59e0b]/20 hover:border-[#f59e0b]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#f59e0b]/5 hover:shadow-[#f59e0b]/20">
                         <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-[#f59e0b] text-white text-xs">COMING SOON</Badge>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
+                          <Badge className="bg-gradient-to-r from-[#f59e0b] to-[#f97316] text-white text-xs shadow-lg">COMING SOON</Badge>
+                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#f59e0b] transition-colors" />
                         </div>
                         <div className="w-full h-32 bg-gradient-to-br from-orange-500/20 to-orange-600/20 rounded-lg mb-3 flex items-center justify-center">
                           <Building2 className="w-12 h-12 text-orange-400" />
@@ -404,11 +404,11 @@ const PortfolioPage = () => {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Secondary Market Card */}
-            <Card className="bg-[#1e293b] border-gray-700">
+            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#f59e0b]/30 relative overflow-hidden shadow-2xl shadow-[#f59e0b]/10">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white text-lg font-medium">Secondary Market</CardTitle>
-                  <div className="w-8 h-8 bg-[#f59e0b] rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#f59e0b] to-[#f97316] rounded-full flex items-center justify-center shadow-lg shadow-[#f59e0b]/30">
                     <span className="text-black font-bold text-sm">M</span>
                   </div>
                 </div>
@@ -432,14 +432,14 @@ const PortfolioPage = () => {
                     <span className="text-white font-medium">1.35</span>
                   </div>
                 </div>
-                <Button className="w-full bg-[#1e293b] hover:bg-[#334155] text-white border border-gray-600">
+                <Button className="w-full bg-gradient-to-r from-[#1e293b] to-[#334155] hover:from-[#334155] hover:to-[#475569] text-white border border-gray-600 shadow-lg shadow-gray-600/20 hover:shadow-gray-600/30 transition-all duration-300">
                   Sell
                 </Button>
               </CardContent>
             </Card>
 
             {/* Secondary Trading Table */}
-            <Card className="bg-[#1e293b] border-gray-700">
+            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white text-lg font-medium">Secondary</CardTitle>
@@ -474,7 +474,7 @@ const PortfolioPage = () => {
             </Card>
 
             {/* Activity Feed */}
-            <Card className="bg-[#1e293b] border-gray-700">
+            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-white text-lg font-medium">Activity</CardTitle>

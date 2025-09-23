@@ -1,8 +1,9 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
-import { X, CreditCard, Shield, CheckCircle } from 'lucide-react'
+import React, { useMemo, useState, useEffect } from 'react'
+import { X, CreditCard, Shield, CheckCircle, Wallet, Plus } from 'lucide-react'
 import { useAuth } from './AuthProvider'
+import EnhancedWalletTopUp from './EnhancedWalletTopUp'
 
 type Props = {
   open: boolean
@@ -18,8 +19,54 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [messageType, setMessageType] = useState<'success' | 'error' | 'info'>('info')
+  const [walletBalance, setWalletBalance] = useState<number>(0)
+  const [hasPaymentMethods, setHasPaymentMethods] = useState<boolean>(false)
+  const [showWalletTopUp, setShowWalletTopUp] = useState(false)
+  const [isLoadingWallet, setIsLoadingWallet] = useState(true)
 
   const total = useMemo(() => (quantity || 0) * pricePerTokenNumber, [quantity, pricePerTokenNumber])
+  const hasInsufficientBalance = total > walletBalance
+
+  useEffect(() => {
+    if (open && token) {
+      checkWalletAndPaymentMethods()
+    }
+  }, [open, token])
+
+  const checkWalletAndPaymentMethods = async () => {
+    setIsLoadingWallet(true)
+    try {
+      // Check wallet balance
+      const walletRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/users/wallet`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (walletRes.ok) {
+        const walletData = await walletRes.json()
+        setWalletBalance(walletData.data?.availableBalance || 0)
+      }
+
+      // Check payment methods
+      const paymentRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/payment-methods`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (paymentRes.ok) {
+        const paymentData = await paymentRes.json()
+        setHasPaymentMethods(paymentData.data && paymentData.data.length > 0)
+      }
+    } catch (error) {
+      console.error('Failed to check wallet and payment methods:', error)
+    } finally {
+      setIsLoadingWallet(false)
+    }
+  }
 
   const handleSubmit = async () => {
     if (!user) {
@@ -38,6 +85,18 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
       setMessage('Please enter a valid quantity')
       setMessageType('error')
       return
+    }
+
+    // Check if user has insufficient balance
+    if (hasInsufficientBalance) {
+      if (!hasPaymentMethods) {
+        setMessage('Insufficient wallet balance and no payment methods available. Please add funds to your wallet first.')
+        setMessageType('error')
+        return
+      } else {
+        setShowWalletTopUp(true)
+        return
+      }
     }
 
     setIsSubmitting(true)
@@ -138,6 +197,37 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
             </div>
           </div>
 
+          {/* Wallet Balance Display */}
+          {!isLoadingWallet && (
+            <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <Wallet className="w-4 h-4 text-slate-300" />
+                  <span className="text-sm text-slate-300">Wallet Balance</span>
+                </div>
+                <span className={`font-semibold ${hasInsufficientBalance ? 'text-red-400' : 'text-green-400'}`}>
+                  PKR {walletBalance.toLocaleString()}
+                </span>
+              </div>
+              {hasInsufficientBalance && (
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-red-300">Insufficient Balance</span>
+                  {hasPaymentMethods ? (
+                    <button
+                      onClick={() => setShowWalletTopUp(true)}
+                      className="text-xs text-[#315dca] hover:text-white transition-colors flex items-center space-x-1"
+                    >
+                      <Plus className="w-3 h-3" />
+                      <span>Add Funds</span>
+                    </button>
+                  ) : (
+                    <span className="text-xs text-red-300">No payment methods</span>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
           {message && (
             <div className={`p-3 rounded-lg flex items-center gap-2 text-sm ${
               messageType === 'success' 
@@ -174,6 +264,21 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
           </div>
         </div>
       </div>
+
+      {/* Enhanced Wallet Top-Up Modal */}
+      {showWalletTopUp && (
+        <EnhancedWalletTopUp
+          onClose={() => {
+            setShowWalletTopUp(false)
+            // Refresh wallet data after top-up
+            checkWalletAndPaymentMethods()
+          }}
+          onSuccess={() => {
+            setShowWalletTopUp(false)
+            checkWalletAndPaymentMethods()
+          }}
+        />
+      )}
     </div>
   )
 }

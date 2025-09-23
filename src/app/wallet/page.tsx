@@ -3,10 +3,15 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff, Plus } from 'lucide-react';
+import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff, Plus, CreditCard, User, MapPin, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
-import WalletTopUp from '@/components/WalletTopUp';
+import EnhancedWalletTopUp from '@/components/EnhancedWalletTopUp';
+import CardManagement from '@/components/CardManagement';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
 interface Investment {
   id: string;
@@ -31,14 +36,32 @@ interface WalletData {
   updatedAt: string;
 }
 
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  addressStreet: string;
+  addressCity: string;
+  addressState: string;
+  addressCountry: string;
+  addressPostalCode: string;
+  profileImage: string;
+  currency: string;
+}
+
 const WalletPage = () => {
   const { user, token, isLoading } = useAuth();
   const router = useRouter();
   const [investments, setInvestments] = useState<Investment[]>([]);
   const [walletData, setWalletData] = useState<WalletData | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'overview' | 'cards' | 'transactions'>('overview');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -46,10 +69,11 @@ const WalletPage = () => {
       return;
     }
 
-    if (user && token) {
-      fetchWalletData();
-      fetchInvestments();
-    }
+      if (user && token) {
+        fetchWalletData();
+        fetchUserProfile();
+        fetchInvestments();
+      }
   }, [user, token, isLoading, router]);
 
   const fetchWalletData = async () => {
@@ -67,6 +91,24 @@ const WalletPage = () => {
       }
     } catch (error) {
       console.error('Failed to fetch wallet data:', error);
+    }
+  };
+
+  const fetchUserProfile = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/auth/me`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUserProfile(data.user);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user profile:', error);
     }
   };
 
@@ -132,133 +174,235 @@ const WalletPage = () => {
               My <span className="text-[#315dca]">Wallet</span>
             </h1>
             <p className="text-[#dee0e5] text-lg">Manage your investments and track your returns</p>
-          </div>
-
-          {/* Wallet Overview Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {/* Total Balance */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-[#315dca]/20 rounded-xl">
-                  <Wallet className="w-6 h-6 text-[#315dca]" />
+            {userProfile && (
+              <div className="mt-4 flex items-center justify-center space-x-4 text-white/70">
+                <div className="flex items-center space-x-1">
+                  <User className="w-4 h-4" />
+                  <span>{userProfile.firstName} {userProfile.lastName}</span>
                 </div>
-                <button
-                  onClick={() => setShowBalance(!showBalance)}
-                  className="text-white/60 hover:text-white transition-colors"
-                >
-                  {showBalance ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                </button>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Balance</h3>
-              <p className="text-xl font-bold text-white break-words">
-                {showBalance ? `PKR ${Number(walletData?.totalBalance || 0).toLocaleString()}` : '••••••'}
-              </p>
-            </div>
-
-            {/* Available Balance */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-green-500/20 rounded-xl">
-                  <DollarSign className="w-6 h-6 text-green-400" />
+                <div className="flex items-center space-x-1">
+                  <Mail className="w-4 h-4" />
+                  <span>{userProfile.email}</span>
                 </div>
-                <button
-                  onClick={() => setShowTopUpModal(true)}
-                  className="bg-[#315dca] hover:bg-[#203a74] text-white p-2 rounded-lg transition-all"
-                  title="Top Up Wallet"
-                >
-                  <Plus className="w-4 h-4" />
-                </button>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Available Balance</h3>
-              <p className="text-xl font-bold text-white break-words">
-                {showBalance ? `PKR ${Number(walletData?.availableBalance || 0).toLocaleString()}` : '••••••'}
-              </p>
-            </div>
-
-            {/* Invested Amount */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-blue-500/20 rounded-xl">
-                  <Building2 className="w-6 h-6 text-blue-400" />
-                </div>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Invested Amount</h3>
-              <p className="text-xl font-bold text-white break-words">
-                {showBalance ? `PKR ${Number(walletData?.investedAmount || 0).toLocaleString()}` : '••••••'}
-              </p>
-            </div>
-
-            {/* Total Returns */}
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all">
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 bg-green-500/20 rounded-xl">
-                  <TrendingUp className="w-6 h-6 text-green-400" />
-                </div>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Returns</h3>
-              <p className="text-xl font-bold text-white break-words">
-                {showBalance ? `PKR ${Number(walletData?.totalReturns || 0).toLocaleString()}` : '••••••'}
-              </p>
-            </div>
-          </div>
-
-          {/* Recent Investments */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-white">Recent Investments</h2>
-              <Link 
-                href="/portfolio" 
-                className="text-[#315dca] hover:text-white font-medium transition-colors"
-              >
-                View All →
-              </Link>
-            </div>
-
-            {investments.length === 0 ? (
-              <div className="text-center py-12">
-                <Building2 className="w-16 h-16 text-white/40 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">No Investments Yet</h3>
-                <p className="text-white/60 mb-6">Start your real estate investment journey today</p>
-                <Link 
-                  href="/properties" 
-                  className="inline-flex items-center px-6 py-3 bg-[#315dca] hover:bg-[#203a74] text-white font-semibold rounded-lg transition-colors"
-                >
-                  Browse Properties
-                </Link>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {investments.slice(0, 5).map((investment) => (
-                  <div key={investment.id} className="bg-white/5 rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-white mb-1">
-                          {investment.propertyTitle}
-                        </h3>
-                        <p className="text-white/60 text-sm">
-                          {investment.tokensPurchased} tokens • {new Date(investment.createdAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-semibold text-white">
-                          PKR {investment.investmentAmount.toLocaleString()}
-                        </p>
-                        <p className="text-green-400 text-sm">
-                          +PKR {investment.totalEarned.toLocaleString()} returns
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                {userProfile.currency && (
+                  <Badge variant="outline" className="text-white/80 border-white/30">
+                    {userProfile.currency}
+                  </Badge>
+                )}
               </div>
             )}
           </div>
+
+          {/* Tabs */}
+          <div className="flex space-x-1 mb-8 bg-white/10 backdrop-blur-lg rounded-xl p-1 border border-white/20 w-fit mx-auto">
+            {[
+              { key: 'overview', label: 'Overview', icon: Wallet },
+              { key: 'cards', label: 'Payment Methods', icon: CreditCard },
+              { key: 'transactions', label: 'Transactions', icon: TrendingUp }
+            ].map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key as any)}
+                className={`px-6 py-3 rounded-lg font-medium transition-all flex items-center space-x-2 ${
+                  activeTab === tab.key
+                    ? 'bg-[#315dca] text-white'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <tab.icon className="w-4 h-4" />
+                <span>{tab.label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          {activeTab === 'overview' && (
+            <div className="space-y-8">
+              {/* Wallet Overview Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Total Balance */}
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-[#315dca]/20 rounded-xl">
+                        <Wallet className="w-6 h-6 text-[#315dca]" />
+                      </div>
+                      <button
+                        onClick={() => setShowBalance(!showBalance)}
+                        className="text-white/60 hover:text-white transition-colors"
+                      >
+                        {showBalance ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+                    <h3 className="text-white/80 text-sm font-medium mb-2">Total Balance</h3>
+                    <p className="text-xl font-bold text-white break-words">
+                      {showBalance ? `PKR ${Number(walletData?.totalBalance || 0).toLocaleString()}` : '••••••'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Available Balance */}
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 bg-green-500/20 rounded-xl">
+                        <DollarSign className="w-6 h-6 text-green-400" />
+                      </div>
+                      <button
+                        onClick={() => setShowTopUpModal(true)}
+                        className="bg-[#315dca] hover:bg-[#203a74] text-white p-2 rounded-lg transition-all"
+                        title="Top Up Wallet"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                    <h3 className="text-white/80 text-sm font-medium mb-2">Available Balance</h3>
+                    <p className="text-xl font-bold text-white break-words">
+                      {showBalance ? `PKR ${Number(walletData?.availableBalance || 0).toLocaleString()}` : '••••••'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Invested Amount */}
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <CardContent className="p-6">
+                    <div className="p-3 bg-blue-500/20 rounded-xl mb-4">
+                      <Building2 className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <h3 className="text-white/80 text-sm font-medium mb-2">Invested Amount</h3>
+                    <p className="text-xl font-bold text-white break-words">
+                      {showBalance ? `PKR ${Number(walletData?.investedAmount || 0).toLocaleString()}` : '••••••'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Total Returns */}
+                <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <CardContent className="p-6">
+                    <div className="p-3 bg-green-500/20 rounded-xl mb-4">
+                      <TrendingUp className="w-6 h-6 text-green-400" />
+                    </div>
+                    <h3 className="text-white/80 text-sm font-medium mb-2">Total Returns</h3>
+                    <p className="text-xl font-bold text-white break-words">
+                      {showBalance ? `PKR ${Number(walletData?.totalReturns || 0).toLocaleString()}` : '••••••'}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Recent Investments */}
+              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white">Recent Investments</CardTitle>
+                    <Link 
+                      href="/portfolio" 
+                      className="text-[#315dca] hover:text-white font-medium transition-colors"
+                    >
+                      View All →
+                    </Link>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {investments.length === 0 ? (
+                    <div className="text-center py-12">
+                      <Building2 className="w-16 h-16 text-white/40 mx-auto mb-4" />
+                      <h3 className="text-xl font-semibold text-white mb-2">No Investments Yet</h3>
+                      <p className="text-white/60 mb-6">Start your real estate investment journey today</p>
+                      <Link 
+                        href="/properties" 
+                        className="inline-flex items-center px-6 py-3 bg-[#315dca] hover:bg-[#203a74] text-white font-semibold rounded-lg transition-colors"
+                      >
+                        Browse Properties
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {investments.slice(0, 5).map((investment) => (
+                        <div key={investment.id} className="bg-white/5 rounded-xl p-6 border border-white/10 hover:bg-white/10 transition-all">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <h3 className="text-lg font-semibold text-white mb-1">
+                                {investment.propertyTitle}
+                              </h3>
+                              <p className="text-white/60 text-sm">
+                                {investment.tokensPurchased} tokens • {new Date(investment.createdAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <p className="text-lg font-semibold text-white">
+                                PKR {investment.investmentAmount.toLocaleString()}
+                              </p>
+                              <p className="text-green-400 text-sm">
+                                +PKR {investment.totalEarned.toLocaleString()} returns
+                              </p>
+                              <Link 
+                                href={`/properties/${investment.propertySlug}`}
+                                className="text-[#315dca] hover:text-white text-sm font-medium transition-colors mt-2 inline-block"
+                              >
+                                View Property →
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {activeTab === 'cards' && (
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader>
+                <CardTitle className="text-white">Payment Methods</CardTitle>
+                <CardDescription className="text-white/70">
+                  Manage your saved payment methods for wallet transactions
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <CardManagement
+                  onCardAdded={() => {
+                    // Refresh any necessary data
+                  }}
+                  showAddButton={true}
+                  showSelectButton={false}
+                />
+              </CardContent>
+            </Card>
+          )}
+
+          {activeTab === 'transactions' && (
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <CardHeader>
+                <CardTitle className="text-white">Transaction History</CardTitle>
+                <CardDescription className="text-white/70">
+                  View your wallet transaction history
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-12">
+                  <TrendingUp className="w-16 h-16 text-white/40 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-white mb-2">Transaction History</h3>
+                  <p className="text-white/60 mb-6">Your wallet transaction history will appear here</p>
+                  <Button 
+                    onClick={() => setShowTopUpModal(true)}
+                    className="bg-[#315dca] hover:bg-[#203a74] text-white"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Funds
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
 
       {/* Wallet Top-Up Modal */}
       {showTopUpModal && (
-        <WalletTopUp 
+        <EnhancedWalletTopUp 
           onClose={() => setShowTopUpModal(false)}
           onSuccess={() => {
             fetchWalletData();

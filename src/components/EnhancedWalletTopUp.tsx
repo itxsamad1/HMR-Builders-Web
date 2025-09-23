@@ -171,18 +171,18 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
               </div>
 
               {amount && parseFloat(amount) > 0 && (
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-[#315dca]/20 border-[#315dca]/30">
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Amount in PKR:</span>
-                      <span className="font-semibold text-blue-900">
+                      <span className="text-sm text-white/70">Amount in PKR:</span>
+                      <span className="font-semibold text-[#315dca]">
                         {formatAmount(amountInPKR, 'PKR')}
                       </span>
                     </div>
                     {currency !== 'PKR' && (
                       <div className="flex items-center justify-between mt-1">
-                        <span className="text-xs text-gray-500">Exchange Rate:</span>
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-white/60">Exchange Rate:</span>
+                        <span className="text-xs text-white/60">
                           1 {currency} = {exchangeRates[currency as keyof typeof exchangeRates]} PKR
                         </span>
                       </div>
@@ -207,22 +207,22 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CreditCard className="w-8 h-8 text-green-600" />
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CreditCard className="w-8 h-8 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Select Payment Method</h3>
-              <p className="text-gray-600">Choose a payment method for your wallet top-up</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Select Payment Method</h3>
+              <p className="text-white/70">Choose a payment method for your wallet top-up</p>
             </div>
 
             <div className="space-y-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="bg-white/10 backdrop-blur-lg p-4 rounded-lg border border-white/20">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Top-up Amount:</span>
-                  <span className="font-semibold">{formatAmount(parseFloat(amount), currency)}</span>
+                  <span className="text-sm text-white/70">Top-up Amount:</span>
+                  <span className="font-semibold text-white">{formatAmount(parseFloat(amount), currency)}</span>
                 </div>
                 <div className="flex items-center justify-between mt-1">
-                  <span className="text-sm text-gray-600">Amount in PKR:</span>
-                  <span className="font-semibold">{formatAmount(amountInPKR, 'PKR')}</span>
+                  <span className="text-sm text-white/70">Amount in PKR:</span>
+                  <span className="font-semibold text-white">{formatAmount(amountInPKR, 'PKR')}</span>
                 </div>
               </div>
 
@@ -249,27 +249,27 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
         return (
           <div className="space-y-6">
             <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-8 h-8 text-purple-600" />
+              <div className="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-8 h-8 text-purple-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Verify Transaction</h3>
-              <p className="text-gray-600">Enter the OTP to confirm your wallet top-up</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Verify Transaction</h3>
+              <p className="text-white/70">Enter the OTP to confirm your wallet top-up</p>
             </div>
 
-            <div className="bg-gray-50 p-4 rounded-lg space-y-3">
+            <div className="bg-white/10 backdrop-blur-lg p-4 rounded-lg border border-white/20 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Amount:</span>
-                <span className="font-semibold">{formatAmount(parseFloat(amount), currency)}</span>
+                <span className="text-sm text-white/70">Amount:</span>
+                <span className="font-semibold text-white">{formatAmount(parseFloat(amount), currency)}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Payment Method:</span>
-                <span className="font-semibold">
+                <span className="text-sm text-white/70">Payment Method:</span>
+                <span className="font-semibold text-white">
                   {selectedCard?.cardType.toUpperCase()} ****{selectedCard?.cardNumberMasked.slice(-4)}
                 </span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Amount in PKR:</span>
-                <span className="font-semibold">{formatAmount(amountInPKR, 'PKR')}</span>
+                <span className="text-sm text-white/70">Amount in PKR:</span>
+                <span className="font-semibold text-white">{formatAmount(amountInPKR, 'PKR')}</span>
               </div>
             </div>
 
@@ -285,16 +285,16 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
       case 'success':
         return (
           <div className="text-center space-y-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+            <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="w-8 h-8 text-green-400" />
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Top-up Successful!</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-white mb-2">Top-up Successful!</h3>
+              <p className="text-white/70 mb-4">
                 {formatAmount(amountInPKR, 'PKR')} has been added to your wallet
               </p>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <p className="text-sm text-green-800">
+              <div className="bg-green-500/20 p-4 rounded-lg border border-green-500/30">
+                <p className="text-sm text-green-300">
                   Your wallet balance has been updated. You can now use these funds for investments.
                 </p>
               </div>

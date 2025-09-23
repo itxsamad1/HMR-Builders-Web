@@ -87,11 +87,11 @@ const CardManagement = ({
   const getCardTypeColor = (cardType: string) => {
     switch (cardType.toLowerCase()) {
       case 'visa':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
       case 'mastercard':
-        return 'bg-red-100 text-red-800 border-red-200';
+        return 'bg-red-500/20 text-red-300 border-red-500/30';
       default:
-        return 'bg-gray-100 text-gray-800 border-gray-200';
+        return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     }
   };
 
@@ -116,8 +116,8 @@ const CardManagement = ({
           {cards.map((card) => (
             <Card 
               key={card.id} 
-              className={`transition-all hover:shadow-md ${
-                selectedCardId === card.id ? 'ring-2 ring-blue-500 bg-blue-50' : ''
+              className={`bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all ${
+                selectedCardId === card.id ? 'ring-2 ring-[#315dca] bg-[#315dca]/20' : ''
               }`}
             >
               <CardContent className="p-4">
@@ -126,7 +126,7 @@ const CardManagement = ({
                     <div className="text-2xl">{getCardIcon(card.cardType)}</div>
                     <div>
                       <div className="flex items-center space-x-2">
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 className="font-semibold text-white">
                           {card.cardNumberMasked}
                         </h3>
                         <Badge 
@@ -136,16 +136,16 @@ const CardManagement = ({
                           {card.cardType.toUpperCase()}
                         </Badge>
                         {card.isDefault && (
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge className="bg-[#315dca]/20 text-[#315dca] border-[#315dca]/30 text-xs">
                             Default
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-white/70">
                         {card.cardHolderName} • Expires {formatExpiry(card.expiryMonth, card.expiryYear)}
                       </p>
                       <div className="flex items-center space-x-2 mt-1">
-                        <span className="text-xs text-gray-500">
+                        <span className="text-xs text-white/60">
                           {card.currency}
                         </span>
                         {card.isVerified ? (
@@ -186,11 +186,11 @@ const CardManagement = ({
           ))}
         </div>
       ) : (
-        <Card className="border-dashed border-2 border-gray-300">
+        <Card className="bg-white/10 backdrop-blur-lg border-dashed border-2 border-white/30">
           <CardContent className="p-8 text-center">
-            <CreditCard className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Payment Methods</h3>
-            <p className="text-gray-600 mb-4">
+            <CreditCard className="w-12 h-12 text-white/40 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-white mb-2">No Payment Methods</h3>
+            <p className="text-white/70 mb-4">
               Add a payment method to start making investments and managing your wallet.
             </p>
           </CardContent>
@@ -210,10 +210,10 @@ const CardManagement = ({
               Add Payment Method
             </Button>
           ) : (
-            <Card>
+            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
               <CardHeader>
-                <CardTitle>Add New Payment Method</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-white">Add New Payment Method</CardTitle>
+                <CardDescription className="text-white/70">
                   Add a new VISA or Mastercard for wallet transactions
                 </CardDescription>
               </CardHeader>

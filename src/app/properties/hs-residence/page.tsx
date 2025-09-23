@@ -24,7 +24,7 @@ import { useAuth } from '@/components/AuthProvider';
 
 const HSResidencePage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('tokens');
   const { user } = useAuth();
 
   const propertyImages = [
@@ -236,9 +236,9 @@ const HSResidencePage = () => {
           <div className="border-b border-white/20">
             <nav className="flex space-x-8">
               {[
+                { id: 'tokens', label: 'Tokens' },
                 { id: 'overview', label: 'Overview' },
                 { id: 'features', label: 'Features & Amenities' },
-                { id: 'units', label: 'Unit Types' },
                 { id: 'investment', label: 'Investment Details' }
               ].map((tab) => (
                 <button
@@ -330,7 +330,7 @@ const HSResidencePage = () => {
               </div>
             )}
 
-            {activeTab === 'units' && (
+            {activeTab === 'tokens' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
                   <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">

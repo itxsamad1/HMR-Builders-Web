@@ -25,7 +25,7 @@ import { useAuth } from '@/components/AuthProvider';
 
 const SaimaTowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('tokens');
   const [buyOpen, setBuyOpen] = useState(false);
   const { user } = useAuth();
 
@@ -277,9 +277,9 @@ const SaimaTowerPage = () => {
           <div className="border-b border-white/20">
             <nav className="flex space-x-8">
               {[
+                { id: 'tokens', label: 'Tokens' },
                 { id: 'overview', label: 'Overview' },
                 { id: 'features', label: 'Features & Amenities' },
-                { id: 'tokens', label: 'Tokens' },
                 { id: 'investment', label: 'Investment Details' }
               ].map((tab) => (
                 <button

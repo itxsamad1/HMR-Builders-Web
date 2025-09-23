@@ -27,7 +27,7 @@ import { useAuth } from '@/components/AuthProvider';
 
 const H1TowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('tokens');
   const [buyOpen, setBuyOpen] = useState(false);
   const { user } = useAuth();
 
@@ -287,7 +287,7 @@ const H1TowerPage = () => {
       <section className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap gap-2 justify-center mb-8">
-            {['overview', 'features', 'tokens', 'investment'].map((tab) => (
+            {['tokens', 'overview', 'features', 'investment'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}

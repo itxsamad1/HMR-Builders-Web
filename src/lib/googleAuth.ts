@@ -39,3 +39,4 @@ export const decodeJWT = (token: string) => {
     throw new Error('Failed to decode JWT token: ' + error);
   }
 };
+

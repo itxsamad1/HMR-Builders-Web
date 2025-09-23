@@ -3,10 +3,31 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Building2, TrendingUp, DollarSign, Calendar, MapPin, BarChart3, Wallet, RefreshCw, Menu, ArrowRight, CheckCircle, Coins } from 'lucide-react';
+import { 
+  Building2, 
+  TrendingUp, 
+  DollarSign, 
+  Calendar, 
+  MapPin, 
+  BarChart3, 
+  Wallet, 
+  RefreshCw, 
+  Menu, 
+  ArrowRight, 
+  CheckCircle, 
+  Coins,
+  Lock,
+  ExternalLink,
+  AlertTriangle
+} from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { GradientDots } from '@/components/gradient-dots';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 interface Investment {
   id: string;
@@ -27,6 +48,23 @@ interface PortfolioStats {
   totalReturns: number;
 }
 
+// Sample chart data for portfolio performance
+const chartData = [
+  { month: 'Jan', value: 3200000 },
+  { month: 'Feb', value: 3800000 },
+  { month: 'Mar', value: 4200000 },
+  { month: 'Apr', value: 4600000 },
+  { month: 'May', value: 4900000 },
+  { month: 'Jun', value: 5235000 },
+];
+
+const chartConfig = {
+  value: {
+    label: 'Portfolio Value',
+    color: '#14b8a6',
+  },
+};
+
 const PortfolioPage = () => {
   const { user, token, isLoading } = useAuth();
   const router = useRouter();
@@ -38,7 +76,7 @@ const PortfolioPage = () => {
     totalReturns: 0
   });
   const [isLoadingData, setIsLoadingData] = useState(true);
-  const [activeTab, setActiveTab] = useState<'all' | 'active' | 'completed'>('all');
+  const [activeHoldingsTab, setActiveHoldingsTab] = useState<'buy' | 'sell'>('buy');
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -85,7 +123,6 @@ const PortfolioPage = () => {
         const data = await res.json();
         const investments = data.data || [];
         
-        // Calculate portfolio stats
         const uniqueProperties = new Set(investments.map((inv: Investment) => inv.propertyId));
         
         const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
@@ -107,7 +144,7 @@ const PortfolioPage = () => {
     }
   };
 
-  // Group investments by property and filter by status
+  // Group investments by property
   const groupedInvestments = investments.reduce((acc, investment) => {
     const key = investment.propertyId;
     if (!acc[key]) {
@@ -129,27 +166,15 @@ const PortfolioPage = () => {
     return acc;
   }, {} as Record<string, any>);
 
-  const filteredInvestments = Object.values(groupedInvestments).filter((investment: any) => {
-    if (activeTab === 'all') return true;
-    return investment.status === activeTab;
-  });
+  const propertiesData = Object.values(groupedInvestments).slice(0, 3);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'text-green-400 bg-green-400/20 border-green-400/30';
-      case 'completed': return 'text-blue-400 bg-blue-400/20 border-blue-400/30';
-      case 'pending': return 'text-yellow-400 bg-yellow-400/20 border-yellow-400/30';
-      default: return 'text-gray-400 bg-gray-400/20 border-gray-400/30';
-    }
-  };
-
-  // Calculate ROI percentage
-  const roiPercentage = stats.totalInvested > 0 ? ((stats.totalReturns / stats.totalInvested) * 100).toFixed(1) : '0.0';
-  const monthlyYield = stats.totalInvested > 0 ? ((stats.totalReturns / stats.totalInvested) * 100 / 12).toFixed(1) : '0.0';
+  // Calculate metrics
+  const roiPercentage = stats.totalInvested > 0 ? ((stats.totalReturns / stats.totalInvested) * 100).toFixed(1) : '24.5';
+  const monthlyYield = '1.8';
 
   if (isLoading || isLoadingData) {
     return (
-      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#0a1426] to-[#1a2332] flex items-center justify-center">
         <div className="text-white text-xl">Loading your portfolio...</div>
       </div>
     );
@@ -160,256 +185,335 @@ const PortfolioPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F172A] relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1426] to-[#1a2332] relative overflow-hidden">
       {/* Gradient Dots Background */}
       <GradientDots 
-        backgroundColor="#0F172A" 
-        duration={40} 
-        colorCycleDuration={8}
-        dotSize={6}
-        spacing={12}
+        backgroundColor="transparent" 
+        duration={50} 
+        colorCycleDuration={10}
+        dotSize={4}
+        spacing={20}
+        className="opacity-30"
       />
 
-      {/* Navigation Bar */}
-      <nav className="relative z-50 bg-black/20 backdrop-blur-xl border-b border-[#38BDF8]/20">
+      {/* Header Navigation */}
+      <header className="relative z-50 bg-[#0f1629]/80 backdrop-blur-xl border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <div className="flex items-center space-x-8">
-              <div className="text-2xl font-bold text-white font-orbitron">
-                HMR
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-[#f59e0b] rounded-sm flex items-center justify-center">
+                  <span className="text-black font-bold text-sm">H</span>
+                </div>
+                <span className="text-white text-xl font-semibold">HMR</span>
               </div>
               
               {/* Navigation Links */}
-              <div className="hidden md:flex items-center space-x-8">
-                <Link href="/portfolio" className="text-[#38BDF8] font-medium border-b-2 border-[#38BDF8] pb-1">
+              <nav className="hidden lg:flex items-center space-x-8">
+                <Link href="/portfolio" className="text-[#14b8a6] font-medium border-b-2 border-[#14b8a6] pb-1">
                   Dashboard
                 </Link>
-                <Link href="/portfolio" className="text-white/70 hover:text-white font-medium transition-colors">
+                <Link href="/portfolio" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Portfolio
                 </Link>
-                <Link href="/properties" className="text-white/70 hover:text-white font-medium transition-colors">
+                <Link href="/properties" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Marketplace
                 </Link>
-                <Link href="/wallet" className="text-white/70 hover:text-white font-medium transition-colors">
+                <Link href="/wallet" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Transactions
                 </Link>
-                <Link href="/analytics" className="text-white/70 hover:text-white font-medium transition-colors">
+                <Link href="/analytics" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Analytics
                 </Link>
-                <Link href="/settings" className="text-white/70 hover:text-white font-medium transition-colors">
+                <Link href="/settings" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Settings
                 </Link>
-              </div>
+              </nav>
             </div>
 
             {/* Connect Wallet Button */}
             <div className="flex items-center space-x-4">
-              <button className="bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-black px-6 py-2 rounded-lg font-semibold shadow-lg shadow-[#38BDF8]/25 hover:shadow-[#38BDF8]/40 transition-all duration-300 transform hover:scale-105">
-                Connect Wallet
-              </button>
+              <Button className="bg-[#1e293b] hover:bg-[#334155] text-white border border-gray-600 flex items-center space-x-2">
+                <Lock className="w-4 h-4" />
+                <span>Connect Wallet</span>
+              </Button>
               <UserProfileDropdown />
             </div>
           </div>
         </div>
-      </nav>
+      </header>
 
-      {/* Dashboard Content */}
+      {/* Main Content */}
       <div className="relative z-10 p-6 max-w-7xl mx-auto">
-        {/* Main Dashboard Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           
-          {/* Portfolio Balance Card */}
-          <div className="lg:col-span-2 bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white font-orbitron">Portfolio Balance</h2>
-              <div className="w-8 h-8 bg-[#38BDF8]/20 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-[#38BDF8]" />
-              </div>
-            </div>
+          {/* Left Column - 60% width (3 of 5 columns) */}
+          <div className="lg:col-span-3 space-y-6">
             
-            <div className="mb-6">
-              <div className="text-4xl font-bold text-white mb-2 font-orbitron">
-                PKR {Number(stats.totalInvested).toLocaleString()}
-              </div>
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-2">
-                  <span className="text-green-400 font-semibold">+{roiPercentage}%</span>
-                  <span className="text-white/60 text-sm">Return on Investment</span>
+            {/* Portfolio Balance Card */}
+            <Card className="bg-[#1e293b] border-gray-700">
+              <CardHeader>
+                <CardTitle className="text-white text-lg font-medium">Portfolio Balance</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <div className="text-4xl font-bold text-white mb-4">
+                    PKR {stats.totalInvested > 0 ? Number(stats.totalInvested).toLocaleString() : '5,235,000'}
+                  </div>
+                  <div className="flex items-center space-x-8">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-green-400 font-semibold">+{roiPercentage}%</span>
+                      <span className="text-[#94a3b8] text-sm">Return on Investment</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <span className="text-white font-semibold">{monthlyYield}%</span>
+                      <span className="text-[#94a3b8] text-sm">Monthly Yield</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-white font-semibold">{monthlyYield}%</span>
-                  <span className="text-white/60 text-sm">Monthly Yield</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Mini Chart Area */}
-            <div className="h-24 bg-gradient-to-r from-[#38BDF8]/10 to-[#0EA5E9]/10 rounded-xl border border-[#38BDF8]/20 flex items-end justify-center space-x-1 p-4">
-              <div className="w-2 bg-[#38BDF8] rounded-t h-8"></div>
-              <div className="w-2 bg-[#38BDF8] rounded-t h-12"></div>
-              <div className="w-2 bg-[#38BDF8] rounded-t h-16"></div>
-              <div className="w-2 bg-[#38BDF8] rounded-t h-20"></div>
-              <div className="w-2 bg-[#38BDF8] rounded-t h-14"></div>
-              <div className="w-2 bg-[#38BDF8] rounded-t h-18"></div>
-            </div>
+                {/* Chart */}
+                <div className="h-24">
+                  <ChartContainer config={chartConfig} className="h-full w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={chartData}>
+                        <Line 
+                          type="monotone" 
+                          dataKey="value" 
+                          stroke="#14b8a6" 
+                          strokeWidth={2}
+                          dot={false}
+                        />
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Holdings Section */}
+            <Card className="bg-[#1e293b] border-gray-700">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white text-lg font-medium">Holdings</CardTitle>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant={activeHoldingsTab === 'buy' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setActiveHoldingsTab('buy')}
+                      className={activeHoldingsTab === 'buy' ? 'bg-[#14b8a6] hover:bg-[#0f9488]' : 'border-gray-600 text-white hover:bg-[#334155]'}
+                    >
+                      Buy
+                    </Button>
+                    <Button 
+                      variant={activeHoldingsTab === 'sell' ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setActiveHoldingsTab('sell')}
+                      className={activeHoldingsTab === 'sell' ? 'bg-[#14b8a6] hover:bg-[#0f9488]' : 'border-gray-600 text-white hover:bg-[#334155]'}
+                    >
+                      Sell
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Property Cards */}
+                  {propertiesData.length > 0 ? propertiesData.map((property: any, index: number) => (
+                    <div key={property.propertyId} className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                      <div className="flex items-start justify-between mb-3">
+                        <Badge 
+                          className={`text-xs ${
+                            property.status === 'active' 
+                              ? 'bg-[#14b8a6] text-white' 
+                              : 'bg-[#f59e0b] text-white'
+                          }`}
+                        >
+                          {property.status === 'active' ? 'ACTIVE' : 'COMING SOON'}
+                        </Badge>
+                        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
+                      </div>
+                      
+                      {/* Property Image Placeholder */}
+                      <div className="w-full h-32 bg-gradient-to-br from-[#14b8a6]/20 to-[#0f9488]/20 rounded-lg mb-3 flex items-center justify-center">
+                        <Building2 className="w-12 h-12 text-[#14b8a6]" />
+                      </div>
+                      
+                      <h3 className="text-white font-semibold mb-2">{property.propertyTitle}</h3>
+                      <p className="text-white font-bold">PKR {Number(property.totalInvested).toLocaleString()}</p>
+                    </div>
+                  )) : (
+                    // Default property cards when no data
+                    <>
+                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                        <div className="flex items-start justify-between mb-3">
+                          <Badge className="bg-[#14b8a6] text-white text-xs">ACTIVE</Badge>
+                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
+                        </div>
+                        <div className="w-full h-32 bg-gradient-to-br from-[#14b8a6]/20 to-[#0f9488]/20 rounded-lg mb-3 flex items-center justify-center">
+                          <Building2 className="w-12 h-12 text-[#14b8a6]" />
+                        </div>
+                        <h3 className="text-white font-semibold mb-2">H1 Tower</h3>
+                        <p className="text-white font-bold">PKR 2,500,000</p>
+                      </div>
+
+                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                        <div className="flex items-start justify-between mb-3">
+                          <Badge className="bg-[#14b8a6] text-white text-xs">ACTIVE</Badge>
+                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
+                        </div>
+                        <div className="w-full h-32 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-lg mb-3 flex items-center justify-center">
+                          <Building2 className="w-12 h-12 text-blue-400" />
+                        </div>
+                        <h3 className="text-white font-semibold mb-2">Saima Tower</h3>
+                        <p className="text-white font-bold">PKR 1,750,000</p>
+                      </div>
+
+                      <div className="bg-[#0f172a] rounded-lg p-4 border border-gray-700 hover:border-[#14b8a6] transition-colors group cursor-pointer">
+                        <div className="flex items-start justify-between mb-3">
+                          <Badge className="bg-[#f59e0b] text-white text-xs">COMING SOON</Badge>
+                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
+                        </div>
+                        <div className="w-full h-32 bg-gradient-to-br from-orange-500/20 to-orange-600/20 rounded-lg mb-3 flex items-center justify-center">
+                          <Building2 className="w-12 h-12 text-orange-400" />
+                        </div>
+                        <h3 className="text-white font-semibold mb-2">A4 Waterfront</h3>
+                        <p className="text-white font-bold">PKR 1,750,000</p>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Secondary Market Card */}
-          <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white font-orbitron">Secondary Market</h2>
-              <Coins className="w-8 h-8 text-[#FACC15]" />
-            </div>
+          {/* Right Column - 40% width (2 of 5 columns) */}
+          <div className="lg:col-span-2 space-y-6">
             
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between items-center">
-                <span className="text-white/60">R+</span>
-                <span className="text-white font-semibold">PKR 1.34</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-white/60">A+</span>
-                <span className="text-white font-semibold">PKR 1.35</span>
-              </div>
-            </div>
-            
-            <button className="w-full bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-black py-3 rounded-lg font-semibold shadow-lg shadow-[#38BDF8]/25 hover:shadow-[#38BDF8]/40 transition-all duration-300 transform hover:scale-105">
-              Sell
-            </button>
-          </div>
-        </div>
-
-        {/* Holdings Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-          <div className="lg:col-span-2 bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white font-orbitron">Holdings</h2>
-              <div className="flex space-x-2">
-                <button className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeTab === 'all' ? 'bg-[#38BDF8] text-black' : 'bg-white/10 text-white/70 hover:text-white'
-                }`}>
-                  Buy
-                </button>
-                <button className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                  activeTab === 'active' ? 'bg-[#38BDF8] text-black' : 'bg-white/10 text-white/70 hover:text-white'
-                }`}>
+            {/* Secondary Market Card */}
+            <Card className="bg-[#1e293b] border-gray-700">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white text-lg font-medium">Secondary Market</CardTitle>
+                  <div className="w-8 h-8 bg-[#f59e0b] rounded-full flex items-center justify-center">
+                    <span className="text-black font-bold text-sm">M</span>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#94a3b8]">R+</span>
+                    <span className="text-white font-medium">-</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#94a3b8]">A+</span>
+                    <span className="text-white font-medium">-</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#94a3b8]">PKR</span>
+                    <span className="text-white font-medium">1.34</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#94a3b8]">PKR</span>
+                    <span className="text-white font-medium">1.35</span>
+                  </div>
+                </div>
+                <Button className="w-full bg-[#1e293b] hover:bg-[#334155] text-white border border-gray-600">
                   Sell
-                </button>
-              </div>
-            </div>
+                </Button>
+              </CardContent>
+            </Card>
 
-            {/* Properties Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {filteredInvestments.slice(0, 3).map((investment: any) => (
-                <div key={investment.propertyId} className="bg-black/20 backdrop-blur-xl rounded-xl p-4 border border-[#38BDF8]/10 hover:border-[#38BDF8]/30 transition-all group">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(investment.status)}`}>
-                      {investment.status.toUpperCase()}
-                    </span>
-                    <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#38BDF8] transition-colors" />
+            {/* Secondary Trading Table */}
+            <Card className="bg-[#1e293b] border-gray-700">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white text-lg font-medium">Secondary</CardTitle>
+                  <Menu className="w-5 h-5 text-[#94a3b8]" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-4 gap-2 text-xs text-[#94a3b8] pb-2 border-b border-gray-700">
+                    <span>Bid</span>
+                    <span>Ask</span>
+                    <span>Orders</span>
+                    <span></span>
                   </div>
                   
-                  <div className="w-full h-32 bg-gradient-to-br from-[#38BDF8]/20 to-[#0EA5E9]/20 rounded-lg mb-3 flex items-center justify-center">
-                    <Building2 className="w-12 h-12 text-[#38BDF8]" />
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-4 gap-2 text-sm">
+                      <span className="text-white">PKR 1.34</span>
+                      <span className="text-white">PKR 1.35</span>
+                      <span className="text-white">12,500</span>
+                      <span className="text-[#14b8a6]">406</span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2 text-sm">
+                      <span className="text-white">PKR 1.35</span>
+                      <span className="text-white">PKR 1.35</span>
+                      <span className="text-white">5,600</span>
+                      <span className="text-[#14b8a6]">325</span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Activity Feed */}
+            <Card className="bg-[#1e293b] border-gray-700">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-white text-lg font-medium">Activity</CardTitle>
+                  <Menu className="w-5 h-5 text-[#94a3b8]" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-5 h-5 bg-green-500/20 rounded-full flex items-center justify-center mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white text-sm">Purchased 17.000 Hickens</p>
+                      <p className="text-[#94a3b8] text-xs">12:15</p>
+                    </div>
                   </div>
                   
-                  <h3 className="text-white font-semibold mb-1">{investment.propertyTitle}</h3>
-                  <p className="text-[#38BDF8] font-semibold">PKR {Number(investment.totalInvested).toLocaleString()}</p>
-                </div>
-              ))}
-              
-              {/* Placeholder for additional properties */}
-              {filteredInvestments.length < 3 && (
-                <div className="bg-black/20 backdrop-blur-xl rounded-xl p-4 border border-dashed border-[#38BDF8]/30 flex items-center justify-center">
-                  <div className="text-center">
-                    <Building2 className="w-8 h-8 text-[#38BDF8]/50 mx-auto mb-2" />
-                    <p className="text-white/50 text-sm">More Properties</p>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-5 h-5 bg-green-500/20 rounded-full flex items-center justify-center mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-green-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white text-sm">Completed KYC verification</p>
+                      <p className="text-[#94a3b8] text-xs">12:13</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="w-5 h-5 bg-blue-500/20 rounded-full flex items-center justify-center mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-blue-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white text-sm">Invested in Sarna Tower</p>
+                      <p className="text-[#94a3b8] text-xs">11:08</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="w-5 h-5 bg-yellow-500/20 rounded-full flex items-center justify-center mt-0.5">
+                      <AlertTriangle className="w-3 h-3 text-yellow-400" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white text-sm">New feature: Auto-staking</p>
+                      <p className="text-[#94a3b8] text-xs">10:55</p>
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
-          </div>
-
-          {/* Secondary Orders */}
-          <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-semibold text-white font-orbitron">Secondary</h2>
-              <RefreshCw className="w-5 h-5 text-white/60" />
-            </div>
-            
-            <div className="space-y-4">
-              <div className="grid grid-cols-4 gap-2 text-xs text-white/60 mb-2">
-                <span>Bid</span>
-                <span>Ask</span>
-                <span>Orders</span>
-                <span>Trades</span>
-              </div>
-              
-              <div className="space-y-3">
-                <div className="grid grid-cols-4 gap-2 text-sm">
-                  <span className="text-white">PKR 1.34</span>
-                  <span className="text-white">PKR 1.35</span>
-                  <span className="text-white">12,500</span>
-                  <span className="text-[#38BDF8]">406</span>
-                </div>
-                <div className="grid grid-cols-4 gap-2 text-sm">
-                  <span className="text-white">PKR 1.35</span>
-                  <span className="text-white">PKR 1.35</span>
-                  <span className="text-white">5,600</span>
-                  <span className="text-[#38BDF8]">325</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Activity Feed */}
-        <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-white font-orbitron">Activity</h2>
-            <Menu className="w-5 h-5 text-white/60" />
-          </div>
-          
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-4 h-4 text-green-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-white text-sm">Purchased 17,000 Tokens</p>
-                <p className="text-white/50 text-xs">12:15</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-4 h-4 text-green-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-white text-sm">Completed KYC verification</p>
-                <p className="text-white/50 text-xs">12:13</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-4 h-4 text-blue-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-white text-sm">Invested in H1 Tower</p>
-                <p className="text-white/50 text-xs">11:08</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-[#FACC15]/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-4 h-4 text-[#FACC15]" />
-              </div>
-              <div className="flex-1">
-                <p className="text-white text-sm">New feature: Auto-staking enabled</p>
-                <p className="text-white/50 text-xs">10:55</p>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

@@ -3,15 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
-import { User, Mail, Lock, Eye, EyeOff, CreditCard } from 'lucide-react';
-import PaymentMethodForm from './PaymentMethodForm';
+import { User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import BillingInfoForm from './BillingInfoForm';
 import OTPVerification from './OTPVerification';
 
 const RegistrationForm = ({ onClose }: { onClose: () => void }) => {
   const router = useRouter();
   const { login } = useAuth();
   
-  const [step, setStep] = useState<'form' | 'payment' | 'otp' | 'success'>('form');
+  const [step, setStep] = useState<'form' | 'billing' | 'otp' | 'success'>('form');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,7 +20,7 @@ const RegistrationForm = ({ onClose }: { onClose: () => void }) => {
     firstName: '',
     lastName: ''
   });
-  const [paymentMethod, setPaymentMethod] = useState<any>(null);
+  const [billingInfo, setBillingInfo] = useState<any>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

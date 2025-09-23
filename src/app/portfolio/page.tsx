@@ -84,14 +84,16 @@ const PortfolioPage = () => {
         const data = await res.json();
         const investments = data.data || [];
         
+        // Calculate portfolio stats
+        const uniqueProperties = new Set(investments.map((inv: Investment) => inv.propertyId));
+        
         const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
-          acc.totalInvestments++;
           acc.totalInvested += Number(investment.investmentAmount) || 0;
           acc.totalTokens += Number(investment.tokensPurchased) || 0;
           acc.totalReturns += Number(investment.totalEarned) || 0;
           return acc;
         }, {
-          totalInvestments: 0,
+          totalInvestments: uniqueProperties.size, // Count unique properties instead of transactions
           totalInvested: 0,
           totalTokens: 0,
           totalReturns: 0
@@ -104,7 +106,29 @@ const PortfolioPage = () => {
     }
   };
 
-  const filteredInvestments = investments.filter(investment => {
+  // Group investments by property and filter by status
+  const groupedInvestments = investments.reduce((acc, investment) => {
+    const key = investment.propertyId;
+    if (!acc[key]) {
+      acc[key] = {
+        propertyId: investment.propertyId,
+        propertyTitle: investment.propertyTitle,
+        propertySlug: investment.propertySlug,
+        totalTokens: 0,
+        totalInvested: 0,
+        totalReturns: 0,
+        status: investment.status,
+        transactions: []
+      };
+    }
+    acc[key].totalTokens += Number(investment.tokensPurchased);
+    acc[key].totalInvested += Number(investment.investmentAmount);
+    acc[key].totalReturns += Number(investment.totalEarned);
+    acc[key].transactions.push(investment);
+    return acc;
+  }, {} as Record<string, any>);
+
+  const filteredInvestments = Object.values(groupedInvestments).filter((investment: any) => {
     if (activeTab === 'all') return true;
     return investment.status === activeTab;
   });
@@ -208,9 +232,9 @@ const PortfolioPage = () => {
           {/* Tabs */}
           <div className="flex space-x-1 mb-8 bg-white/10 backdrop-blur-lg rounded-xl p-1 border border-white/20 w-fit mx-auto">
             {[
-              { key: 'all', label: 'All Investments', count: investments.length },
-              { key: 'active', label: 'Active', count: investments.filter(i => i.status === 'active').length },
-              { key: 'completed', label: 'Completed', count: investments.filter(i => i.status === 'completed').length }
+              { key: 'all', label: 'All Investments', count: new Set(investments.map(i => i.propertyId)).size },
+              { key: 'active', label: 'Active', count: new Set(investments.filter(i => i.status === 'active').map(i => i.propertyId)).size },
+              { key: 'completed', label: 'Completed', count: new Set(investments.filter(i => i.status === 'completed').map(i => i.propertyId)).size }
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -250,8 +274,8 @@ const PortfolioPage = () => {
               </div>
             ) : (
               <div className="divide-y divide-white/10">
-                {filteredInvestments.map((investment) => (
-                  <div key={investment.id} className="p-6 hover:bg-white/5 transition-all">
+                {filteredInvestments.map((investment: any) => (
+                  <div key={investment.propertyId} className="p-6 hover:bg-white/5 transition-all">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
@@ -266,21 +290,21 @@ const PortfolioPage = () => {
                         <div className="flex items-center space-x-6 text-white/60 text-sm">
                           <div className="flex items-center space-x-1">
                             <BarChart3 className="w-4 h-4" />
-                            <span>{investment.tokensPurchased} tokens</span>
+                            <span>{investment.totalTokens} tokens</span>
                           </div>
                           <div className="flex items-center space-x-1">
                             <Calendar className="w-4 h-4" />
-                            <span>{new Date(investment.createdAt).toLocaleDateString()}</span>
+                            <span>{investment.transactions.length} purchase{investment.transactions.length > 1 ? 's' : ''}</span>
                           </div>
                         </div>
                       </div>
                       
                       <div className="text-right">
                         <p className="text-xl font-bold text-white mb-1">
-                          PKR {investment.investmentAmount.toLocaleString()}
+                          PKR {Number(investment.totalInvested).toLocaleString()}
                         </p>
                         <p className="text-green-400 text-sm font-medium">
-                          +PKR {investment.totalEarned.toLocaleString()} returns
+                          +PKR {Number(investment.totalReturns).toLocaleString()} returns
                         </p>
                         <Link 
                           href={`/properties/${investment.propertySlug}`}

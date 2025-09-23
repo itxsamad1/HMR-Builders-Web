@@ -73,7 +73,7 @@ const PortfolioPage = () => {
 
   const fetchPortfolioStats = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments/my-investments`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments/my-investments?limit=100`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -86,9 +86,9 @@ const PortfolioPage = () => {
         
         const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
           acc.totalInvestments++;
-          acc.totalInvested += investment.investmentAmount;
-          acc.totalTokens += investment.tokensPurchased;
-          acc.totalReturns += investment.totalEarned;
+          acc.totalInvested += parseFloat(investment.investmentAmount) || 0;
+          acc.totalTokens += parseInt(investment.tokensPurchased) || 0;
+          acc.totalReturns += parseFloat(investment.totalEarned) || 0;
           return acc;
         }, {
           totalInvestments: 0,
@@ -181,7 +181,7 @@ const PortfolioPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Total Invested</h3>
-              <p className="text-2xl font-bold text-white">PKR {stats.totalInvested.toLocaleString()}</p>
+              <p className="text-xl font-bold text-white break-words">PKR {Number(stats.totalInvested).toLocaleString()}</p>
             </div>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
@@ -191,7 +191,7 @@ const PortfolioPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Total Tokens</h3>
-              <p className="text-2xl font-bold text-white">{stats.totalTokens.toLocaleString()}</p>
+              <p className="text-xl font-bold text-white">{Number(stats.totalTokens).toLocaleString()}</p>
             </div>
 
             <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
@@ -201,7 +201,7 @@ const PortfolioPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Total Returns</h3>
-              <p className="text-2xl font-bold text-white">PKR {stats.totalReturns.toLocaleString()}</p>
+              <p className="text-xl font-bold text-white">PKR {Number(stats.totalReturns).toLocaleString()}</p>
             </div>
           </div>
 

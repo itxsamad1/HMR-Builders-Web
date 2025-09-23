@@ -148,8 +148,8 @@ const WalletPage = () => {
                 </button>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Total Balance</h3>
-              <p className="text-2xl font-bold text-white">
-                {showBalance ? `PKR ${(walletData?.totalBalance || 0).toLocaleString()}` : '••••••'}
+              <p className="text-xl font-bold text-white break-words">
+                {showBalance ? `PKR ${Number(walletData?.totalBalance || 0).toLocaleString()}` : '••••••'}
               </p>
             </div>
 
@@ -161,8 +161,8 @@ const WalletPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Available Balance</h3>
-              <p className="text-2xl font-bold text-white">
-                {showBalance ? `PKR ${(walletData?.availableBalance || 0).toLocaleString()}` : '••••••'}
+              <p className="text-xl font-bold text-white break-words">
+                {showBalance ? `PKR ${Number(walletData?.availableBalance || 0).toLocaleString()}` : '••••••'}
               </p>
             </div>
 
@@ -174,8 +174,8 @@ const WalletPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Invested Amount</h3>
-              <p className="text-2xl font-bold text-white">
-                {showBalance ? `PKR ${(walletData?.investedAmount || 0).toLocaleString()}` : '••••••'}
+              <p className="text-xl font-bold text-white break-words">
+                {showBalance ? `PKR ${Number(walletData?.investedAmount || 0).toLocaleString()}` : '••••••'}
               </p>
             </div>
 
@@ -187,8 +187,8 @@ const WalletPage = () => {
                 </div>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Total Returns</h3>
-              <p className="text-2xl font-bold text-white">
-                {showBalance ? `PKR ${(walletData?.totalReturns || 0).toLocaleString()}` : '••••••'}
+              <p className="text-xl font-bold text-white break-words">
+                {showBalance ? `PKR ${Number(walletData?.totalReturns || 0).toLocaleString()}` : '••••••'}
               </p>
             </div>
           </div>

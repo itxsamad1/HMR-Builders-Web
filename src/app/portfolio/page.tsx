@@ -23,6 +23,7 @@ import {
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { GradientDots } from '@/components/gradient-dots';
+import { FlickeringGrid } from '@/components/ui/flickering-grid';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -186,15 +187,16 @@ const PortfolioPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a1426] to-[#1a2332] relative overflow-hidden">
-      {/* Gradient Dots Background */}
-      <GradientDots 
-        backgroundColor="transparent" 
-        duration={50} 
-        colorCycleDuration={10}
-        dotSize={4}
-        spacing={20}
-        className="opacity-30"
-      />
+      {/* Flickering Grid Background */}
+      <div className="absolute inset-0 opacity-20">
+        <FlickeringGrid
+          squareSize={4}
+          gridGap={6}
+          flickerChance={0.3}
+          color="rgb(20, 184, 166)"
+          maxOpacity={0.4}
+        />
+      </div>
 
       {/* Header Navigation */}
       <header className="relative z-50 bg-[#0f1629]/80 backdrop-blur-xl border-b border-gray-800">
@@ -211,10 +213,10 @@ const PortfolioPage = () => {
               
               {/* Navigation Links */}
               <nav className="hidden lg:flex items-center space-x-8">
-                <Link href="/portfolio" className="text-[#14b8a6] font-medium border-b-2 border-[#14b8a6] pb-1">
+                <Link href="/" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Dashboard
                 </Link>
-                <Link href="/portfolio" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
+                <Link href="/portfolio" className="text-[#14b8a6] font-medium border-b-2 border-[#14b8a6] pb-1">
                   Portfolio
                 </Link>
                 <Link href="/properties" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
@@ -252,11 +254,20 @@ const PortfolioPage = () => {
           <div className="lg:col-span-3 space-y-6">
             
             {/* Portfolio Balance Card */}
-            <Card className="bg-[#1e293b] border-gray-700">
-              <CardHeader>
+            <Card className="bg-[#1e293b] border-gray-700 relative overflow-hidden">
+              <div className="absolute inset-0 opacity-5">
+                <FlickeringGrid
+                  squareSize={3}
+                  gridGap={4}
+                  flickerChance={0.1}
+                  color="rgb(20, 184, 166)"
+                  maxOpacity={0.3}
+                />
+              </div>
+              <CardHeader className="relative z-10">
                 <CardTitle className="text-white text-lg font-medium">Portfolio Balance</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-6 relative z-10">
                 <div>
                   <div className="text-4xl font-bold text-white mb-4">
                     PKR {stats.totalInvested > 0 ? Number(stats.totalInvested).toLocaleString() : '5,235,000'}

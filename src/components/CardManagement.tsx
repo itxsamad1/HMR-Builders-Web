@@ -11,16 +11,24 @@ import PaymentMethodForm from './PaymentMethodForm';
 
 interface PaymentMethod {
   id: string;
-  cardType: string;
-  cardNumberMasked: string;
-  cardHolderName: string;
-  expiryMonth: number;
-  expiryYear: number;
+  card_type?: string; // Backend format
+  cardType?: string; // Frontend format
+  card_number_masked?: string; // Backend format
+  cardNumberMasked?: string; // Frontend format
+  card_holder_name?: string; // Backend format
+  cardHolderName?: string; // Frontend format
+  expiry_month?: number; // Backend format
+  expiryMonth?: number; // Frontend format
+  expiry_year?: number; // Backend format
+  expiryYear?: number; // Frontend format
   currency: string;
-  isDefault: boolean;
-  isVerified: boolean;
+  is_default?: boolean; // Backend format
+  isDefault?: boolean; // Frontend format
+  is_verified?: boolean; // Backend format
+  isVerified?: boolean; // Frontend format
   status: string;
-  createdAt: string;
+  created_at?: string; // Backend format
+  createdAt?: string; // Frontend format
 }
 
 interface CardManagementProps {
@@ -73,7 +81,25 @@ const CardManagement = ({
     onCardAdded?.();
   };
 
+  // Helper function to normalize payment method data
+  const normalizePaymentMethod = (card: any): PaymentMethod => {
+    return {
+      id: card.id,
+      cardType: card.cardType || card.card_type || '',
+      cardNumberMasked: card.cardNumberMasked || card.card_number_masked || '',
+      cardHolderName: card.cardHolderName || card.card_holder_name || '',
+      expiryMonth: card.expiryMonth || card.expiry_month || 0,
+      expiryYear: card.expiryYear || card.expiry_year || 0,
+      currency: card.currency || 'PKR',
+      isDefault: card.isDefault || card.is_default || false,
+      isVerified: card.isVerified || card.is_verified || false,
+      status: card.status || 'active',
+      createdAt: card.createdAt || card.created_at || ''
+    };
+  };
+
   const getCardIcon = (cardType: string) => {
+    if (!cardType) return '💳';
     switch (cardType.toLowerCase()) {
       case 'visa':
         return '💳';
@@ -85,6 +111,7 @@ const CardManagement = ({
   };
 
   const getCardTypeColor = (cardType: string) => {
+    if (!cardType) return 'bg-gray-500/20 text-gray-300 border-gray-500/30';
     switch (cardType.toLowerCase()) {
       case 'visa':
         return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
@@ -113,77 +140,80 @@ const CardManagement = ({
       {/* Cards List */}
       {cards.length > 0 ? (
         <div className="space-y-3">
-          {cards.map((card) => (
-            <Card 
-              key={card.id} 
-              className={`bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all ${
-                selectedCardId === card.id ? 'ring-2 ring-[#315dca] bg-[#315dca]/20' : ''
-              }`}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="text-2xl">{getCardIcon(card.cardType)}</div>
-                    <div>
-                      <div className="flex items-center space-x-2">
-                        <h3 className="font-semibold text-white">
-                          {card.cardNumberMasked}
-                        </h3>
-                        <Badge 
-                          variant="outline" 
-                          className={`text-xs ${getCardTypeColor(card.cardType)}`}
-                        >
-                          {card.cardType.toUpperCase()}
-                        </Badge>
-                        {card.isDefault && (
-                          <Badge className="bg-[#315dca]/20 text-[#315dca] border-[#315dca]/30 text-xs">
-                            Default
+          {cards.map((card) => {
+            const normalizedCard = normalizePaymentMethod(card);
+            return (
+              <Card 
+                key={normalizedCard.id} 
+                className={`bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all ${
+                  selectedCardId === normalizedCard.id ? 'ring-2 ring-[#315dca] bg-[#315dca]/20' : ''
+                }`}
+              >
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-2xl">{getCardIcon(normalizedCard.cardType)}</div>
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <h3 className="font-semibold text-white">
+                            {normalizedCard.cardNumberMasked}
+                          </h3>
+                          <Badge 
+                            variant="outline" 
+                            className={`text-xs ${getCardTypeColor(normalizedCard.cardType)}`}
+                          >
+                            {normalizedCard.cardType?.toUpperCase() || 'CARD'}
                           </Badge>
-                        )}
-                      </div>
-                      <p className="text-sm text-white/70">
-                        {card.cardHolderName} • Expires {formatExpiry(card.expiryMonth, card.expiryYear)}
-                      </p>
-                      <div className="flex items-center space-x-2 mt-1">
-                        <span className="text-xs text-white/60">
-                          {card.currency}
-                        </span>
-                        {card.isVerified ? (
-                          <div className="flex items-center space-x-1 text-green-600">
-                            <CheckCircle className="w-3 h-3" />
-                            <span className="text-xs">Verified</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center space-x-1 text-yellow-600">
-                            <Shield className="w-3 h-3" />
-                            <span className="text-xs">Pending</span>
-                          </div>
-                        )}
+                          {normalizedCard.isDefault && (
+                            <Badge className="bg-[#315dca]/20 text-[#315dca] border-[#315dca]/30 text-xs">
+                              Default
+                            </Badge>
+                          )}
+                        </div>
+                        <p className="text-sm text-white/70">
+                          {normalizedCard.cardHolderName} • Expires {formatExpiry(normalizedCard.expiryMonth, normalizedCard.expiryYear)}
+                        </p>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <span className="text-xs text-white/60">
+                            {normalizedCard.currency}
+                          </span>
+                          {normalizedCard.isVerified ? (
+                            <div className="flex items-center space-x-1 text-green-600">
+                              <CheckCircle className="w-3 h-3" />
+                              <span className="text-xs">Verified</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center space-x-1 text-yellow-600">
+                              <Shield className="w-3 h-3" />
+                              <span className="text-xs">Pending</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
                   
-                  <div className="flex items-center space-x-2">
-                    {showSelectButton && (
-                      <Button
-                        variant={selectedCardId === card.id ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => onCardSelected?.(card)}
-                      >
-                        {selectedCardId === card.id ? 'Selected' : 'Select'}
+                    <div className="flex items-center space-x-2">
+                      {showSelectButton && (
+                        <Button
+                          variant={selectedCardId === normalizedCard.id ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => onCardSelected?.(normalizedCard)}
+                        >
+                          {selectedCardId === normalizedCard.id ? 'Selected' : 'Select'}
+                        </Button>
+                      )}
+                      <Button variant="ghost" size="sm">
+                        <Edit className="w-4 h-4" />
                       </Button>
-                    )}
-                    <Button variant="ghost" size="sm">
-                      <Edit className="w-4 h-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
+                      <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       ) : (
         <Card className="bg-white/10 backdrop-blur-lg border-dashed border-2 border-white/30">

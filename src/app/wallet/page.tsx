@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff, Plus } from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
+import WalletTopUp from '@/components/WalletTopUp';
 
 interface Investment {
   id: string;
@@ -37,6 +38,7 @@ const WalletPage = () => {
   const [walletData, setWalletData] = useState<WalletData | null>(null);
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
+  const [showTopUpModal, setShowTopUpModal] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -159,6 +161,13 @@ const WalletPage = () => {
                 <div className="p-3 bg-green-500/20 rounded-xl">
                   <DollarSign className="w-6 h-6 text-green-400" />
                 </div>
+                <button
+                  onClick={() => setShowTopUpModal(true)}
+                  className="bg-[#315dca] hover:bg-[#203a74] text-white p-2 rounded-lg transition-all"
+                  title="Top Up Wallet"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
               </div>
               <h3 className="text-white/80 text-sm font-medium mb-2">Available Balance</h3>
               <p className="text-xl font-bold text-white break-words">
@@ -246,6 +255,17 @@ const WalletPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Wallet Top-Up Modal */}
+      {showTopUpModal && (
+        <WalletTopUp 
+          onClose={() => setShowTopUpModal(false)}
+          onSuccess={() => {
+            fetchWalletData();
+            setShowTopUpModal(false);
+          }}
+        />
+      )}
     </div>
   );
 };

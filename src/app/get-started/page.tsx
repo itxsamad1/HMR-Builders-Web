@@ -8,14 +8,13 @@ import { useRouter } from 'next/navigation';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { useAuth } from '@/components/AuthProvider';
 import GoogleAuth from '@/components/GoogleAuth';
+import RegistrationForm from '@/components/RegistrationForm';
 
 const GetStartedPage = () => {
-  // Simplified onboarding: Google only
   const [isLoading, setIsLoading] = useState(false);
+  const [showRegistrationForm, setShowRegistrationForm] = useState(false);
   const router = useRouter();
   const { user, loginWithGoogle } = useAuth();
-
-  // Removed traditional form for concise flow
 
 
   const benefits = [
@@ -153,14 +152,31 @@ const GetStartedPage = () => {
             <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-white mb-4">Get Started Today</h2>
-                <p className="text-white/80 mb-8">Sign up securely with Google to continue</p>
+                <p className="text-white/80 mb-8">Choose your preferred sign-up method</p>
                 
-                {/* Google Sign Up Button */}
-                <div className="w-full">
-                  <GoogleAuth 
-                    variant="signup"
-                    text="signup_with"
-                  />
+                <div className="space-y-4">
+                  {/* Email Registration Button */}
+                  <button
+                    onClick={() => setShowRegistrationForm(true)}
+                    className="w-full bg-gradient-to-r from-[#315dca] to-[#203a74] py-3 px-6 rounded-xl text-white font-semibold hover:from-[#203a74] hover:to-[#315dca] transition-all"
+                  >
+                    Sign Up with Email & Payment Method
+                  </button>
+                  
+                  {/* Divider */}
+                  <div className="flex items-center">
+                    <div className="flex-1 border-t border-white/20"></div>
+                    <span className="px-4 text-white/60 text-sm">or</span>
+                    <div className="flex-1 border-t border-white/20"></div>
+                  </div>
+                  
+                  {/* Google Sign Up Button */}
+                  <div className="w-full">
+                    <GoogleAuth 
+                      variant="signup"
+                      text="signup_with"
+                    />
+                  </div>
                 </div>
 
                 <p className="text-white/60 text-sm mt-6">
@@ -217,6 +233,11 @@ const GetStartedPage = () => {
           </div>
         </div>
       </footer>
+
+      {/* Registration Form Modal */}
+      {showRegistrationForm && (
+        <RegistrationForm onClose={() => setShowRegistrationForm(false)} />
+      )}
     </div>
   );
 };

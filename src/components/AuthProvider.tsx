@@ -88,7 +88,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithGoogle = async (googleData: any) => {
     try {
-      console.log('Sending Google data to backend:', googleData);
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/auth/google`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -100,8 +99,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }),
       })
       
-      console.log('Google auth response status:', res.status);
-      
       if (!res.ok) {
         const errorData = await res.json();
         console.error('Google auth failed:', errorData);
@@ -109,10 +106,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       
       const data = await res.json()
-      console.log('Google auth success data:', data);
-      
       const t = data.token as string
-      console.log('Storing token:', t);
       
       localStorage.setItem('hmr_token', t)
       setToken(t)
@@ -123,7 +117,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         image: data.user.profileImage || null,
       })
       
-      console.log('User set:', data.user);
       return true
     } catch (error) {
       console.error('Google auth error:', error);

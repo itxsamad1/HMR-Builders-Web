@@ -323,10 +323,10 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
         {message && (
           <div className={`p-3 rounded-lg flex items-center gap-2 text-sm ${
             message.type === 'success' 
-              ? 'bg-green-100 text-green-800 border border-green-200' 
+              ? 'bg-green-500/10 text-green-300 border border-green-500/30' 
               : message.type === 'error'
-              ? 'bg-red-100 text-red-800 border border-red-200'
-              : 'bg-blue-100 text-blue-800 border border-blue-200'
+              ? 'bg-red-500/10 text-red-300 border border-red-500/30'
+              : 'bg-blue-500/10 text-blue-300 border border-blue-500/30'
           }`}>
             {message.type === 'success' && <CheckCircle className="w-4 h-4" />}
             {message.type === 'error' && <AlertCircle className="w-4 h-4" />}
@@ -339,7 +339,7 @@ const EnhancedWalletTopUp = ({ onClose, onSuccess }: EnhancedWalletTopUpProps) =
         </div>
 
         {step !== 'success' && (
-          <div className="flex justify-between items-center pt-4 border-t">
+          <div className="flex justify-between items-center pt-4 border-t border-white/20">
             <Button variant="outline" onClick={onClose}>
               Cancel
             </Button>

@@ -22,6 +22,9 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
   const total = useMemo(() => (quantity || 0) * pricePerTokenNumber, [quantity, pricePerTokenNumber])
 
   const handleSubmit = async () => {
+    console.log('Buy token submit - User:', user);
+    console.log('Buy token submit - Token:', token);
+    
     if (!user) {
       setMessage('Please sign in to continue')
       setMessageType('error')
@@ -44,6 +47,18 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
     setMessage(null)
     
     try {
+      console.log('Making investment request to:', `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments`);
+      console.log('Request headers:', {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      });
+      console.log('Request body:', {
+        propertyId,
+        tokensPurchased: quantity,
+        investmentAmount: total,
+        payment: { method: 'bank_transfer' },
+      });
+      
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments`, {
         method: 'POST',
         headers: {
@@ -58,7 +73,11 @@ export default function BuyTokenDialog({ open, onClose, propertyId, tokenSymbol,
         }),
       })
       
+      console.log('Investment response status:', res.status);
+      console.log('Investment response headers:', Object.fromEntries(res.headers.entries()));
+      
       const data = await res.json()
+      console.log('Investment response data:', data);
       
       if (!res.ok) {
         throw new Error(data?.error || data?.message || 'Failed to create investment')

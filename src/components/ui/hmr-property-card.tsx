@@ -1,0 +1,161 @@
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+
+// Define the props for the HMR Property Card component
+interface HMRPropertyCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  imageUrl: string;
+  imageAlt: string;
+  logo?: React.ReactNode;
+  title: string;
+  location: string;
+  overview: string;
+  price: number;
+  pricePeriod: string;
+  status?: 'active' | 'coming-soon' | 'sold-out';
+  roi?: string;
+  tokens?: number;
+  availableTokens?: number;
+  onInvest: () => void;
+}
+
+const HMRPropertyCard = React.forwardRef<HTMLDivElement, HMRPropertyCardProps>(
+  (
+    {
+      className,
+      imageUrl,
+      imageAlt,
+      logo,
+      title,
+      location,
+      overview,
+      price,
+      pricePeriod,
+      status = 'active',
+      roi,
+      tokens,
+      availableTokens,
+      onInvest,
+      ...props
+    },
+    ref
+  ) => {
+    const getStatusColor = () => {
+      switch (status) {
+        case 'active':
+          return 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white';
+        case 'coming-soon':
+          return 'bg-gradient-to-r from-[#f59e0b] to-[#f97316] text-white';
+        case 'sold-out':
+          return 'bg-gradient-to-r from-gray-500 to-gray-600 text-white';
+        default:
+          return 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white';
+      }
+    };
+
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "group relative w-full max-w-sm overflow-hidden rounded-xl",
+          "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b]",
+          "border border-[#14b8a6]/30 shadow-2xl shadow-[#14b8a6]/10",
+          "transition-all duration-300 ease-in-out hover:shadow-2xl hover:shadow-[#14b8a6]/20 hover:-translate-y-2",
+          "before:absolute before:inset-0 before:rounded-xl before:p-[1px]",
+          "before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10",
+          className
+        )}
+        {...props}
+      >
+        {/* Background Image with Zoom Effect on Hover */}
+        <img
+          src={imageUrl}
+          alt={imageAlt}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+        />
+
+        {/* Gradient Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
+
+        {/* Content Container */}
+        <div className="relative flex h-full flex-col justify-between p-6 text-white">
+          {/* Top Section: Logo and Status */}
+          <div className="flex h-40 items-start justify-between">
+            {logo && (
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-black/20 backdrop-blur-sm">
+                {logo}
+              </div>
+            )}
+            <Badge className={`text-xs shadow-lg ${getStatusColor()}`}>
+              {status === 'active' ? 'ACTIVE' : status === 'coming-soon' ? 'COMING SOON' : 'SOLD OUT'}
+            </Badge>
+          </div>
+          
+          {/* Middle Section: Details (slides up on hover) */}
+          <div className="space-y-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-16">
+            <div>
+              <h3 className="text-3xl font-bold text-white">{title}</h3>
+              <p className="text-sm text-white/80 flex items-center">
+                <span>{location}</span>
+              </p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white/90">OVERVIEW</h4>
+              <p className="text-sm text-white/70 leading-relaxed">
+                {overview}
+              </p>
+            </div>
+            
+            {/* Property Stats */}
+            {(roi || tokens || availableTokens) && (
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                {roi && (
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
+                    <span className="text-white/60">ROI</span>
+                    <p className="text-green-400 font-semibold">{roi}</p>
+                  </div>
+                )}
+                {tokens && (
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
+                    <span className="text-white/60">Total Tokens</span>
+                    <p className="text-white font-semibold">{tokens.toLocaleString()}</p>
+                  </div>
+                )}
+                {availableTokens && (
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 col-span-2">
+                    <span className="text-white/60">Available Tokens</span>
+                    <p className="text-[#14b8a6] font-semibold">{availableTokens.toLocaleString()}</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Bottom Section: Price and Button (revealed on hover) */}
+          <div className="absolute -bottom-20 left-0 w-full p-6 opacity-0 transition-all duration-500 ease-in-out group-hover:bottom-0 group-hover:opacity-100">
+            <div className="flex items-end justify-between">
+              <div>
+                <span className="text-4xl font-bold text-white">PKR {price.toLocaleString()}</span>
+                <span className="text-white/80"> {pricePeriod}</span>
+              </div>
+              <Button 
+                onClick={onInvest} 
+                size="lg" 
+                className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] text-white shadow-lg shadow-[#14b8a6]/30"
+                disabled={status === 'sold-out'}
+              >
+                {status === 'sold-out' ? 'Sold Out' : 'Invest Now'} 
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+);
+HMRPropertyCard.displayName = "HMRPropertyCard";
+
+export { HMRPropertyCard };

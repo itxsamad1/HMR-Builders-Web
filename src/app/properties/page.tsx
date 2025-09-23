@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, MapPin, Building, TrendingUp, Users, Filter, Search } from 'lucide-react';
+import { ArrowLeft, MapPin, Building, TrendingUp, Users, Filter, Search, Home } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { useAuth } from '@/components/AuthProvider';
+import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
 
 const PropertiesPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -191,59 +192,6 @@ const PropertiesPage = () => {
 
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
-      {/* Header */}
-      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="transparent-navbar rounded-2xl shadow-navbar">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-14 sm:h-16">
-            <Link href="/" className="flex items-center">
-              <Image 
-                src="/hmr-group.svg" 
-                alt="HMR Group" 
-                width={32} 
-                height={32}
-                className="mr-2 sm:w-10 sm:h-10"
-              />
-              <div className="text-base sm:text-lg lg:text-xl font-bold text-white">
-                HMR <span className="text-[#315dca]">BUILDERS</span>
-              </div>
-            </Link>
-
-            {/* Navigation Links */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-white/80 hover:text-white font-medium transition-colors">Home</Link>
-              <Link href="/properties" className="text-white font-medium">Properties</Link>
-              <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How it Works</Link>
-              <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
-              <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
-              <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              {user ? (
-                <UserProfileDropdown />
-              ) : (
-                <>
-                  <Link
-                    href="/login"
-                    className="text-white/80 hover:text-white font-medium transition-colors"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/get-started"
-                    className="bg-[#315dca] hover:bg-[#24246c] text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
-                  >
-                    Get Started
-                  </Link>
-                </>
-              )}
-            </div>
-
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="pt-20 sm:pt-24 lg:pt-28 pb-8 sm:pb-12">
@@ -312,109 +260,36 @@ const PropertiesPage = () => {
                 }
               };
               
+              const getPropertyIcon = (id: number) => {
+                switch (id) {
+                  case 1: return <Building className="h-6 w-6 text-white/80" />;
+                  case 2: return <TrendingUp className="h-6 w-6 text-white/80" />;
+                  case 3: return <Home className="h-6 w-6 text-white/80" />;
+                  case 4: return <Users className="h-6 w-6 text-white/80" />;
+                  case 5: return <Building className="h-6 w-6 text-white/80" />;
+                  case 6: return <Building className="h-6 w-6 text-white/80" />;
+                  default: return <Building className="h-6 w-6 text-white/80" />;
+                }
+              };
+              
               return (
-              <Link key={property.id} href={getPropertyLink(property.id)} className="block">
-                <div className="bg-white/95 backdrop-blur-sm rounded-2xl overflow-hidden hover:bg-white transition-all duration-500 group cursor-pointer transform hover:scale-[1.02] hover:shadow-2xl border border-gray-200">
-                {/* Property Image */}
-                <div className="relative h-48 sm:h-56 overflow-hidden">
-                  <Image
-                    src={property.image}
-                    alt={property.title}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  {/* Corner Animation Lines */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-[#315dca] animate-pulse"></div>
-                    <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-[#315dca] animate-pulse"></div>
-                    <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-[#315dca] animate-pulse"></div>
-                    <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-[#315dca] animate-pulse"></div>
-                  </div>
-                  {/* RWA Token Badge */}
-                  <div className="absolute top-3 left-3">
-                    <div className="bg-gradient-to-r from-[#315dca] to-[#203a74] text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm shadow-lg">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
-                        RWA TOKEN
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Tower Info Badge */}
-                  <div className="absolute top-3 right-3">
-                    <div className="bg-black/70 text-white px-3 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
-                      {property.floors} • {property.units?.length || 0} Types
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Property Details */}
-                <div className="p-4 sm:p-6 space-y-4">
-                  <div className="flex items-center text-gray-600">
-                    <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5 sm:mr-2" />
-                    <span className="text-xs sm:text-sm text-gray-600">{property.location}</span>
-                  </div>
-                  
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">{property.title}</h3>
-                  
-                  <p className="text-gray-600 text-sm sm:text-base line-clamp-2">
-                    {property.description}
-                  </p>
-                  
-                  {/* Financial Details */}
-                  <div className="bg-gray-50 rounded-lg p-3 sm:p-4 space-y-2 border border-gray-200">
-                    <div className="flex justify-between items-center text-xs sm:text-sm mb-2">
-                      <span className="text-gray-600">Status:</span>
-                      <div className={`${getStatusColor(property.status)} text-white px-2 py-1 rounded-full text-xs font-bold flex items-center`}>
-                        <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5"></div>
-                        {property.status}
-                      </div>
-                    </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-600">Tower Value:</span>
-                      <span className="font-semibold text-gray-900">{property.price}</span>
-                    </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-600">Market Value:</span>
-                      <span className="font-semibold text-gray-900">{property.marketValue}</span>
-                    </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-600">Appreciation:</span>
-                      <span className="font-semibold text-[#315dca]">{property.appreciation}</span>
-                    </div>
-                    <div className="flex justify-between text-xs sm:text-sm">
-                      <span className="text-gray-600">Expected ROI:</span>
-                      <span className="font-semibold text-[#315dca]">{property.roi}</span>
-                    </div>
-                  </div>
-
-                  {/* Investment Info */}
-                  <div className="flex justify-between items-center text-xs sm:text-sm">
-                    <span className="text-gray-600">Min. Investment:</span>
-                    <span className="font-semibold text-gray-900">{property.minInvestment}</span>
-                  </div>
-
-                  {/* Features */}
-                  <div className="flex flex-wrap gap-1 sm:gap-2">
-                    {property.features.slice(0, 3).map((feature, index) => (
-                      <span key={index} className="bg-[#315dca]/10 text-[#315dca] px-2 py-1 rounded-full text-xs border border-[#315dca]/20">
-                        {feature}
-                      </span>
-                    ))}
-                    {property.features.length > 3 && (
-                      <span className="bg-gray-100 text-gray-600 px-2 py-1 rounded-full text-xs border border-gray-200">
-                        +{property.features.length - 3} more
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Action Button */}
-                  <button className="w-full bg-gradient-to-r from-[#315dca] to-[#203a74] hover:from-[#203a74] hover:to-[#315dca] text-white py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                    {property.status === 'ACTIVE' ? 'Invest Now' : 'View Details'}
-                  </button>
-                </div>
-              </div>
-              </Link>
+                <HMRPropertyCard
+                  key={property.id}
+                  imageUrl={property.image}
+                  imageAlt={`${property.title} - ${property.type}`}
+                  logo={getPropertyIcon(property.id)}
+                  title={property.title}
+                  location={property.location}
+                  overview={property.description}
+                  price={parseInt(property.price.split(' ')[2]) * 1000000} // Convert "PKR 8.92 - 39.11 Cr" to number
+                  pricePeriod="Investment"
+                  status={property.status === 'ACTIVE' ? 'active' : 'coming-soon'}
+                  roi={property.roi}
+                  tokens={property.tokens}
+                  availableTokens={property.availableTokens}
+                  onInvest={() => window.open(getPropertyLink(property.id), '_blank')}
+                  className="h-96"
+                />
               );
             })}
           </div>

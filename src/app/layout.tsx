@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter, Orbitron } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/components/SessionProvider'
+import GlobalDock from '@/components/GlobalDock'
 
 const inter = Inter({ subsets: ['latin'] })
 const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' })
@@ -34,6 +35,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} ${orbitron.variable}`}>
         <SessionProvider>
+          <GlobalDock />
           {children}
         </SessionProvider>
       </body>

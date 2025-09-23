@@ -18,7 +18,8 @@ import {
   Coins,
   Lock,
   ExternalLink,
-  AlertTriangle
+  AlertTriangle,
+  Activity
 } from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
@@ -29,6 +30,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { LineChart, Line, ResponsiveContainer } from 'recharts';
+import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 interface Investment {
   id: string;
@@ -213,15 +216,11 @@ const PortfolioPage = () => {
               
               {/* Navigation Links */}
               <nav className="hidden lg:flex items-center space-x-8">
-                <Link href="/" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
-                  Dashboard
-                </Link>
+               
                 <Link href="/portfolio" className="text-[#14b8a6] font-medium border-b-2 border-[#14b8a6] pb-1">
                   Portfolio
                 </Link>
-                <Link href="/properties" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
-                  Marketplace
-                </Link>
+               
                 <Link href="/wallet" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
                   Transactions
                 </Link>
@@ -254,20 +253,29 @@ const PortfolioPage = () => {
           <div className="lg:col-span-3 space-y-6">
             
             {/* Portfolio Balance Card */}
-            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10 before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10">
-              <div className="absolute inset-0 opacity-5">
-                <FlickeringGrid
-                  squareSize={3}
-                  gridGap={4}
-                  flickerChance={0.1}
-                  color="rgb(20, 184, 166)"
-                  maxOpacity={0.3}
-                />
-              </div>
-              <CardHeader className="relative z-10">
-                <CardTitle className="text-white text-lg font-medium">Portfolio Balance</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 relative z-10">
+            <div className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={3}
+              />
+              <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10 before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10">
+                <div className="absolute inset-0 opacity-5">
+                  <FlickeringGrid
+                    squareSize={3}
+                    gridGap={4}
+                    flickerChance={0.1}
+                    color="rgb(20, 184, 166)"
+                    maxOpacity={0.3}
+                  />
+                </div>
+                <CardHeader className="relative z-10">
+                  <CardTitle className="text-white text-lg font-medium">Portfolio Balance</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6 relative z-10">
                 <div>
                   <div className="text-4xl font-bold text-white mb-4">
                     PKR {stats.totalInvested > 0 ? Number(stats.totalInvested).toLocaleString() : '5,235,000'}
@@ -301,189 +309,239 @@ const PortfolioPage = () => {
                     </ResponsiveContainer>
                   </ChartContainer>
                 </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Holdings Section */}
-            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10 before:absolute before:inset-0 before:rounded-lg before:p-[1px] before:bg-gradient-to-r before:from-[#14b8a6]/50 before:via-[#0ea5e9]/30 before:to-[#14b8a6]/50 before:-z-10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white text-lg font-medium">Holdings</CardTitle>
-                  <div className="flex space-x-2">
-                    <Button 
-                      variant={activeHoldingsTab === 'buy' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setActiveHoldingsTab('buy')}
-                      className={activeHoldingsTab === 'buy' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30' : 'border-gray-600 text-white hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
-                    >
-                      Buy
-                    </Button>
-                    <Button 
-                      variant={activeHoldingsTab === 'sell' ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setActiveHoldingsTab('sell')}
-                      className={activeHoldingsTab === 'sell' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30' : 'border-gray-600 text-white hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
-                    >
-                      Sell
-                    </Button>
+            <div className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={3}
+              />
+              <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white text-lg font-medium">Holdings</CardTitle>
+                    <div className="flex space-x-2">
+                      <Button 
+                        variant={activeHoldingsTab === 'buy' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setActiveHoldingsTab('buy')}
+                        className={activeHoldingsTab === 'buy' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30 text-black' : 'border-gray-600 text-black hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
+                      >
+                        Buy
+                      </Button>
+                      <Button 
+                        variant={activeHoldingsTab === 'sell' ? 'default' : 'outline'}
+                        size="sm"
+                        onClick={() => setActiveHoldingsTab('sell')}
+                        className={activeHoldingsTab === 'sell' ? 'bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] shadow-lg shadow-[#14b8a6]/30 text-black' : 'border-gray-600 text-black hover:bg-gradient-to-r hover:from-[#334155] hover:to-[#475569]'}
+                      >
+                        Sell
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent>
+                </CardHeader>
+                <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Property Cards */}
                   {propertiesData.length > 0 ? propertiesData.map((property: any, index: number) => (
-                    <div key={property.propertyId} className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
-                      <div className="flex items-start justify-between mb-3">
-                        <Badge 
-                          className={`text-xs ${
-                            property.status === 'active' 
-                              ? 'bg-[#14b8a6] text-white' 
-                              : 'bg-[#f59e0b] text-white'
-                          }`}
-                        >
-                          {property.status === 'active' ? 'ACTIVE' : 'COMING SOON'}
-                        </Badge>
-                        <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
-                      </div>
-                      
-                      {/* Property Image Placeholder */}
-                      <div className="w-full h-32 bg-gradient-to-br from-[#14b8a6]/20 to-[#0f9488]/20 rounded-lg mb-3 flex items-center justify-center">
-                        <Building2 className="w-12 h-12 text-[#14b8a6]" />
-                      </div>
-                      
-                      <h3 className="text-white font-semibold mb-2">{property.propertyTitle}</h3>
-                      <p className="text-white font-bold">PKR {Number(property.totalInvested).toLocaleString()}</p>
-                    </div>
+                    <HMRPropertyCard
+                      key={property.propertyId}
+                      imageUrl={`/projects/${property.propertySlug}/main.jpg`}
+                      imageAlt={`${property.propertyTitle} - Investment Property`}
+                      logo={<Building2 className="h-6 w-6 text-white/80" />}
+                      title={property.propertyTitle}
+                      location="HMR Waterfront, Karachi"
+                      overview={`Your investment in ${property.propertyTitle} with ${property.totalTokens} tokens purchased.`}
+                      price={Number(property.totalInvested)}
+                      pricePeriod="Invested"
+                      status="active"
+                      roi="18-22%"
+                      tokens={property.totalTokens}
+                      availableTokens={0}
+                      onInvest={() => window.open(`/properties/${property.propertySlug}`, '_blank')}
+                      className="h-80"
+                    />
                   )) : (
                     // Default property cards when no data
                     <>
-                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
-                        <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white text-xs shadow-lg">ACTIVE</Badge>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
-                        </div>
-                        <div className="w-full h-32 bg-gradient-to-br from-[#14b8a6]/20 to-[#0f9488]/20 rounded-lg mb-3 flex items-center justify-center">
-                          <Building2 className="w-12 h-12 text-[#14b8a6]" />
-                        </div>
-                        <h3 className="text-white font-semibold mb-2">H1 Tower</h3>
-                        <p className="text-white font-bold">PKR 2,500,000</p>
-                      </div>
+                      <HMRPropertyCard
+                        imageUrl="/projects/h1-tower/main.jpg"
+                        imageAlt="H1 Tower - Investment Property"
+                        logo={<Building2 className="h-6 w-6 text-white/80" />}
+                        title="H1 Tower"
+                        location="HMR Waterfront, Karachi"
+                        overview="Premium residential tower offering luxury living with stunning city views and world-class amenities."
+                        price={2500000}
+                        pricePeriod="Investment"
+                        status="active"
+                        roi="18-22%"
+                        tokens={1000}
+                        availableTokens={342}
+                        onInvest={() => window.open('/properties/h1-tower', '_blank')}
+                        className="h-80"
+                      />
 
-                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#14b8a6]/20 hover:border-[#14b8a6]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#14b8a6]/5 hover:shadow-[#14b8a6]/20">
-                        <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] text-white text-xs shadow-lg">ACTIVE</Badge>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#14b8a6] transition-colors" />
-                        </div>
-                        <div className="w-full h-32 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-lg mb-3 flex items-center justify-center">
-                          <Building2 className="w-12 h-12 text-blue-400" />
-                        </div>
-                        <h3 className="text-white font-semibold mb-2">Saima Tower</h3>
-                        <p className="text-white font-bold">PKR 1,750,000</p>
-                      </div>
+                      <HMRPropertyCard
+                        imageUrl="/projects/saima-tower/main.jpg"
+                        imageAlt="Saima Tower - Investment Property"
+                        logo={<TrendingUp className="h-6 w-6 text-white/80" />}
+                        title="Saima Tower"
+                        location="HMR Waterfront, Karachi"
+                        overview="Ultra-luxury commercial and residential complex with state-of-the-art facilities and smart building technology."
+                        price={1750000}
+                        pricePeriod="Investment"
+                        status="active"
+                        roi="17-21%"
+                        tokens={1000}
+                        availableTokens={1000}
+                        onInvest={() => window.open('/properties/saima-tower', '_blank')}
+                        className="h-80"
+                      />
 
-                      <div className="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] rounded-lg p-4 border border-[#f59e0b]/20 hover:border-[#f59e0b]/50 transition-all duration-300 group cursor-pointer shadow-lg shadow-[#f59e0b]/5 hover:shadow-[#f59e0b]/20">
-                        <div className="flex items-start justify-between mb-3">
-                          <Badge className="bg-gradient-to-r from-[#f59e0b] to-[#f97316] text-white text-xs shadow-lg">COMING SOON</Badge>
-                          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#f59e0b] transition-colors" />
-                        </div>
-                        <div className="w-full h-32 bg-gradient-to-br from-orange-500/20 to-orange-600/20 rounded-lg mb-3 flex items-center justify-center">
-                          <Building2 className="w-12 h-12 text-orange-400" />
-                        </div>
-                        <h3 className="text-white font-semibold mb-2">A4 Waterfront</h3>
-                        <p className="text-white font-bold">PKR 1,750,000</p>
-                      </div>
+                      <HMRPropertyCard
+                        imageUrl="/projects/aa-waterfront/main.jpg"
+                        imageAlt="AA Waterfront - Investment Property"
+                        logo={<Building2 className="h-6 w-6 text-white/80" />}
+                        title="AA Waterfront"
+                        location="HMR Waterfront, Karachi"
+                        overview="Smart luxury residential development with stunning sea views and premium amenities."
+                        price={1750000}
+                        pricePeriod="Investment"
+                        status="coming-soon"
+                        roi="16-20%"
+                        tokens={1000}
+                        availableTokens={1000}
+                        onInvest={() => window.open('/properties/aa-waterfront', '_blank')}
+                        className="h-80"
+                      />
                     </>
                   )}
                 </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* Right Column - 40% width (2 of 5 columns) */}
           <div className="lg:col-span-2 space-y-6">
             
             {/* Secondary Market Card */}
-            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#f59e0b]/30 relative overflow-hidden shadow-2xl shadow-[#f59e0b]/10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white text-lg font-medium">Secondary Market</CardTitle>
-                  <div className="w-8 h-8 bg-gradient-to-br from-[#f59e0b] to-[#f97316] rounded-full flex items-center justify-center shadow-lg shadow-[#f59e0b]/30">
-                    <span className="text-black font-bold text-sm">M</span>
+            <div className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={3}
+              />
+              <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#f59e0b]/30 relative overflow-hidden shadow-2xl shadow-[#f59e0b]/10">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white text-lg font-medium">Secondary Market</CardTitle>
+                    <div className="w-8 h-8 bg-gradient-to-br from-[#f59e0b] to-[#f97316] rounded-full flex items-center justify-center shadow-lg shadow-[#f59e0b]/30">
+                      <span className="text-black font-bold text-sm">M</span>
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#94a3b8]">R+</span>
-                    <span className="text-white font-medium">-</span>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#94a3b8]">R+</span>
+                      <span className="text-white font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#94a3b8]">A+</span>
+                      <span className="text-white font-medium">-</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#94a3b8]">PKR</span>
+                      <span className="text-white font-medium">1.34</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[#94a3b8]">PKR</span>
+                      <span className="text-white font-medium">1.35</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#94a3b8]">A+</span>
-                    <span className="text-white font-medium">-</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#94a3b8]">PKR</span>
-                    <span className="text-white font-medium">1.34</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[#94a3b8]">PKR</span>
-                    <span className="text-white font-medium">1.35</span>
-                  </div>
-                </div>
-                <Button className="w-full bg-gradient-to-r from-[#1e293b] to-[#334155] hover:from-[#334155] hover:to-[#475569] text-white border border-gray-600 shadow-lg shadow-gray-600/20 hover:shadow-gray-600/30 transition-all duration-300">
-                  Sell
-                </Button>
-              </CardContent>
-            </Card>
+                  <Button className="w-full bg-gradient-to-r from-[#1e293b] to-[#334155] hover:from-[#334155] hover:to-[#475569] text-white border border-gray-600 shadow-lg shadow-gray-600/20 hover:shadow-gray-600/30 transition-all duration-300">
+                    Sell
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Secondary Trading Table */}
-            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white text-lg font-medium">Secondary</CardTitle>
-                  <Menu className="w-5 h-5 text-[#94a3b8]" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-4 gap-2 text-xs text-[#94a3b8] pb-2 border-b border-gray-700">
-                    <span>Bid</span>
-                    <span>Ask</span>
-                    <span>Orders</span>
-                    <span></span>
+            <div className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={3}
+              />
+              <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white text-lg font-medium">Secondary Trading</CardTitle>
+                    <Menu className="w-5 h-5 text-[#94a3b8]" />
                   </div>
-                  
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-4 gap-2 text-sm">
-                      <span className="text-white">PKR 1.34</span>
-                      <span className="text-white">PKR 1.35</span>
-                      <span className="text-white">12,500</span>
-                      <span className="text-[#14b8a6]">406</span>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-4 gap-2 text-xs text-[#94a3b8] pb-2 border-b border-gray-700">
+                      <span>Bid</span>
+                      <span>Ask</span>
+                      <span>Orders</span>
+                      <span></span>
                     </div>
-                    <div className="grid grid-cols-4 gap-2 text-sm">
-                      <span className="text-white">PKR 1.35</span>
-                      <span className="text-white">PKR 1.35</span>
-                      <span className="text-white">5,600</span>
-                      <span className="text-[#14b8a6]">325</span>
+                    
+                    <div className="space-y-3">
+                      <div className="grid grid-cols-4 gap-2 text-sm">
+                        <span className="text-white">PKR 1.34</span>
+                        <span className="text-white">PKR 1.35</span>
+                        <span className="text-white">12,500</span>
+                        <span className="text-[#14b8a6]">406</span>
+                      </div>
+                      <div className="grid grid-cols-4 gap-2 text-sm">
+                        <span className="text-white">PKR 1.35</span>
+                        <span className="text-white">PKR 1.35</span>
+                        <span className="text-white">5,600</span>
+                        <span className="text-[#14b8a6]">325</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Activity Feed */}
-            <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white text-lg font-medium">Activity</CardTitle>
-                  <Menu className="w-5 h-5 text-[#94a3b8]" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
+            <div className="relative">
+              <GlowingEffect
+                spread={40}
+                glow={true}
+                disabled={false}
+                proximity={64}
+                inactiveZone={0.01}
+                borderWidth={3}
+              />
+              <Card className="bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b] border border-[#14b8a6]/30 relative overflow-hidden shadow-2xl shadow-[#14b8a6]/10">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-white text-lg font-medium">Activity Feed</CardTitle>
+                    <Menu className="w-5 h-5 text-[#94a3b8]" />
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
                     <div className="w-5 h-5 bg-green-500/20 rounded-full flex items-center justify-center mt-0.5">
                       <CheckCircle className="w-3 h-3 text-green-400" />
                     </div>
@@ -522,9 +580,10 @@ const PortfolioPage = () => {
                       <p className="text-[#94a3b8] text-xs">10:55</p>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>

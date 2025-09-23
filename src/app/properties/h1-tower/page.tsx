@@ -24,6 +24,7 @@ import {
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import BuyTokenDialog from '@/components/BuyTokenDialog';
 import { useAuth } from '@/components/AuthProvider';
+import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
 
 const H1TowerPage = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -379,41 +380,23 @@ const H1TowerPage = () => {
             {activeTab === 'tokens' && (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {unitTypes.map((unit, index) => (
-                  <div key={index} className="bg-white/95 backdrop-blur-sm rounded-xl p-6 hover:bg-white transition-all duration-300 border border-gray-200">
-                    <div className="mb-4">
-                      <div className="text-[#315dca] font-bold text-lg mb-1">{unit.tokenSymbol}</div>
-                      <h4 className="text-gray-900 font-bold text-lg">{unit.type}</h4>
-                      <div className="text-[#315dca] font-semibold text-right mt-2">{unit.price}</div>
-                    </div>
-                    <div className="space-y-2 text-sm mb-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Area:</span>
-                        <span className="text-gray-900 font-medium">{unit.area}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Bedrooms:</span>
-                        <span className="text-gray-900 font-medium">{unit.bedrooms}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Bathrooms:</span>
-                        <span className="text-gray-900 font-medium">{unit.bathrooms}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tokens:</span>
-                        <span className="text-[#315dca] font-semibold">{unit.tokens}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Token Price:</span>
-                        <span className="text-[#315dca] font-semibold">{unit.tokenPrice}</span>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setBuyOpen(true)}
-                      className="w-full bg-[#315dca] hover:bg-[#203a74] text-white py-2 rounded-lg font-medium transition-colors"
-                    >
-                      Buy Tokens
-                    </button>
-                  </div>
+                  <HMRPropertyCard
+                    key={index}
+                    imageUrl="/projects/h1-tower/main.jpg"
+                    imageAlt={`${unit.type} - H1 Tower`}
+                    logo={<Building2 className="h-6 w-6 text-white/80" />}
+                    title={unit.type}
+                    location="H1 Tower, HMR Waterfront"
+                    overview={`${unit.area} • ${unit.bedrooms} Bed • ${unit.bathrooms} Bath • Token Symbol: ${unit.tokenSymbol}`}
+                    price={parseInt(unit.price.replace(/[^\d]/g, ''))}
+                    pricePeriod="Investment"
+                    status="active"
+                    roi="18-22%"
+                    tokens={unit.tokens}
+                    availableTokens={Math.floor(unit.tokens * 0.7)}
+                    onInvest={() => setBuyOpen(true)}
+                    className="h-96"
+                  />
                 ))}
               </div>
             )}

@@ -3,15 +3,58 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Menu, X, Home, RefreshCw, Eye, Globe, Zap, Smartphone } from 'lucide-react';
+import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Home, RefreshCw, Eye, Globe as GlobeIcon, Zap, Smartphone } from 'lucide-react';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { useAuth } from '@/components/AuthProvider';
+import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
+import { Squares } from '@/components/ui/squares-background';
+import { Globe } from '@/components/ui/globe';
+import { COBEOptions } from "cobe";
+import AnimatedLoadingSkeleton from '@/components/ui/animated-loading-skeleton';
+import { HyperText } from '@/components/ui/hyper-text';
+
+const GLOBE_CONFIG: COBEOptions = {
+  width: 800,
+  height: 800,
+  onRender: () => {},
+  devicePixelRatio: 2,
+  phi: 0,
+  theta: 0.3,
+  dark: 0,
+  diffuse: 0.4,
+  mapSamples: 16000,
+  mapBrightness: 1.2,
+  baseColor: [1, 1, 1],
+  markerColor: [251 / 255, 100 / 255, 21 / 255],
+  glowColor: [1, 1, 1],
+  markers: [
+    { location: [14.5995, 120.9842], size: 0.03 },
+    { location: [19.076, 72.8777], size: 0.1 },
+    { location: [23.8103, 90.4125], size: 0.05 },
+    { location: [30.0444, 31.2357], size: 0.07 },
+    { location: [39.9042, 116.4074], size: 0.08 },
+    { location: [-23.5505, -46.6333], size: 0.1 },
+    { location: [19.4326, -99.1332], size: 0.1 },
+    { location: [40.7128, -74.006], size: 0.1 },
+    { location: [34.6937, 135.5022], size: 0.05 },
+    { location: [41.0082, 28.9784], size: 0.06 },
+  ],
+};
 
 const HomePage = () => {
   const [email, setEmail] = useState('');
   const [activeTab, setActiveTab] = useState('featured');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
+
+  // Handle initial loading
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 second loading animation
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const properties = [
     {
@@ -115,121 +158,124 @@ const HomePage = () => {
     { value: "25+", label: "Properties Listed" }
   ];
 
+  // Loading Screen
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-[#060606] flex flex-col items-center justify-center overflow-hidden z-50">
+        {/* Squares Background */}
+        <div className="absolute inset-0">
+          <Squares
+            direction="diagonal"
+            speed={0.3}
+            squareSize={30}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </div>
+        
+        {/* Loading Content */}
+        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4">
+          <div className="text-center mb-8">
+           
+            
+          
+            
+         
+          </div>
+            {/* Animated Loading Skeleton - Full Width */}
+            <div className="w-full max-w-6xl">
+            <AnimatedLoadingSkeleton />
+          </div>
+         
+          
+        
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
-      {/* Header */}
-      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="transparent-navbar rounded-2xl shadow-navbar">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-14 sm:h-16">
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden text-white p-1"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-            
-            {/* Logo (Left) */}
-            <div className="flex items-center">
-              <Image 
-                src="/hmr-group.svg" 
-                alt="HMR Group" 
-                width={32} 
-                height={32}
-                className="mr-2 sm:w-10 sm:h-10"
-              />
-              <div className="text-base sm:text-lg lg:text-xl font-bold text-white">
-                HMR <span className="text-[#315dca]">BUILDERS</span>
-              </div>
-            </div>
-
-            {/* Navigation Links (Center) */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-white font-medium">Home</Link>
-              <Link href="/properties" className="text-white/80 hover:text-white font-medium transition-colors">Properties</Link>
-              <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How it Works</Link>
-              <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
-              <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
-              <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
-            </nav>
-
-            {/* Action Buttons */}
-            <div className="flex items-center space-x-2 sm:space-x-4">
-              {/* Desktop buttons */}
-              <div className="hidden md:flex items-center space-x-4">
-                {user ? (
-                  <UserProfileDropdown />
-                ) : (
-                  <>
-                    <Link href="/login" className="text-white/80 hover:text-white font-medium transition-colors">
-                      Sign In
-                    </Link>
-                    <Link href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
-                      Get Started
-                    </Link>
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-
-            {/* Mobile Menu */}
-            {mobileMenuOpen && (
-              <div className="md:hidden py-4 border-t border-[#203a74]/50">
-                <nav className="flex flex-col space-y-4">
-                  <Link href="/" className="text-white hover:text-[#315dca] font-medium">Home</Link>
-                  <Link href="/properties" className="text-white hover:text-[#315dca] font-medium">Properties</Link>
-                  <Link href="/how-it-works" className="text-white hover:text-[#315dca] font-medium">How it Works</Link>
-                  <Link href="/about" className="text-white hover:text-[#315dca] font-medium">About</Link>
-                  <Link href="/faqs" className="text-white hover:text-[#315dca] font-medium">FAQs</Link>
-                  <Link href="/media" className="text-white hover:text-[#315dca] font-medium">Media</Link>
-                  
-                  {/* Mobile Action Buttons */}
-                  <div className="flex flex-col space-y-3 pt-4 border-t border-[#203a74]/30">
-                    {user ? (
-                      <div className="flex justify-center">
-                        <UserProfileDropdown />
-                      </div>
-                    ) : (
-                      <>
-                        <Link href="/login" className="text-white/80 hover:text-white font-medium text-center">
-                          Sign In
-                        </Link>
-                        <Link href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-3 rounded-lg font-medium transition-colors text-center">
-                          Get Started
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                </nav>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-center">
+        {/* Squares Background */}
+        <div className="absolute inset-0 bg-[#060606]">
+          <Squares
+            direction="diagonal"
+            speed={0.5}
+            squareSize={40}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px]">
             {/* Left Content */}
-            <div className="text-white dark:text-white space-y-4 sm:space-y-6">
-              <div className="space-y-3 sm:space-y-4">
-                <div className="inline-flex items-center bg-[#315dca]/20 border border-[#315dca]/30 rounded-full px-3 py-1.5 text-xs font-medium text-[#315dca] animate-pulse">
-                  <div className="w-1.5 h-1.5 bg-[#315dca] rounded-full mr-2 animate-ping"></div>
-                  LIVE PROPERTIES
-                </div>
-                
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                  <span className="text-white dark:text-white">MORE TOKENIZED</span><br />
-                  <span className="text-[#315dca]">PROPERTIES COMING SOON!</span>
-                </h1>
-                
-                <p className="text-sm sm:text-base lg:text-lg text-[#dee0e5] dark:text-gray-300 leading-relaxed max-w-xl">
-                  Start investing in premium Pakistani real estate from just PKR 1 Million. Fractional ownership made simple.
-                </p>
-              </div>
+             <div className="text-white dark:text-white space-y-4 sm:space-y-6">
+               <div className="space-y-3 sm:space-y-4">
+                 {/* Animated Status Badge */}
+                 <div className="inline-flex items-center bg-[#315dca]/20 border border-[#315dca]/30 rounded-full px-3 py-1.5 text-xs font-medium text-[#315dca] animate-pulse">
+                   <div className="w-1.5 h-1.5 bg-[#315dca] rounded-full mr-2 animate-ping"></div>
+                   <HyperText 
+                     text="LIVE PROPERTIES" 
+                     duration={1200}
+                     className="text-[#315dca] font-bold"
+                     framerProps={{
+                       initial: { opacity: 0, scale: 0.8 },
+                       animate: { opacity: 1, scale: 1 },
+                       exit: { opacity: 0, scale: 1.2 }
+                     }}
+                   />
+                 </div>
+                 
+                 {/* Main Hero Title with HyperText */}
+                 <h1 className="text-xxxl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
+                   <div className="mb-2">
+                     <HyperText 
+                       text="MORE TOKENIZED" 
+                       duration={1500}
+                       className="text-white font-bold"
+                       framerProps={{
+                         initial: { opacity: 0, y: 20 },
+                         animate: { opacity: 1, y: 0 },
+                         exit: { opacity: 0, y: -20 }
+                       }}
+                     />
+                   </div>
+                   <div className="text-[#315dca]">
+                     <HyperText 
+                       text="PROPERTIES COMING SOON!" 
+                       duration={1800}
+                       className="text-[#315dca] font-bold"
+                       framerProps={{
+                         initial: { opacity: 0, scale: 0.9 },
+                         animate: { opacity: 1, scale: 1 },
+                         exit: { opacity: 0, scale: 1.1 }
+                       }}
+                     />
+                   </div>
+                 </h1>
+                 
+                 <p className="text-sm sm:text-base lg:text-lg text-[#dee0e5] dark:text-gray-300 leading-relaxed max-w-xl">
+                   Start investing in premium Pakistani real estate from just 
+                   <span className="inline-block mx-1">
+                     <HyperText 
+                       text="PKR 1 MILLION" 
+                       duration={2000}
+                       className="text-[#315dca] font-bold"
+                       framerProps={{
+                         initial: { opacity: 0, scale: 0.8 },
+                         animate: { opacity: 1, scale: 1 },
+                         exit: { opacity: 0, scale: 1.2 }
+                       }}
+                     />
+                   </span>
+                   . Fractional ownership made simple.
+                 </p>
+               </div>
               
               <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <a href="/get-started" className="group bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center">
@@ -252,65 +298,45 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Right Content - Property Card */}
-            <div className="relative mt-6 sm:mt-8 lg:mt-0">
-              <Link href="/properties/h1-tower" className="block">
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer" style={{borderRadius: '24px 24px 32px 32px'}}>
-                  <div className="relative h-40 sm:h-48 md:h-56">
-                    <Image
-                      src="/projects/h1-tower/main.jpg"
-                      alt="H1 Tower"
-                      fill
-                      className="object-cover"
-                    />
-                    {/* Live Badge */}
-                    <div className="absolute top-3 right-3">
-                      <div className="bg-[#315dca] text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
-                        <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>
-                        ACTIVE
-                      </div>
-                    </div>
-                    {/* Property Type Badge */}
-                    <div className="absolute top-3 left-3">
-                      <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
-                        Flagship Tower
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-4 sm:p-6 space-y-4">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
-                      <span className="text-sm">HMR Waterfront, Karachi</span>
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-gray-900">H1 Tower</h3>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Tower Value:</span>
-                        <span className="font-semibold text-[#315dca]">PKR 2B</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Market Value:</span>
-                        <span className="font-semibold text-gray-900">PKR 2.4B</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Appreciation:</span>
-                        <span className="font-semibold text-[#315dca]">20.0%</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Expected ROI:</span>
-                        <span className="font-semibold text-[#315dca]">18-22%</span>
-                      </div>
-                    </div>
-                    
-                    <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
-                      View Tower Details
-                    </button>
-                  </div>
+            {/* Right Content - Globe */}
+            <div className="relative mt-6 sm:mt-8 lg:mt-0 flex items-center justify-center">
+              <div className="relative w-full max-w-lg h-96 lg:h-[500px] group">
+                {/* Subtle glow effect behind globe */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#315dca]/10 to-transparent rounded-full blur-3xl scale-110"></div>
+                
+                <Globe 
+                  className="w-full h-full relative z-10"
+                  config={{
+                    ...GLOBE_CONFIG,
+                    width: 600,
+                    height: 600,
+                    markers: [
+                      { location: [24.8607, 67.0011], size: 0.15 }, // Karachi, Pakistan
+                      { location: [31.5204, 74.3587], size: 0.1 },  // Lahore, Pakistan
+                      { location: [33.6844, 73.0479], size: 0.08 }, // Islamabad, Pakistan
+                      { location: [25.3960, 68.3578], size: 0.06 }, // Hyderabad, Pakistan
+                      { location: [30.1798, 71.4925], size: 0.05 }, // Multan, Pakistan
+                    ],
+                    markerColor: [49 / 255, 93 / 255, 202 / 255], // HMR blue
+                    glowColor: [49 / 255, 93 / 255, 202 / 255],
+                    baseColor: [0.05, 0.05, 0.1],
+                    diffuse: 0.8,
+                    mapBrightness: 3,
+                    dark: 0.1,
+                  }}
+                />
+                
+                {/* Floating stats overlay */}
+                <div className="absolute top-4 left-4 bg-black/20 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                  <div className="text-white text-sm font-medium">Pakistan</div>
+                  <div className="text-[#315dca] text-xs">5 Cities</div>
                 </div>
-              </Link>
+                
+                <div className="absolute bottom-4 right-4 bg-black/20 backdrop-blur-sm rounded-lg p-3 border border-white/10">
+                  <div className="text-white text-sm font-medium">Global</div>
+                  <div className="text-[#315dca] text-xs">Expansion</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -322,61 +348,146 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Key Features Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/50 dark:bg-gray-900/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
-              Enter the future of <span className="text-[#315dca]">real estate</span>
+      {/* Modern Startup Features Section */}
+      <section className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/80 via-[#1a1a2e]/60 to-[#16213e]/80"></div>
+          <Squares
+            direction="up"
+            speed={0.2}
+            squareSize={60}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16 sm:mb-20">
+            <div className="inline-flex items-center bg-[#315dca]/10 border border-[#315dca]/30 rounded-full px-4 py-2 text-sm font-medium text-[#315dca] mb-6">
+              <div className="w-2 h-2 bg-[#315dca] rounded-full mr-2 animate-pulse"></div>
+              REVOLUTIONARY TECHNOLOGY
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+              The Future of <span className=" text-transparent bg-clip-text bg-gradient-to-r from-[#315dca] to-[#14b8a6]">
+                <div className="flex justify-center w-full">
+                  <HyperText 
+                    text="REAL ESTATE" 
+                    duration={2000}
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-[#315dca] to-[#14b8a6] font-bold text-center"
+                    framerProps={{
+                      initial: { opacity: 0, scale: 0.8 },
+                      animate: { opacity: 1, scale: 1 },
+                      exit: { opacity: 0, scale: 1.2 }
+                    }}
+                  />
+                </div>
+              </span>
             </h2>
-            <p className="text-lg sm:text-xl text-[#dee0e5] dark:text-gray-300 max-w-3xl mx-auto">
-              Experience the power of tokenized real estate with HMR Builders
+            <p className="text-xl sm:text-2xl text-[#dee0e5] max-w-4xl mx-auto leading-relaxed">
+              Experience the power of blockchain technology transforming traditional real estate investment
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+
+          {/* Modern Feature Cards with Parallax */}
+          <div className="space-y-16 sm:space-y-20 lg:space-y-24">
             {[
               {
-                icon: <Home className="w-8 h-8" />,
                 title: "Fractional Ownership",
-                description: "Own a piece of premium Pakistani real estate with as little as PKR 1 Million"
+                description: "Break down barriers to premium real estate. Own a piece of luxury Pakistani properties starting from just PKR 1 Million through our innovative tokenization platform.",
+                image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "Modern real estate investment",
+                badge: "Start from PKR 1M",
+                badgeDesc: "Minimum investment threshold"
               },
               {
-                icon: <TrendingUp className="w-8 h-8" />,
+                title: "Blockchain Security",
+                description: "Your investments are secured by cutting-edge blockchain technology. Every transaction is transparent, immutable, and verifiable on the blockchain.",
+                image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2036&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "Blockchain technology",
+                badge: "100% Transparent",
+                badgeDesc: "All transactions on blockchain"
+              },
+              {
+                title: "Global Accessibility",
+                description: "Invest in Pakistani real estate from anywhere in the world. Our platform is designed for the global Pakistani diaspora and international investors.",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "Global investment platform",
+                badge: "Worldwide Access",
+                badgeDesc: "Invest from anywhere, anytime"
+              },
+              {
                 title: "High Returns",
-                description: "Earn 15-20% annual returns through rental income and property appreciation"
+                description: "Earn 15-20% annual returns through rental income and property appreciation. Our carefully selected properties offer exceptional growth potential.",
+                image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "High returns investment",
+                badge: "15-20% Returns",
+                badgeDesc: "Annual expected returns"
               },
               {
-                icon: <RefreshCw className="w-8 h-8" />,
-                title: "Liquidity",
-                description: "Trade your property tokens on our secondary market anytime"
+                title: "Liquidity & Trading",
+                description: "Trade your property tokens on our secondary market anytime. Full liquidity with transparent pricing and instant settlements.",
+                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "Trading platform",
+                badge: "Instant Trading",
+                badgeDesc: "24/7 secondary market"
               },
               {
-                icon: <Eye className="w-8 h-8" />,
-                title: "Transparency",
-                description: "Full transparency with blockchain-secured ownership and transactions"
-              },
-              {
-                icon: <Globe className="w-8 h-8" />,
-                title: "Diversification",
-                description: "Invest across multiple properties and locations in Pakistan"
-              },
-              {
-                icon: <Zap className="w-8 h-8" />,
-                title: "Global Access",
-                description: "Access premium Pakistani real estate from anywhere in the world"
+                title: "SECP Regulated",
+                description: "Fully compliant with Pakistani regulations. Our platform is licensed and regulated by the Securities and Exchange Commission of Pakistan.",
+                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
+                alt: "Regulated platform",
+                badge: "SECP Licensed",
+                badgeDesc: "Fully regulated platform"
               }
             ].map((feature, index) => (
-              <div key={index} className="group bg-white/5 dark:bg-gray-800/50 backdrop-blur-sm border border-white/10 dark:border-gray-700/50 rounded-2xl p-6 sm:p-8 hover:bg-white/10 dark:hover:bg-gray-800/70 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl">
-                <div className="w-16 h-16 bg-[#315dca]/20 rounded-2xl flex items-center justify-center text-[#315dca] mb-6 group-hover:bg-[#315dca]/30 transition-colors">
-                  {feature.icon}
+              <div key={index} className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+                {/* Content */}
+                <div className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                  <div className="space-y-4">
+                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+                      {feature.title}
+                    </h3>
+                    <p className="text-lg sm:text-xl text-[#dee0e5] leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-4">
+                    <div className="bg-[#315dca]/10 border border-[#315dca]/30 rounded-full px-4 py-2 text-sm font-medium text-[#315dca]">
+                      {feature.badge}
+                    </div>
+                    <div className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm font-medium text-white/80">
+                      {feature.badgeDesc}
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white dark:text-white mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-[#dee0e5] dark:text-gray-300 leading-relaxed">
-                  {feature.description}
-                </p>
+
+                {/* Image */}
+                <div className={`relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl overflow-hidden group ${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
+                  <img 
+                    src={feature.image}
+                    alt={feature.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                  
+                  {/* Floating elements for parallax effect */}
+                  <div className="absolute top-8 right-8 w-16 h-16 bg-[#315dca]/20 rounded-full blur-xl animate-pulse"></div>
+                  <div className="absolute bottom-8 left-8 w-24 h-24 bg-[#14b8a6]/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
+                  
+                  {/* Overlay content */}
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 transform transition-transform duration-300 group-hover:translate-y-[-4px]">
+                      <h4 className="text-white font-bold text-lg mb-2">{feature.badge}</h4>
+                      <p className="text-white/80 text-sm">{feature.badgeDesc}</p>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             ))}
           </div>
@@ -393,78 +504,56 @@ const HomePage = () => {
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {properties.map((property, index) => {
-              const getPropertyLink = (id: number) => {
-                switch (id) {
-                  case 1: return "/properties/h1-tower";
-                  case 2: return "/properties/saima-tower";
-                  case 3: return "/properties/aa-waterfront";
-                  default: return "#";
-                }
-              };
-              
-              return (
-              <Link key={property.id} href={getPropertyLink(property.id)} className="block">
-                <div className="bg-white rounded-3xl shadow-2xl overflow-hidden hover:scale-105 transition-all duration-300 group" style={{borderRadius: '24px 24px 32px 32px'}}>
-                  {/* Property Image */}
-                  <div className="relative h-40 sm:h-48">
-                    <Image
-                      src={property.image}
-                      alt={property.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {/* Status Badge */}
-                    <div className="absolute top-3 right-3">
-                      <div className={`${property.status === 'ACTIVE' ? 'bg-[#315dca]' : 'bg-orange-500'} text-white px-2.5 py-1 rounded-full text-xs font-bold flex items-center ${property.status === 'ACTIVE' ? 'animate-pulse' : ''}`}>
-                        {property.status === 'ACTIVE' && <div className="w-1.5 h-1.5 bg-white rounded-full mr-1.5 animate-ping"></div>}
-                        {property.status}
-                      </div>
-                    </div>
-                    {/* Property Type Badge */}
-                    <div className="absolute top-3 left-3">
-                      <div className="bg-black/50 text-white px-2.5 py-1 rounded-full text-xs font-medium">
-                        {property.type}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Property Details */}
-                  <div className="p-4 sm:p-6 space-y-4">
-                    <div className="flex items-center text-gray-600">
-                      <MapPin className="w-4 h-4 text-[#315dca] mr-2" />
-                      <span className="text-sm">{property.location}</span>
-                    </div>
-                    
-                    <h3 className="text-lg font-bold text-gray-900">{property.title}</h3>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">HMR Builders price:</span>
-                        <span className="font-semibold text-[#315dca]">{property.price}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Estimated market value:</span>
-                        <span className="font-semibold text-gray-900">{property.marketValue}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Estimated instant appreciation:</span>
-                        <span className="font-semibold text-[#315dca]">{property.appreciation}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Est. annualised net ROI over first 5 years:</span>
-                        <span className="font-semibold text-[#315dca]">{property.roi}</span>
-                      </div>
-                    </div>
-                    
-                    <button className="w-full bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors">
-                      {property.status === 'ACTIVE' ? 'Invest Now' : 'View Details'}
-                    </button>
-                  </div>
-                </div>
-              </Link>
-              );
-            })}
+            <HMRPropertyCard
+              imageUrl="/projects/h1-tower/main.jpg"
+              imageAlt="H1 Tower - Flagship Development"
+              logo={<Building2 className="h-6 w-6 text-white/80" />}
+              title="H1 Tower"
+              location="HMR Waterfront, Karachi"
+              overview="The Flagship Tower of HMR Waterfront - a G+39 floors architectural masterpiece offering panoramic Arabian Sea views with world-class amenities."
+              price={2500000}
+              pricePeriod="Investment"
+              status="active"
+              roi="18-22%"
+              tokens={1000}
+              availableTokens={342}
+              onInvest={() => window.open('/properties/h1-tower', '_blank')}
+              className="h-96"
+            />
+            
+            <HMRPropertyCard
+              imageUrl="/projects/saima-tower/main.jpg"
+              imageAlt="Saima Tower - Ultra-Luxury Development"
+              logo={<TrendingUp className="h-6 w-6 text-white/80" />}
+              title="Saima Tower"
+              location="HMR Waterfront, Karachi"
+              overview="Ultra-luxury commercial and residential complex with state-of-the-art facilities and smart building technology."
+              price={1750000}
+              pricePeriod="Investment"
+              status="coming-soon"
+              roi="17-21%"
+              tokens={1000}
+              availableTokens={1000}
+              onInvest={() => window.open('/properties/saima-tower', '_blank')}
+              className="h-96"
+            />
+            
+            <HMRPropertyCard
+              imageUrl="/projects/aa-waterfront/main.jpg"
+              imageAlt="AA Waterfront - Smart Luxury Development"
+              logo={<Home className="h-6 w-6 text-white/80" />}
+              title="AA Waterfront"
+              location="HMR Waterfront, Karachi"
+              overview="Smart luxury residential development with stunning sea views, smart home technology, and premium amenities."
+              price={1750000}
+              pricePeriod="Investment"
+              status="coming-soon"
+              roi="16-20%"
+              tokens={1000}
+              availableTokens={1000}
+              onInvest={() => window.open('/properties/aa-waterfront', '_blank')}
+              className="h-96"
+            />
           </div>
           
           <div className="text-center mt-12">
@@ -544,16 +633,51 @@ const HomePage = () => {
       </section>
 
       {/* How it Works Section */}
-      <section id="how-it-works" className="py-20 sm:py-24 lg:py-28 bg-[#0e1521]/20 dark:bg-gray-900/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16 sm:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
-              It's really this <span className="text-[#315dca]">simple</span>
-            </h2>
-            <p className="text-lg sm:text-xl text-[#dee0e5] dark:text-gray-300 max-w-3xl mx-auto">
-              Start your real estate investment journey in just three easy steps
-            </p>
-          </div>
+      <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 bg-[#060606] overflow-hidden">
+        {/* Squares Background */}
+        <div className="absolute inset-0 bg-[#060606]">
+          <Squares
+            direction="down"
+            speed={0.3}
+            squareSize={45}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="text-center mb-16 sm:mb-20">
+             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
+               It's really this <span className="text-[#315dca]">
+                 <HyperText 
+                   text="SIMPLE" 
+                   duration={1800}
+                   className="text-[#315dca] font-bold"
+                   framerProps={{
+                     initial: { opacity: 0, rotateX: 90 },
+                     animate: { opacity: 1, rotateX: 0 },
+                     exit: { opacity: 0, rotateX: -90 }
+                   }}
+                 />
+               </span>
+             </h2>
+             <p className="text-lg sm:text-xl text-[#dee0e5] dark:text-gray-300 max-w-3xl mx-auto">
+               Start your 
+               <span className="inline-block mx-1">
+                 <HyperText 
+                   text="BLOCKCHAIN" 
+                   duration={1600}
+                   className="text-[#315dca] font-bold"
+                   framerProps={{
+                     initial: { opacity: 0, scale: 0.5 },
+                     animate: { opacity: 1, scale: 1 },
+                     exit: { opacity: 0, scale: 1.5 }
+                   }}
+                 />
+               </span>
+               real estate investment journey in just three easy steps
+             </p>
+           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12">
             {steps.map((step, index) => (
@@ -658,3 +782,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+

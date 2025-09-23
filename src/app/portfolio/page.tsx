@@ -86,9 +86,9 @@ const PortfolioPage = () => {
         
         const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
           acc.totalInvestments++;
-          acc.totalInvested += parseFloat(investment.investmentAmount) || 0;
-          acc.totalTokens += parseInt(investment.tokensPurchased) || 0;
-          acc.totalReturns += parseFloat(investment.totalEarned) || 0;
+          acc.totalInvested += Number(investment.investmentAmount) || 0;
+          acc.totalTokens += Number(investment.tokensPurchased) || 0;
+          acc.totalReturns += Number(investment.totalEarned) || 0;
           return acc;
         }, {
           totalInvestments: 0,

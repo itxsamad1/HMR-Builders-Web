@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from './AuthProvider';
 import { CreditCard, MapPin, User, Building, Globe, ArrowRight, SkipForward, CheckCircle } from 'lucide-react';
 import OTPVerification from './OTPVerification';
@@ -12,6 +13,7 @@ interface PostLoginBillingSetupProps {
 
 const PostLoginBillingSetup = ({ onComplete, onSkip }: PostLoginBillingSetupProps) => {
   const { token } = useAuth();
+  const router = useRouter();
   const [step, setStep] = useState<'currency' | 'billing' | 'payment' | 'otp' | 'success'>('currency');
   const [billingData, setBillingData] = useState({
     currency: 'PKR',

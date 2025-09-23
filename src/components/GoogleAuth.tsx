@@ -47,7 +47,8 @@ export default function GoogleAuth({ onSuccess, text, variant = 'signin' }: Goog
       const success = await loginWithGoogle(googleData);
       if (success) {
         onSuccess?.();
-        router.push('/');
+        // Don't redirect immediately - let AuthProvider handle billing setup first
+        // router.push('/'); // Removed immediate redirect
       } else {
         alert(`${variant === 'signup' ? 'Sign-up' : 'Sign-in'} failed. Please try again.`);
       }

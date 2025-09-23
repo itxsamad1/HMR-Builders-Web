@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import PostLoginBillingSetup from './PostLoginBillingSetup'
 
 type AuthUser = {
@@ -27,9 +28,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true)
   const [showBillingSetup, setShowBillingSetup] = useState(false)
   const [hasPaymentMethod, setHasPaymentMethod] = useState(false)
+  const router = useRouter()
 
   // Check if user has payment methods
-  const checkPaymentMethods = async (authToken: string) => {
+  const checkPaymentMethods = async (authToken: string, isFreshLogin: boolean = false) => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/payment-methods`, {
         headers: {
@@ -43,8 +45,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const hasMethods = data.data && data.data.length > 0;
         setHasPaymentMethod(hasMethods);
         
-        // Show billing setup if user just logged in and has no payment methods
-        if (!hasMethods && user) {
+        // Show billing setup if this is a fresh login and user has no payment methods
+        if (!hasMethods && isFreshLogin) {
+          console.log('No payment methods found, showing billing setup');
           setShowBillingSetup(true);
         }
       }
@@ -113,7 +116,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       
       // Check payment methods after successful login
-      await checkPaymentMethods(t)
+      await checkPaymentMethods(t, true)
       
       return true
     } catch {
@@ -153,7 +156,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
       
       // Check payment methods after successful login
-      await checkPaymentMethods(t)
+      await checkPaymentMethods(t, true)
       
       return true
     } catch (error) {
@@ -169,18 +172,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const handleBillingComplete = () => {
+    console.log('Billing setup completed');
     setShowBillingSetup(false);
     setHasPaymentMethod(true);
+    // Redirect to home page after billing setup completion
+    router.push('/');
   };
 
   const handleBillingSkip = () => {
+    console.log('Billing setup skipped');
     setShowBillingSetup(false);
+    // Redirect to home page after skipping billing setup
+    router.push('/');
   };
 
   const value = useMemo(
     () => ({ user, token, isLoading, login, loginWithGoogle, logout }),
     [user, token, isLoading]
   )
+
+  // Debug logging
+  console.log('AuthProvider render:', { 
+    showBillingSetup, 
+    hasPaymentMethod, 
+    user: user?.email, 
+    token: !!token 
+  });
 
   return (
     <AuthContext.Provider value={value}>

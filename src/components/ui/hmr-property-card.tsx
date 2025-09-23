@@ -59,7 +59,7 @@ const HMRPropertyCard = React.forwardRef<HTMLDivElement, HMRPropertyCardProps>(
       <div
         ref={ref}
         className={cn(
-          "group relative w-full max-w-sm overflow-hidden rounded-xl",
+          "group relative w-full max-w-sm overflow-hidden rounded-xl h-80",
           "bg-gradient-to-br from-[#1e293b] via-[#0f172a] to-[#1e293b]",
           "border border-[#14b8a6]/30 shadow-2xl shadow-[#14b8a6]/10",
           "transition-all duration-300 ease-in-out hover:shadow-2xl hover:shadow-[#14b8a6]/20 hover:-translate-y-2",
@@ -79,12 +79,12 @@ const HMRPropertyCard = React.forwardRef<HTMLDivElement, HMRPropertyCardProps>(
         {/* Gradient Overlay for Text Readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20"></div>
 
-        {/* Content Container */}
+        {/* Content Container - Always Visible on Image */}
         <div className="relative flex h-full flex-col justify-between p-6 text-white">
           {/* Top Section: Logo and Status */}
-          <div className="flex h-40 items-start justify-between">
+          <div className="flex justify-between items-start">
             {logo && (
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-black/20 backdrop-blur-sm">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 backdrop-blur-sm">
                 {logo}
               </div>
             )}
@@ -93,62 +93,61 @@ const HMRPropertyCard = React.forwardRef<HTMLDivElement, HMRPropertyCardProps>(
             </Badge>
           </div>
           
-          {/* Middle Section: Details (slides up on hover) */}
-          <div className="space-y-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-16">
+          {/* Bottom Section: Main Content - Always Visible */}
+          <div className="space-y-3">
             <div>
-              <h3 className="text-3xl font-bold text-white">{title}</h3>
-              <p className="text-sm text-white/80 flex items-center">
-                <span>{location}</span>
-              </p>
+              <h3 className="text-3xl font-bold text-white leading-tight">{title}</h3>
+              <p className="text-sm text-white/90 mt-1">{location}</p>
             </div>
+            
             <div>
-              <h4 className="font-semibold text-white/90">OVERVIEW</h4>
-              <p className="text-sm text-white/70 leading-relaxed">
+              <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">OVERVIEW</h4>
+              <p className="text-sm text-white/90 leading-relaxed">
                 {overview}
               </p>
             </div>
             
-            {/* Property Stats */}
+            {/* Property Stats - Always Visible */}
             {(roi || tokens || availableTokens) && (
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-3 gap-2 text-xs">
                 {roi && (
                   <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
-                    <span className="text-white/60">ROI</span>
+                    <span className="text-white/60 block">ROI</span>
                     <p className="text-green-400 font-semibold">{roi}</p>
                   </div>
                 )}
                 {tokens && (
                   <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
-                    <span className="text-white/60">Total Tokens</span>
-                    <p className="text-white font-semibold">{tokens.toLocaleString()}</p>
+                    <span className="text-white/60 block">Tokens</span>
+                    <p className="text-white font-semibold text-xs">{tokens.toLocaleString()}</p>
                   </div>
                 )}
                 {availableTokens && (
-                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2 col-span-2">
-                    <span className="text-white/60">Available Tokens</span>
-                    <p className="text-[#14b8a6] font-semibold">{availableTokens.toLocaleString()}</p>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-2">
+                    <span className="text-white/60 block">Available</span>
+                    <p className="text-[#14b8a6] font-semibold text-xs">{availableTokens.toLocaleString()}</p>
                   </div>
                 )}
               </div>
             )}
-          </div>
 
-          {/* Bottom Section: Price and Button (revealed on hover) */}
-          <div className="absolute -bottom-20 left-0 w-full p-6 opacity-0 transition-all duration-500 ease-in-out group-hover:bottom-0 group-hover:opacity-100">
-            <div className="flex items-end justify-between">
-              <div>
-                <span className="text-4xl font-bold text-white">PKR {price.toLocaleString()}</span>
-                <span className="text-white/80"> {pricePeriod}</span>
+            {/* Price and Button - Revealed on Hover */}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pt-2 border-t border-white/20">
+              <div className="flex items-end justify-between">
+                <div>
+                  <span className="text-2xl font-bold text-white">PKR {price.toLocaleString()}</span>
+                  <span className="text-white/80 text-sm ml-1">{pricePeriod}</span>
+                </div>
+                <Button 
+                  onClick={onInvest} 
+                  size="sm" 
+                  className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] text-white shadow-lg shadow-[#14b8a6]/30 text-xs"
+                  disabled={status === 'sold-out'}
+                >
+                  {status === 'sold-out' ? 'Sold Out' : 'Invest Now'} 
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </Button>
               </div>
-              <Button 
-                onClick={onInvest} 
-                size="lg" 
-                className="bg-gradient-to-r from-[#14b8a6] to-[#0ea5e9] hover:from-[#0f9488] hover:to-[#0284c7] text-white shadow-lg shadow-[#14b8a6]/30"
-                disabled={status === 'sold-out'}
-              >
-                {status === 'sold-out' ? 'Sold Out' : 'Invest Now'} 
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
           </div>
         </div>

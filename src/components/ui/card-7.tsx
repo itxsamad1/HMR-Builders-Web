@@ -37,7 +37,7 @@ const TravelCard = React.forwardRef<HTMLDivElement, TravelCardProps>(
       <div
         ref={ref}
         className={cn(
-          "group relative w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card shadow-lg",
+          "group relative w-full max-w-sm overflow-hidden rounded-xl border border-border bg-card shadow-lg h-80",
           "transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-2",
           className
         )}
@@ -51,43 +51,44 @@ const TravelCard = React.forwardRef<HTMLDivElement, TravelCardProps>(
         />
 
         {/* Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
-        {/* Content Container */}
-        <div className="relative flex h-full flex-col justify-between p-6 text-card-foreground">
+        {/* Content Container - Always Visible on Image */}
+        <div className="relative flex h-full flex-col justify-between p-6 text-white">
           {/* Top Section: Logo */}
-          <div className="flex h-40 items-start">
+          <div className="flex justify-start">
              {logo && (
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-black/20 backdrop-blur-sm">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/50 bg-white/20 backdrop-blur-sm">
                    {logo}
                 </div>
              )}
           </div>
           
-          {/* Middle Section: Details (slides up on hover) */}
-          <div className="space-y-4 transition-transform duration-500 ease-in-out group-hover:-translate-y-16">
+          {/* Bottom Section: Main Content - Always Visible */}
+          <div className="space-y-3">
             <div>
-              <h3 className="text-3xl font-bold text-white">{title}</h3>
-              <p className="text-sm text-white/80">{location}</p>
+              <h3 className="text-3xl font-bold text-white leading-tight">{title}</h3>
+              <p className="text-sm text-white/90 mt-1">{location}</p>
             </div>
+            
             <div>
-              <h4 className="font-semibold text-white/90">OVERVIEW</h4>
-              <p className="text-sm text-white/70 leading-relaxed">
+              <h4 className="text-xs font-semibold text-white/80 uppercase tracking-wider mb-2">OVERVIEW</h4>
+              <p className="text-sm text-white/90 leading-relaxed">
                 {overview}
               </p>
             </div>
-          </div>
 
-          {/* Bottom Section: Price and Button (revealed on hover) */}
-          <div className="absolute -bottom-20 left-0 w-full p-6 opacity-0 transition-all duration-500 ease-in-out group-hover:bottom-0 group-hover:opacity-100">
-            <div className="flex items-end justify-between">
-              <div>
-                <span className="text-4xl font-bold text-white">${price}</span>
-                <span className="text-white/80"> {pricePeriod}</span>
+            {/* Price and Button - Revealed on Hover */}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 pt-2 border-t border-white/20">
+              <div className="flex items-end justify-between">
+                <div>
+                  <span className="text-2xl font-bold text-white">${price}</span>
+                  <span className="text-white/80 text-sm ml-1">{pricePeriod}</span>
+                </div>
+                <Button onClick={onBookNow} size="sm" className="bg-white text-black hover:bg-white/90 text-xs">
+                  Book Now <ArrowRight className="ml-1 h-3 w-3" />
+                </Button>
               </div>
-              <Button onClick={onBookNow} size="lg" className="bg-white text-black hover:bg-white/90">
-                Book Now <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
             </div>
           </div>
         </div>

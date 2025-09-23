@@ -1,8 +1,6 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import PostLoginBillingSetup from './PostLoginBillingSetup'
 
 type AuthUser = {
   id: string
@@ -26,35 +24,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [showBillingSetup, setShowBillingSetup] = useState(false)
-  const [hasPaymentMethod, setHasPaymentMethod] = useState(false)
-  const router = useRouter()
-
-  // Check if user has payment methods
-  const checkPaymentMethods = async (authToken: string, isFreshLogin: boolean = false) => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/payment-methods`, {
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      
-      if (res.ok) {
-        const data = await res.json();
-        const hasMethods = data.data && data.data.length > 0;
-        setHasPaymentMethod(hasMethods);
-        
-        // Show billing setup if this is a fresh login and user has no payment methods
-        if (!hasMethods && isFreshLogin) {
-          console.log('No payment methods found, showing billing setup');
-          setShowBillingSetup(true);
-        }
-      }
-    } catch (error) {
-      console.error('Failed to check payment methods:', error);
-    }
-  };
 
   useEffect(() => {
     const storedToken = typeof window !== 'undefined' ? localStorage.getItem('hmr_token') : null
@@ -80,9 +49,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             image: data.user.profileImage || null,
           })
           console.log('User authenticated successfully:', data.user.name);
-          
-          // Check payment methods for existing users
-          checkPaymentMethods(storedToken)
         })
         .catch((error) => {
           console.log('Authentication failed:', error.message);
@@ -114,10 +80,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email: data.user.email,
         image: data.user.profileImage || null,
       })
-      
-      // Check payment methods after successful login
-      await checkPaymentMethods(t, true)
-      
       return true
     } catch {
       return false
@@ -155,9 +117,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         image: data.user.profileImage || null,
       })
       
-      // Check payment methods after successful login
-      await checkPaymentMethods(t, true)
-      
       return true
     } catch (error) {
       console.error('Google auth error:', error);
@@ -171,45 +130,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null)
   }
 
-  const handleBillingComplete = () => {
-    console.log('Billing setup completed');
-    setShowBillingSetup(false);
-    setHasPaymentMethod(true);
-    // Redirect to home page after billing setup completion
-    router.push('/');
-  };
-
-  const handleBillingSkip = () => {
-    console.log('Billing setup skipped');
-    setShowBillingSetup(false);
-    // Redirect to home page after skipping billing setup
-    router.push('/');
-  };
-
   const value = useMemo(
     () => ({ user, token, isLoading, login, loginWithGoogle, logout }),
     [user, token, isLoading]
   )
 
-  // Debug logging
-  console.log('AuthProvider render:', { 
-    showBillingSetup, 
-    hasPaymentMethod, 
-    user: user?.email, 
-    token: !!token 
-  });
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-      {showBillingSetup && (
-        <PostLoginBillingSetup
-          onComplete={handleBillingComplete}
-          onSkip={handleBillingSkip}
-        />
-      )}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
 export function useAuth() {

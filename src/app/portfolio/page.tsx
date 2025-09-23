@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Building2, TrendingUp, DollarSign, Calendar, MapPin, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Building2, TrendingUp, DollarSign, Calendar, MapPin, BarChart3, Wallet, RefreshCw, Menu, ArrowRight, CheckCircle, Coins } from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
+import { GradientDots } from '@/components/gradient-dots';
 
 interface Investment {
   id: string;
@@ -93,7 +94,7 @@ const PortfolioPage = () => {
           acc.totalReturns += Number(investment.totalEarned) || 0;
           return acc;
         }, {
-          totalInvestments: uniqueProperties.size, // Count unique properties instead of transactions
+          totalInvestments: uniqueProperties.size,
           totalInvested: 0,
           totalTokens: 0,
           totalReturns: 0
@@ -135,16 +136,20 @@ const PortfolioPage = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'active': return 'text-green-400 bg-green-400/20';
-      case 'completed': return 'text-blue-400 bg-blue-400/20';
-      case 'pending': return 'text-yellow-400 bg-yellow-400/20';
-      default: return 'text-gray-400 bg-gray-400/20';
+      case 'active': return 'text-green-400 bg-green-400/20 border-green-400/30';
+      case 'completed': return 'text-blue-400 bg-blue-400/20 border-blue-400/30';
+      case 'pending': return 'text-yellow-400 bg-yellow-400/20 border-yellow-400/30';
+      default: return 'text-gray-400 bg-gray-400/20 border-gray-400/30';
     }
   };
 
+  // Calculate ROI percentage
+  const roiPercentage = stats.totalInvested > 0 ? ((stats.totalReturns / stats.totalInvested) * 100).toFixed(1) : '0.0';
+  const monthlyYield = stats.totalInvested > 0 ? ((stats.totalReturns / stats.totalInvested) * 100 / 12).toFixed(1) : '0.0';
+
   if (isLoading || isLoadingData) {
     return (
-      <div className="min-h-screen hero-gradient flex items-center justify-center">
+      <div className="min-h-screen bg-[#0F172A] flex items-center justify-center">
         <div className="text-white text-xl">Loading your portfolio...</div>
       </div>
     );
@@ -155,169 +160,256 @@ const PortfolioPage = () => {
   }
 
   return (
-    <div className="min-h-screen hero-gradient overflow-x-hidden">
-      {/* Header */}
-      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="transparent-navbar rounded-2xl shadow-navbar">
-          <div className="flex items-center justify-between px-6 py-4">
-            <Link href="/wallet" className="flex items-center space-x-3 text-white hover:text-[#315dca] transition-colors">
-              <ArrowLeft className="w-6 h-6" />
-              <span className="font-semibold">Back to Wallet</span>
-            </Link>
-            
+    <div className="min-h-screen bg-[#0F172A] relative overflow-hidden">
+      {/* Gradient Dots Background */}
+      <GradientDots 
+        backgroundColor="#0F172A" 
+        duration={40} 
+        colorCycleDuration={8}
+        dotSize={6}
+        spacing={12}
+      />
+
+      {/* Navigation Bar */}
+      <nav className="relative z-50 bg-black/20 backdrop-blur-xl border-b border-[#38BDF8]/20">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center space-x-8">
+              <div className="text-2xl font-bold text-white font-orbitron">
+                HMR
+              </div>
+              
+              {/* Navigation Links */}
+              <div className="hidden md:flex items-center space-x-8">
+                <Link href="/portfolio" className="text-[#38BDF8] font-medium border-b-2 border-[#38BDF8] pb-1">
+                  Dashboard
+                </Link>
+                <Link href="/portfolio" className="text-white/70 hover:text-white font-medium transition-colors">
+                  Portfolio
+                </Link>
+                <Link href="/properties" className="text-white/70 hover:text-white font-medium transition-colors">
+                  Marketplace
+                </Link>
+                <Link href="/wallet" className="text-white/70 hover:text-white font-medium transition-colors">
+                  Transactions
+                </Link>
+                <Link href="/analytics" className="text-white/70 hover:text-white font-medium transition-colors">
+                  Analytics
+                </Link>
+                <Link href="/settings" className="text-white/70 hover:text-white font-medium transition-colors">
+                  Settings
+                </Link>
+              </div>
+            </div>
+
+            {/* Connect Wallet Button */}
             <div className="flex items-center space-x-4">
-              <Link href="/wallet" className="text-white hover:text-[#315dca] font-medium transition-colors">
-                Wallet
-              </Link>
+              <button className="bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-black px-6 py-2 rounded-lg font-semibold shadow-lg shadow-[#38BDF8]/25 hover:shadow-[#38BDF8]/40 transition-all duration-300 transform hover:scale-105">
+                Connect Wallet
+              </button>
               <UserProfileDropdown />
             </div>
           </div>
         </div>
-      </header>
+      </nav>
 
-      {/* Main Content */}
-      <div className="pt-24 px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="max-w-7xl mx-auto">
-          {/* Page Title */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              My <span className="text-[#315dca]">Portfolio</span>
-            </h1>
-            <p className="text-[#dee0e5] text-lg">Track your real estate investments and performance</p>
-          </div>
-
-          {/* Portfolio Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex items-center mb-4">
-                <div className="p-3 bg-[#315dca]/20 rounded-xl">
-                  <Building2 className="w-6 h-6 text-[#315dca]" />
+      {/* Dashboard Content */}
+      <div className="relative z-10 p-6 max-w-7xl mx-auto">
+        {/* Main Dashboard Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          
+          {/* Portfolio Balance Card */}
+          <div className="lg:col-span-2 bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-white font-orbitron">Portfolio Balance</h2>
+              <div className="w-8 h-8 bg-[#38BDF8]/20 rounded-lg flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-[#38BDF8]" />
+              </div>
+            </div>
+            
+            <div className="mb-6">
+              <div className="text-4xl font-bold text-white mb-2 font-orbitron">
+                PKR {Number(stats.totalInvested).toLocaleString()}
+              </div>
+              <div className="flex items-center space-x-6">
+                <div className="flex items-center space-x-2">
+                  <span className="text-green-400 font-semibold">+{roiPercentage}%</span>
+                  <span className="text-white/60 text-sm">Return on Investment</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-white font-semibold">{monthlyYield}%</span>
+                  <span className="text-white/60 text-sm">Monthly Yield</span>
                 </div>
               </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Properties</h3>
-              <p className="text-2xl font-bold text-white">{stats.totalInvestments}</p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex items-center mb-4">
-                <div className="p-3 bg-green-500/20 rounded-xl">
-                  <DollarSign className="w-6 h-6 text-green-400" />
-                </div>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Invested</h3>
-              <p className="text-xl font-bold text-white break-words">PKR {Number(stats.totalInvested).toLocaleString()}</p>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex items-center mb-4">
-                <div className="p-3 bg-blue-500/20 rounded-xl">
-                  <BarChart3 className="w-6 h-6 text-blue-400" />
-                </div>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Tokens</h3>
-              <p className="text-xl font-bold text-white">{Number(stats.totalTokens).toLocaleString()}</p>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-              <div className="flex items-center mb-4">
-                <div className="p-3 bg-green-500/20 rounded-xl">
-                  <TrendingUp className="w-6 h-6 text-green-400" />
-                </div>
-              </div>
-              <h3 className="text-white/80 text-sm font-medium mb-2">Total Returns</h3>
-              <p className="text-xl font-bold text-white">PKR {Number(stats.totalReturns).toLocaleString()}</p>
+            {/* Mini Chart Area */}
+            <div className="h-24 bg-gradient-to-r from-[#38BDF8]/10 to-[#0EA5E9]/10 rounded-xl border border-[#38BDF8]/20 flex items-end justify-center space-x-1 p-4">
+              <div className="w-2 bg-[#38BDF8] rounded-t h-8"></div>
+              <div className="w-2 bg-[#38BDF8] rounded-t h-12"></div>
+              <div className="w-2 bg-[#38BDF8] rounded-t h-16"></div>
+              <div className="w-2 bg-[#38BDF8] rounded-t h-20"></div>
+              <div className="w-2 bg-[#38BDF8] rounded-t h-14"></div>
+              <div className="w-2 bg-[#38BDF8] rounded-t h-18"></div>
             </div>
           </div>
 
-          {/* Tabs */}
-          <div className="flex space-x-1 mb-8 bg-white/10 backdrop-blur-lg rounded-xl p-1 border border-white/20 w-fit mx-auto">
-            {[
-              { key: 'all', label: 'All Investments', count: new Set(investments.map(i => i.propertyId)).size },
-              { key: 'active', label: 'Active', count: new Set(investments.filter(i => i.status === 'active').map(i => i.propertyId)).size },
-              { key: 'completed', label: 'Completed', count: new Set(investments.filter(i => i.status === 'completed').map(i => i.propertyId)).size }
-            ].map((tab) => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key as any)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
-                  activeTab === tab.key
-                    ? 'bg-[#315dca] text-white'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {tab.label} ({tab.count})
-              </button>
-            ))}
-          </div>
-
-          {/* Investments List */}
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 overflow-hidden">
-            {filteredInvestments.length === 0 ? (
-              <div className="text-center py-16">
-                <Building2 className="w-20 h-20 text-white/40 mx-auto mb-6" />
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  {activeTab === 'all' ? 'No Investments Yet' : `No ${activeTab} investments`}
-                </h3>
-                <p className="text-white/60 mb-8 max-w-md mx-auto">
-                  {activeTab === 'all' 
-                    ? 'Start building your real estate portfolio by investing in tokenized properties'
-                    : `You don't have any ${activeTab} investments at the moment`
-                  }
-                </p>
-                <Link 
-                  href="/properties" 
-                  className="inline-flex items-center px-8 py-4 bg-[#315dca] hover:bg-[#203a74] text-white font-semibold rounded-xl transition-all transform hover:scale-105"
-                >
-                  <Building2 className="w-5 h-5 mr-2" />
-                  Browse Properties
-                </Link>
+          {/* Secondary Market Card */}
+          <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-white font-orbitron">Secondary Market</h2>
+              <Coins className="w-8 h-8 text-[#FACC15]" />
+            </div>
+            
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between items-center">
+                <span className="text-white/60">R+</span>
+                <span className="text-white font-semibold">PKR 1.34</span>
               </div>
-            ) : (
-              <div className="divide-y divide-white/10">
-                {filteredInvestments.map((investment: any) => (
-                  <div key={investment.propertyId} className="p-6 hover:bg-white/5 transition-all">
-                    <div className="flex items-center justify-between">
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-2">
-                          <h3 className="text-xl font-semibold text-white">
-                            {investment.propertyTitle}
-                          </h3>
-                          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(investment.status)}`}>
-                            {investment.status.charAt(0).toUpperCase() + investment.status.slice(1)}
-                          </span>
-                        </div>
-                        
-                        <div className="flex items-center space-x-6 text-white/60 text-sm">
-                          <div className="flex items-center space-x-1">
-                            <BarChart3 className="w-4 h-4" />
-                            <span>{investment.totalTokens} tokens</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{investment.transactions.length} purchase{investment.transactions.length > 1 ? 's' : ''}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="text-right">
-                        <p className="text-xl font-bold text-white mb-1">
-                          PKR {Number(investment.totalInvested).toLocaleString()}
-                        </p>
-                        <p className="text-green-400 text-sm font-medium">
-                          +PKR {Number(investment.totalReturns).toLocaleString()} returns
-                        </p>
-                        <Link 
-                          href={`/properties/${investment.propertySlug}`}
-                          className="text-[#315dca] hover:text-white text-sm font-medium transition-colors mt-2 inline-block"
-                        >
-                          View Property →
-                        </Link>
-                      </div>
-                    </div>
+              <div className="flex justify-between items-center">
+                <span className="text-white/60">A+</span>
+                <span className="text-white font-semibold">PKR 1.35</span>
+              </div>
+            </div>
+            
+            <button className="w-full bg-gradient-to-r from-[#38BDF8] to-[#0EA5E9] text-black py-3 rounded-lg font-semibold shadow-lg shadow-[#38BDF8]/25 hover:shadow-[#38BDF8]/40 transition-all duration-300 transform hover:scale-105">
+              Sell
+            </button>
+          </div>
+        </div>
+
+        {/* Holdings Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div className="lg:col-span-2 bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-white font-orbitron">Holdings</h2>
+              <div className="flex space-x-2">
+                <button className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  activeTab === 'all' ? 'bg-[#38BDF8] text-black' : 'bg-white/10 text-white/70 hover:text-white'
+                }`}>
+                  Buy
+                </button>
+                <button className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  activeTab === 'active' ? 'bg-[#38BDF8] text-black' : 'bg-white/10 text-white/70 hover:text-white'
+                }`}>
+                  Sell
+                </button>
+              </div>
+            </div>
+
+            {/* Properties Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {filteredInvestments.slice(0, 3).map((investment: any) => (
+                <div key={investment.propertyId} className="bg-black/20 backdrop-blur-xl rounded-xl p-4 border border-[#38BDF8]/10 hover:border-[#38BDF8]/30 transition-all group">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className={`px-2 py-1 rounded text-xs font-medium border ${getStatusColor(investment.status)}`}>
+                      {investment.status.toUpperCase()}
+                    </span>
+                    <ArrowRight className="w-4 h-4 text-white/40 group-hover:text-[#38BDF8] transition-colors" />
                   </div>
-                ))}
+                  
+                  <div className="w-full h-32 bg-gradient-to-br from-[#38BDF8]/20 to-[#0EA5E9]/20 rounded-lg mb-3 flex items-center justify-center">
+                    <Building2 className="w-12 h-12 text-[#38BDF8]" />
+                  </div>
+                  
+                  <h3 className="text-white font-semibold mb-1">{investment.propertyTitle}</h3>
+                  <p className="text-[#38BDF8] font-semibold">PKR {Number(investment.totalInvested).toLocaleString()}</p>
+                </div>
+              ))}
+              
+              {/* Placeholder for additional properties */}
+              {filteredInvestments.length < 3 && (
+                <div className="bg-black/20 backdrop-blur-xl rounded-xl p-4 border border-dashed border-[#38BDF8]/30 flex items-center justify-center">
+                  <div className="text-center">
+                    <Building2 className="w-8 h-8 text-[#38BDF8]/50 mx-auto mb-2" />
+                    <p className="text-white/50 text-sm">More Properties</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Secondary Orders */}
+          <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-semibold text-white font-orbitron">Secondary</h2>
+              <RefreshCw className="w-5 h-5 text-white/60" />
+            </div>
+            
+            <div className="space-y-4">
+              <div className="grid grid-cols-4 gap-2 text-xs text-white/60 mb-2">
+                <span>Bid</span>
+                <span>Ask</span>
+                <span>Orders</span>
+                <span>Trades</span>
               </div>
-            )}
+              
+              <div className="space-y-3">
+                <div className="grid grid-cols-4 gap-2 text-sm">
+                  <span className="text-white">PKR 1.34</span>
+                  <span className="text-white">PKR 1.35</span>
+                  <span className="text-white">12,500</span>
+                  <span className="text-[#38BDF8]">406</span>
+                </div>
+                <div className="grid grid-cols-4 gap-2 text-sm">
+                  <span className="text-white">PKR 1.35</span>
+                  <span className="text-white">PKR 1.35</span>
+                  <span className="text-white">5,600</span>
+                  <span className="text-[#38BDF8]">325</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Activity Feed */}
+        <div className="bg-black/30 backdrop-blur-xl rounded-2xl p-6 border border-[#38BDF8]/20 shadow-xl shadow-[#38BDF8]/10">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-white font-orbitron">Activity</h2>
+            <Menu className="w-5 h-5 text-white/60" />
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-green-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm">Purchased 17,000 Tokens</p>
+                <p className="text-white/50 text-xs">12:15</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-green-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm">Completed KYC verification</p>
+                <p className="text-white/50 text-xs">12:13</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-blue-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm">Invested in H1 Tower</p>
+                <p className="text-white/50 text-xs">11:08</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-[#FACC15]/20 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-4 h-4 text-[#FACC15]" />
+              </div>
+              <div className="flex-1">
+                <p className="text-white text-sm">New feature: Auto-staking enabled</p>
+                <p className="text-white/50 text-xs">10:55</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -326,4 +418,3 @@ const PortfolioPage = () => {
 };
 
 export default PortfolioPage;
-

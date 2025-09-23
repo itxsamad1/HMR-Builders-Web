@@ -4,31 +4,20 @@ import { useState, useEffect, useRef } from 'react';
 import { Shield, CheckCircle, X } from 'lucide-react';
 
 interface OTPVerificationProps {
-  onVerify?: (otp: string) => Promise<boolean> | boolean;
-  onOTPVerified?: (otp: string) => void;
-  onOTPError?: (error: string) => void;
+  onOTPVerified: (otp: string) => void;
+  onOTPError: (error: string) => void;
   isLoading?: boolean;
   autoFocus?: boolean;
-  message?: { type: 'success' | 'error' | 'info', text: string } | null;
-  fixedOtp?: string;
 }
 
-const OTPVerification = ({ 
-  onVerify, 
-  onOTPVerified, 
-  onOTPError, 
-  isLoading = false, 
-  autoFocus = true, 
-  message,
-  fixedOtp = '1122'
-}: OTPVerificationProps) => {
+const OTPVerification = ({ onOTPVerified, onOTPError, isLoading = false, autoFocus = true }: OTPVerificationProps) => {
   const [otp, setOtp] = useState('');
   const [attempts, setAttempts] = useState(0);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const FIXED_OTP = fixedOtp;
+  const FIXED_OTP = '1122';
 
   useEffect(() => {
     if (autoFocus && inputRef.current) {
@@ -46,34 +35,16 @@ const OTPVerification = ({
     }
   };
 
-  const verifyOTP = async (otpValue: string) => {
+  const verifyOTP = (otpValue: string) => {
     if (otpValue === FIXED_OTP) {
       setSuccess(true);
       setError('');
-      
-      // Use the new onVerify callback if provided, otherwise fall back to onOTPVerified
-      if (onVerify) {
-        try {
-          const result = await onVerify(otpValue);
-          if (!result) {
-            setSuccess(false);
-            setError('OTP verification failed');
-          }
-        } catch (error) {
-          setSuccess(false);
-          setError('OTP verification failed');
-        }
-      } else if (onOTPVerified) {
-        onOTPVerified(otpValue);
-      }
+      onOTPVerified(otpValue);
     } else {
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       setError(`Invalid OTP. ${3 - newAttempts} attempts remaining.`);
-      
-      if (onOTPError) {
-        onOTPError('Invalid OTP');
-      }
+      onOTPError('Invalid OTP');
       
       if (newAttempts >= 3) {
         setError('Maximum attempts reached. Please try again later.');
@@ -142,26 +113,6 @@ const OTPVerification = ({
             </div>
           )}
         </div>
-
-        {message && (
-          <div className={`border rounded-lg p-3 ${
-            message.type === 'success' 
-              ? 'bg-green-500/10 border-green-500/30' 
-              : message.type === 'error' 
-              ? 'bg-red-500/10 border-red-500/30' 
-              : 'bg-blue-500/10 border-blue-500/30'
-          }`}>
-            <p className={`text-sm text-center ${
-              message.type === 'success' 
-                ? 'text-green-300' 
-                : message.type === 'error' 
-                ? 'text-red-300' 
-                : 'text-blue-300'
-            }`}>
-              {message.text}
-            </p>
-          </div>
-        )}
 
         {error && (
           <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">

@@ -179,6 +179,22 @@ const HomePage = () => {
             {/* Left Content */}
              <div className="text-white dark:text-white space-y-4 sm:space-y-6">
                <div className="space-y-3 sm:space-y-4">
+                 {/* HMR Logo and Brand */}
+                 <div className="flex items-center space-x-4 mb-6">
+                   <div className="flex-shrink-0">
+                     <img 
+                       src="/hmr-group.svg" 
+                       alt="HMR Group Logo" 
+                       className="w-12 h-12 sm:w-16 sm:h-16"
+                     />
+                   </div>
+                   <div className="flex flex-col">
+                     <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
+                       HMR BUILDERS
+                     </div>
+                   </div>
+                 </div>
+                 
                  {/* Animated Status Badge */}
                  <div className="inline-flex items-center bg-[#315dca]/20 border border-[#315dca]/30 rounded-full px-3 py-1.5 text-xs font-medium text-[#315dca] animate-pulse">
                    <div className="w-1.5 h-1.5 bg-[#315dca] rounded-full mr-2 animate-ping"></div>
@@ -260,10 +276,9 @@ const HomePage = () => {
                 </div>
               </div>
             </div>
-
             {/* Right Content - Globe */}
-            <div className="relative mt-6 sm:mt-8 lg:mt-0 flex items-center justify-center">
-              <div className="relative w-full max-w-lg h-96 lg:h-[500px] group">
+            <div className="relative mt-0 sm:-mt-24 lg:-mt-96 ml-0 sm:ml-16 lg:ml-32 flex items-center justify-center">
+              <div className="relative w-[500px] h-[500px] lg:w-[800px] lg:h-[800px] xl:w-[900px] xl:h-[900px] 2xl:w-[1000px] 2xl:h-[1000px] group">
                 {/* Subtle glow effect behind globe */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#315dca]/10 to-transparent rounded-full blur-3xl scale-110"></div>
                 
@@ -271,21 +286,86 @@ const HomePage = () => {
                   className="w-full h-full relative z-10"
                   config={{
                     ...GLOBE_CONFIG,
-                    width: 600,
-                    height: 600,
+                    width: 2000,
+                    height: 2000,
                     markers: [
+                      // Pakistan - Primary Markets
                       { location: [24.8607, 67.0011], size: 0.15 }, // Karachi, Pakistan
-                      { location: [31.5204, 74.3587], size: 0.1 },  // Lahore, Pakistan
-                      { location: [33.6844, 73.0479], size: 0.08 }, // Islamabad, Pakistan
-                      { location: [25.3960, 68.3578], size: 0.06 }, // Hyderabad, Pakistan
-                      { location: [30.1798, 71.4925], size: 0.05 }, // Multan, Pakistan
+                      { location: [31.5204, 74.3587], size: 0.12 }, // Lahore, Pakistan
+                      { location: [33.6844, 73.0479], size: 0.10 }, // Islamabad, Pakistan
+                      { location: [25.3960, 68.3578], size: 0.08 }, // Hyderabad, Pakistan
+                      { location: [30.1798, 71.4925], size: 0.07 }, // Multan, Pakistan
+                      { location: [32.0836, 72.6711], size: 0.06 }, // Sargodha, Pakistan
+                      { location: [34.0151, 71.5249], size: 0.06 }, // Peshawar, Pakistan
+                      { location: [30.3753, 69.3451], size: 0.05 }, // Quetta, Pakistan
+                      
+                      // Middle East - Strategic Markets
+                      { location: [25.2048, 55.2708], size: 0.12 }, // Dubai, UAE
+                      { location: [24.4539, 54.3773], size: 0.08 }, // Abu Dhabi, UAE
+                      { location: [29.3117, 47.4818], size: 0.07 }, // Kuwait City, Kuwait
+                      { location: [26.0667, 50.5577], size: 0.06 }, // Manama, Bahrain
+                      { location: [25.3548, 51.1839], size: 0.09 }, // Doha, Qatar
+                      { location: [23.8859, 45.0792], size: 0.08 }, // Riyadh, Saudi Arabia
+                      { location: [21.4225, 39.8262], size: 0.06 }, // Jeddah, Saudi Arabia
+                      
+                      // South Asia - Regional Expansion
+                      { location: [28.6139, 77.2090], size: 0.11 }, // New Delhi, India
+                      { location: [19.0760, 72.8777], size: 0.10 }, // Mumbai, India
+                      { location: [12.9716, 77.5946], size: 0.08 }, // Bangalore, India
+                      { location: [23.8103, 90.4125], size: 0.07 }, // Dhaka, Bangladesh
+                      { location: [6.9271, 79.8612], size: 0.06 },  // Colombo, Sri Lanka
+                      
+                      // Southeast Asia - Growth Markets
+                      { location: [1.3521, 103.8198], size: 0.09 }, // Singapore
+                      { location: [3.1390, 101.6869], size: 0.08 }, // Kuala Lumpur, Malaysia
+                      { location: [14.5995, 120.9842], size: 0.07 }, // Manila, Philippines
+                      { location: [-6.2088, 106.8456], size: 0.07 }, // Jakarta, Indonesia
+                      { location: [13.7563, 100.5018], size: 0.06 }, // Bangkok, Thailand
+                      
+                      // Europe - International Presence
+                      { location: [51.5074, -0.1278], size: 0.10 }, // London, UK
+                      { location: [52.5200, 13.4050], size: 0.08 }, // Berlin, Germany
+                      { location: [48.8566, 2.3522], size: 0.08 },  // Paris, France
+                      { location: [41.9028, 12.4964], size: 0.06 }, // Rome, Italy
+                      { location: [40.4168, -3.7038], size: 0.06 }, // Madrid, Spain
+                      
+                      // North America - Global Expansion
+                      { location: [40.7128, -74.0060], size: 0.11 }, // New York, USA
+                      { location: [34.0522, -118.2437], size: 0.09 }, // Los Angeles, USA
+                      { location: [41.8781, -87.6298], size: 0.07 }, // Chicago, USA
+                      { location: [43.6532, -79.3832], size: 0.08 }, // Toronto, Canada
+                      { location: [45.5017, -73.5673], size: 0.06 }, // Montreal, Canada
+                      
+                      // East Asia - Tech Hubs
+                      { location: [35.6762, 139.6503], size: 0.10 }, // Tokyo, Japan
+                      { location: [37.5665, 126.9780], size: 0.08 }, // Seoul, South Korea
+                      { location: [39.9042, 116.4074], size: 0.09 }, // Beijing, China
+                      { location: [31.2304, 121.4737], size: 0.08 }, // Shanghai, China
+                      { location: [22.3193, 114.1694], size: 0.07 }, // Hong Kong
+                      
+                      // Australia & Oceania
+                      { location: [-33.8688, 151.2093], size: 0.08 }, // Sydney, Australia
+                      { location: [-37.8136, 144.9631], size: 0.07 }, // Melbourne, Australia
+                      { location: [-36.8485, 174.7633], size: 0.05 }, // Auckland, New Zealand
+                      
+                      // Africa - Emerging Markets
+                      { location: [30.0444, 31.2357], size: 0.07 }, // Cairo, Egypt
+                      { location: [-26.2041, 28.0473], size: 0.06 }, // Johannesburg, South Africa
+                      { location: [33.9391, -6.8430], size: 0.05 }, // Casablanca, Morocco
+                      { location: [6.5244, 3.3792], size: 0.05 },   // Lagos, Nigeria
+                      
+                      // South America
+                      { location: [-23.5505, -46.6333], size: 0.08 }, // São Paulo, Brazil
+                      { location: [-34.6037, -58.3816], size: 0.07 }, // Buenos Aires, Argentina
+                      { location: [19.4326, -99.1332], size: 0.07 }, // Mexico City, Mexico
+                      { location: [-33.4489, -70.6693], size: 0.05 }, // Santiago, Chile
                     ],
                     markerColor: [49 / 255, 93 / 255, 202 / 255], // HMR blue
                     glowColor: [49 / 255, 93 / 255, 202 / 255],
                     baseColor: [0.05, 0.05, 0.1],
-                    diffuse: 0.8,
-                    mapBrightness: 3,
-                    dark: 0.1,
+                    diffuse: 1.2,
+                    mapBrightness: 4.5,
+                    dark: 0.05,
                   }}
                 />
                 

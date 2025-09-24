@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Lenis from '@studio-freight/lenis'
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     // Initialize Lenis with better scrollbar integration
@@ -17,6 +18,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     })
 
     lenisRef.current = lenis
+
+    // Track scroll progress
+    lenis.on('scroll', ({ scroll, limit }: { scroll: number; limit: number }) => {
+      const progress = (scroll / limit) * 100
+      setScrollProgress(progress)
+    })
 
     // Animation frame
     function raf(time: number) {
@@ -44,5 +51,20 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     }
   }, [])
 
-  return <div>{children}</div>
+  // Scroll Progress Indicator
+  const ScrollProgress = () => (
+    <div className="fixed top-0 left-0 w-full h-1 bg-[#1a1a1a] z-40">
+      <div
+        className="h-full bg-gradient-to-r from-[#315dca] to-[#203a74] transition-all duration-75 ease-out"
+        style={{ width: `${scrollProgress}%` }}
+      />
+    </div>
+  )
+
+  return (
+    <>
+      <ScrollProgress />
+      <div>{children}</div>
+    </>
+  )
 }

@@ -141,7 +141,7 @@ function StickyDockItem({ children, className }: StickyDockItemProps) {
       aria-haspopup='true'
     >
       {Children.map(children, (child) =>
-        cloneElement(child as React.ReactElement, { width, isHovered })
+        child ? cloneElement(child as React.ReactElement, { width, isHovered }) : null
       )}
     </motion.div>
   );

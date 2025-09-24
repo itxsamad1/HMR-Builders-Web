@@ -17,7 +17,8 @@ import ParallaxSection from '@/components/ParallaxSection';
 import ParallaxText from '@/components/ParallaxText';
 import OptimizedImage from '@/components/OptimizedImage';
 import PerformanceMonitor from '@/components/PerformanceMonitor';
-
+import { HoverExpand_001 } from '@/components/expand-on-hover';
+import { GSAPScrollHijackSteps } from '@/components/gsap-scroll-hijack-steps'; 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
   height: 800,
@@ -628,72 +629,96 @@ const HomePage = () => {
         </LampContainer>
       </section>
 
-      {/* Tokenization at a Glance Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-            <div className="space-y-6 sm:space-y-8">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white">
-                Tokenization at a <span className="text-[#315dca]">glance</span>
-              </h2>
-              <div className="space-y-4 text-[#dee0e5] dark:text-gray-300 text-lg leading-relaxed">
-                <p>
-                  Real estate tokenization transforms physical properties into digital tokens on the blockchain. 
-                  Each token represents fractional ownership of the underlying asset, making premium real estate 
-                  accessible to everyone.
-                </p>
-                <p>
-                  With HMR Builders, you can invest in luxury Pakistani properties starting from just PKR 1 Million, 
-                  earn rental income, and benefit from property appreciation - all while maintaining full transparency 
-                  and liquidity through our secure platform.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                  Enter the future of Pakistani real estate from just PKR 1 Million
-                </a>
-              </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">What is a token?</h3>
-                <div className="relative rounded-2xl overflow-hidden">
-                  <video 
-                    className="w-full h-auto rounded-2xl"
-                    preload="auto"
-                    autoPlay
-                    loop
-                    playsInline
-                    muted
-                    onLoadedMetadata={(e) => e.currentTarget.muted = true}
-                  >
-                    <source src="/what_is_token.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </div>
-              
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                <div className="text-center">
-                  <p className="text-base leading-relaxed mb-3">
-                    A token is a digital unit of ownership stored on a blockchain.
-                  </p>
-                  <p className="text-sm leading-relaxed">
-                    For example, in real estate, a property can be divided into 1,000,000 tokens, and each token represents a fraction of ownership. Buying 10,000 tokens would give you 1% ownership of the property.
-                  </p>
-                </div>
-              </div>
-              
-              <button className="w-full mt-6 bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
-                Learn more
-                <div className="ml-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                </div>
-              </button>
-            </div>
+      {/* Interactive Gallery Section - Full Width */}
+      <section className="py-20 sm:py-32 lg:py-40 bg-[#060606] overflow-hidden min-h-[80vh]">
+        <div className="w-full px-2 sm:px-4 h-full flex flex-col">
+          <div className="text-center mb-8 sm:mb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+              Explore Our <span className="text-[#315dca]">Properties</span>
+            </h2>
+            <p className="text-xl sm:text-2xl text-[#dee0e5] max-w-4xl mx-auto leading-relaxed">
+              Hover over the images to discover our premium real estate portfolio
+            </p>
+          </div>
+          
+          <div className="relative w-full flex-1 flex items-center justify-center">
+            <HoverExpand_001 
+              images={[
+                {
+                  src: "/projects/h1-tower/main.jpg",
+                  alt: "H1 Tower - Flagship Development",
+                  code: "H1 Tower"
+                },
+                {
+                  src: "/projects/saima-tower/main.jpg", 
+                  alt: "Saima Tower - Ultra-Luxury Development",
+                  code: "Saima Tower"
+                },
+                {
+                  src: "/projects/aa-waterfront/main.jpg",
+                  alt: "AA Waterfront - Smart Luxury Development", 
+                  code: "AA Waterfront"
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800",
+                  alt: "Luxury Property Investment",
+                  code: "Premium Real Estate"
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800",
+                  alt: "Modern Architecture",
+                  code: "Modern Design"
+                },
+                {
+                  src: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?w=800",
+                  alt: "City Skyline Investment",
+                  code: "Urban Development"
+                }
+              ]}
+              className="w-full"
+            />
           </div>
         </div>
+      </section>
+
+      {/* Investment Process Section - Scroll-Based */}
+      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
+        <GSAPScrollHijackSteps
+          title="How to Start Your Real Estate Investment Journey"
+          features={[
+            {
+              step: "01",
+              title: "Browse Properties",
+              content: "Explore our curated portfolio of premium Pakistani real estate. Filter by location, price range, and investment potential to find properties that match your investment goals.",
+              image: "/projects/h1-tower/main.jpg"
+            },
+            {
+              step: "02", 
+              title: "Select Investment Amount",
+              content: "Choose your investment amount starting from just PKR 1 Million. Our fractional ownership model makes premium real estate accessible to everyone.",
+              image: "/projects/saima-tower/main.jpg"
+            },
+            {
+              step: "03",
+              title: "Complete KYC & Verification", 
+              content: "Complete our SECP-compliant verification process. Upload required documents and get verified within 24 hours to start investing.",
+              image: "/projects/aa-waterfront/main.jpg"
+            },
+            {
+              step: "04",
+              title: "Purchase Tokens",
+              content: "Buy digital tokens representing your fractional ownership. Each token is backed by real property assets and recorded on the blockchain.",
+              image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800"
+            },
+            {
+              step: "05",
+              title: "Earn Returns",
+              content: "Start earning rental income and benefit from property appreciation. Track your returns through our comprehensive dashboard and receive regular updates.",
+              image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800"
+            }
+          ]}
+          className="bg-[#0e1521]/30"
+        />
       </section>
 
       {/* How it Works Section */}

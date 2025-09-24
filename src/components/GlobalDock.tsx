@@ -12,6 +12,36 @@ const GlobalDock = () => {
   const pathname = usePathname();
   const { user } = useAuth();
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [hasAuthToken, setHasAuthToken] = useState(false);
+
+  // Check if user has auth token in localStorage
+  useEffect(() => {
+    const checkAuthToken = () => {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('hmr_token') : null;
+      setHasAuthToken(!!token);
+    };
+    
+    checkAuthToken();
+    
+    // Listen for storage changes (when user signs in/out)
+    const handleStorageChange = () => {
+      checkAuthToken();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Also check on focus (in case of same-tab changes)
+    window.addEventListener('focus', checkAuthToken);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', checkAuthToken);
+    };
+  }, []);
+
+  // Debug: Log auth state
+  console.log('GlobalDock - Has auth token:', hasAuthToken);
+  console.log('GlobalDock - Should show Get Started:', !hasAuthToken);
 
   useEffect(() => {
     // Ease-out cubic for smoothness
@@ -71,6 +101,12 @@ const GlobalDock = () => {
       icon: Eye,
       label: 'Media',
       isActive: pathname.startsWith('/media')
+    },
+    {
+      href: '/get-started',
+      icon: Zap,
+      label: 'Get Started',
+      isActive: pathname.startsWith('/get-started')
     }
   ];
 
@@ -209,20 +245,22 @@ const GlobalDock = () => {
           </StickyDockLabel>
         </StickyDockItem>
 
-        {/* Get Started for Dock Mode - Prominent styling */}
-        <StickyDockItem>
-          <StickyDockIcon>
-            <Link 
-              href="/get-started" 
-              className="flex items-center justify-center w-full h-full bg-[#315dca] hover:bg-[#315dca]/90 rounded-lg transition-colors duration-200 shadow-lg shadow-[#315dca]/25"
-            >
-              <Zap className="w-5 h-5 text-white" />
-            </Link>
-          </StickyDockIcon>
-          <StickyDockLabel className="bg-[#315dca] text-white border border-[#315dca] whitespace-nowrap font-medium">
-            Get Started
-          </StickyDockLabel>
-        </StickyDockItem>
+        {/* Get Started for Dock Mode - Only show when no auth token (Sign In is present) */}
+        {!hasAuthToken && (
+          <StickyDockItem>
+            <StickyDockIcon>
+              <Link 
+                href="/get-started" 
+                className="flex items-center justify-center w-full h-full bg-[#315dca] hover:bg-[#315dca]/90 rounded-lg transition-colors duration-200 shadow-lg shadow-[#315dca]/25"
+              >
+                <Zap className="w-5 h-5 text-white" />
+              </Link>
+            </StickyDockIcon>
+            <StickyDockLabel className="bg-[#315dca] text-white border border-[#315dca] whitespace-nowrap font-medium">
+              Get Started
+            </StickyDockLabel>
+          </StickyDockItem>
+        )}
       </StickyDock>
     </div>
   );

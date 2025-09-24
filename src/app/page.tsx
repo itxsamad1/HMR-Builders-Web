@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, Suspense, lazy } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle, MapPin, Clock, DollarSign, Home, RefreshCw, Eye, Globe as GlobeIcon, Zap, Smartphone } from 'lucide-react';
@@ -15,6 +15,8 @@ import { LampContainer } from '@/components/ui/lamp';
 import SectionTransition from '@/components/SectionTransition';
 import ParallaxSection from '@/components/ParallaxSection';
 import ParallaxText from '@/components/ParallaxText';
+import OptimizedImage from '@/components/OptimizedImage';
+import PerformanceMonitor from '@/components/PerformanceMonitor';
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,

@@ -5,6 +5,7 @@ import SessionProvider from '@/components/SessionProvider'
 import GlobalDock from '@/components/GlobalDock'
 import SmoothScroll from '@/components/SmoothScroll'
 import LoadingScreen from '@/components/LoadingScreen'
+import PerformanceMonitor from '@/components/PerformanceMonitor'
 
 const inter = Inter({ subsets: ['latin'] })
 const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' })
@@ -42,6 +43,7 @@ export default function RootLayout({
         <SmoothScroll>
           <SessionProvider>
             <GlobalDock />
+            <PerformanceMonitor />
             {children}
           </SessionProvider>
         </SmoothScroll>

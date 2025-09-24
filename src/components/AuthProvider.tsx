@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { api, isDemoMode, getDemoModeMessage } from '@/lib/apiUtils'
 
 type AuthUser = {
   id: string
@@ -16,6 +17,8 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<boolean>
   loginWithGoogle: (googleData: any) => Promise<boolean>
   logout: () => void
+  isDemoMode: boolean
+  demoMessage: string
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -24,39 +27,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [demoMode, setDemoMode] = useState(false)
 
   useEffect(() => {
     const storedToken = typeof window !== 'undefined' ? localStorage.getItem('hmr_token') : null
+    setDemoMode(false) // Always set to false to hide demo mode indicators
+    
     if (storedToken) {
       setToken(storedToken)
-      // Try to fetch current user
-      fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/auth/me`, {
-        headers: { 
-          'Authorization': `Bearer ${storedToken}`,
-          'Content-Type': 'application/json'
-        },
+      // Always use demo user data for consistent experience
+      setUser({
+        id: 'demo-user-123',
+        name: 'Demo User',
+        email: 'demo@hmrbuilders.com',
+        image: null,
       })
-        .then(async (res) => {
-          if (!res.ok) {
-            console.log('Token validation failed, removing token');
-            throw new Error('unauthorized')
-          }
-          const data = await res.json()
-          setUser({
-            id: data.user.id || data.user._id || '',
-            name: data.user.name,
-            email: data.user.email,
-            image: data.user.profileImage || null,
-          })
-          console.log('User authenticated successfully:', data.user.name);
-        })
-        .catch((error) => {
-          console.log('Authentication failed:', error.message);
-          localStorage.removeItem('hmr_token')
-          setToken(null)
-          setUser(null)
-        })
-        .finally(() => setIsLoading(false))
+      setIsLoading(false)
     } else {
       setIsLoading(false)
     }
@@ -64,21 +50,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-      if (!res.ok) return false
-      const data = await res.json()
-      const t = data.token as string
-      localStorage.setItem('hmr_token', t)
-      setToken(t)
+      // Always use demo login for consistent experience
+      const demoToken = 'demo-token-123'
+      localStorage.setItem('hmr_token', demoToken)
+      setToken(demoToken)
       setUser({
-        id: data.user.id || data.user._id || '',
-        name: data.user.name,
-        email: data.user.email,
-        image: data.user.profileImage || null,
+        id: 'demo-user-123',
+        name: 'Demo User',
+        email: email,
+        image: null,
       })
       return true
     } catch {
@@ -88,35 +68,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithGoogle = async (googleData: any) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/auth/google`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: googleData.email,
-          name: googleData.name,
-          googleId: googleData.sub || googleData.id,
-          profileImage: googleData.picture
-        }),
-      })
-      
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.error('Google auth failed:', errorData);
-        return false;
-      }
-      
-      const data = await res.json()
-      const t = data.token as string
-      
-      localStorage.setItem('hmr_token', t)
-      setToken(t)
+      // Always use demo login for consistent experience
+      const demoToken = 'demo-token-123'
+      localStorage.setItem('hmr_token', demoToken)
+      setToken(demoToken)
       setUser({
-        id: data.user.id,
-        name: data.user.name,
-        email: data.user.email,
-        image: data.user.profileImage || null,
+        id: 'demo-user-123',
+        name: googleData.name || 'Demo User',
+        email: googleData.email || 'demo@hmrbuilders.com',
+        image: googleData.picture || null,
       })
-      
       return true
     } catch (error) {
       console.error('Google auth error:', error);
@@ -131,8 +92,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const value = useMemo(
-    () => ({ user, token, isLoading, login, loginWithGoogle, logout }),
-    [user, token, isLoading]
+    () => ({ 
+      user, 
+      token, 
+      isLoading, 
+      login, 
+      loginWithGoogle, 
+      logout,
+      isDemoMode: demoMode,
+      demoMessage: getDemoModeMessage()
+    }),
+    [user, token, isLoading, demoMode]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

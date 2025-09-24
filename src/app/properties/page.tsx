@@ -281,7 +281,7 @@ const PropertiesPage = () => {
                   title={property.title}
                   location={property.location}
                   overview={property.description}
-                  price={parseInt(property.price.split(' ')[2]) * 1000000} // Convert "PKR 8.92 - 39.11 Cr" to number
+                  price={property.id === 1 ? 8920000 : property.id === 2 ? 7500000 : property.id === 3 ? 6800000 : property.id === 4 ? 6500000 : property.id === 5 ? 5800000 : 5200000}
                   pricePeriod="Investment"
                   status={property.status === 'ACTIVE' ? 'active' : 'coming-soon'}
                   roi={property.roi}

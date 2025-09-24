@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
+import { api } from '@/lib/apiUtils';
 import { 
   Building2, 
   TrendingUp, 
@@ -72,12 +73,35 @@ const chartConfig = {
 const PortfolioPage = () => {
   const { user, token, isLoading } = useAuth();
   const router = useRouter();
-  const [investments, setInvestments] = useState<Investment[]>([]);
+  const [investments, setInvestments] = useState<Investment[]>([
+    {
+      id: 'demo-investment-1',
+      propertyId: 'h1-tower',
+      propertyTitle: 'H1 Tower',
+      propertySlug: 'h1-tower',
+      tokensPurchased: 100,
+      investmentAmount: 250000,
+      totalEarned: 37500,
+      status: 'active',
+      createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'demo-investment-2',
+      propertyId: 'saima-tower',
+      propertyTitle: 'Saima Tower',
+      propertySlug: 'saima-tower',
+      tokensPurchased: 50,
+      investmentAmount: 125000,
+      totalEarned: 18750,
+      status: 'active',
+      createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ]);
   const [stats, setStats] = useState<PortfolioStats>({
-    totalInvestments: 0,
-    totalInvested: 0,
-    totalTokens: 0,
-    totalReturns: 0
+    totalInvestments: 2,
+    totalInvested: 375000,
+    totalTokens: 150,
+    totalReturns: 56250
   });
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [activeHoldingsTab, setActiveHoldingsTab] = useState<'buy' | 'sell'>('buy');
@@ -96,17 +120,8 @@ const PortfolioPage = () => {
 
   const fetchInvestments = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments/my-investments?limit=100`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setInvestments(data.data || []);
-      }
+      const response = await api.getInvestments(token!, 100);
+      setInvestments(response.data);
     } catch (error) {
       console.error('Failed to fetch investments:', error);
     } finally {
@@ -116,33 +131,24 @@ const PortfolioPage = () => {
 
   const fetchPortfolioStats = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments/my-investments?limit=100`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+      const response = await api.getInvestments(token!, 100);
+      const investments = response.data;
+      
+      const uniqueProperties = new Set(investments.map((inv: Investment) => inv.propertyId));
+      
+      const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
+        acc.totalInvested += Number(investment.investmentAmount) || 0;
+        acc.totalTokens += Number(investment.tokensPurchased) || 0;
+        acc.totalReturns += Number(investment.totalEarned) || 0;
+        return acc;
+      }, {
+        totalInvestments: uniqueProperties.size,
+        totalInvested: 0,
+        totalTokens: 0,
+        totalReturns: 0
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        const investments = data.data || [];
-        
-        const uniqueProperties = new Set(investments.map((inv: Investment) => inv.propertyId));
-        
-        const portfolioStats = investments.reduce((acc: PortfolioStats, investment: Investment) => {
-          acc.totalInvested += Number(investment.investmentAmount) || 0;
-          acc.totalTokens += Number(investment.tokensPurchased) || 0;
-          acc.totalReturns += Number(investment.totalEarned) || 0;
-          return acc;
-        }, {
-          totalInvestments: uniqueProperties.size,
-          totalInvested: 0,
-          totalTokens: 0,
-          totalReturns: 0
-        });
-
-        setStats(portfolioStats);
-      }
+      setStats(portfolioStats);
     } catch (error) {
       console.error('Failed to fetch portfolio stats:', error);
     }

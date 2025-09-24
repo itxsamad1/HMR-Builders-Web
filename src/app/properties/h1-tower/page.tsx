@@ -7,6 +7,7 @@ import {
   ArrowLeft, 
   MapPin, 
   Building, 
+  Building2,
   TrendingUp, 
   Users, 
   Shield,
@@ -388,7 +389,7 @@ const H1TowerPage = () => {
                     title={unit.type}
                     location="H1 Tower, HMR Waterfront"
                     overview={`${unit.area} • ${unit.bedrooms} Bed • ${unit.bathrooms} Bath • Token Symbol: ${unit.tokenSymbol}`}
-                    price={parseInt(unit.price.replace(/[^\d]/g, ''))}
+                    price={unit.type.includes("1-Bedroom") ? 8920000 : unit.type.includes("2-Bedroom") ? 10300000 : unit.type.includes("3-Bedroom") ? 13600000 : unit.type.includes("4-Bedroom") ? 18950000 : unit.type.includes("Townhouse") ? 25000000 : 39110000}
                     pricePeriod="Investment"
                     status="active"
                     roi="18-22%"

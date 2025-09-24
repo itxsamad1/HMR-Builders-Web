@@ -59,13 +59,7 @@ const AnimatedLoadingSkeleton = () => {
         return {
             x: shuffledPositions.map(pos => pos.x),
             y: shuffledPositions.map(pos => pos.y),
-            scale: Array(shuffledPositions.length).fill(1.2),
-            transition: {
-                duration: shuffledPositions.length * 2,
-                repeat: Infinity, // Loop animation infinitely
-                ease: [0.4, 0, 0.2, 1], // Ease function for smooth animation
-                times: shuffledPositions.map((_, i) => i / (shuffledPositions.length - 1))
-            }
+            scale: Array(shuffledPositions.length).fill(1.2)
         }
     }
 
@@ -80,7 +74,15 @@ const AnimatedLoadingSkeleton = () => {
     // Updates animation path whenever the window width changes
     useEffect(() => {
         const config = getGridConfig(windowWidth)
-        controls.start(generateSearchPath(config))
+        const animationPath = generateSearchPath(config)
+        controls.start({
+            ...animationPath,
+            transition: {
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+            }
+        })
     }, [windowWidth, controls])
 
     // Variants for frame animations
@@ -107,12 +109,7 @@ const AnimatedLoadingSkeleton = () => {
                 "0 0 35px rgba(49, 93, 202, 0.4)",
                 "0 0 20px rgba(49, 93, 202, 0.2)"
             ],
-            scale: [1, 1.1, 1], // Pulsating effect
-            transition: {
-                duration: 1,
-                repeat: Infinity,
-                ease: "easeInOut" // Smooth pulsation
-            }
+            scale: [1, 1.1, 1] // Pulsating effect
         }
     }
 
@@ -136,6 +133,11 @@ const AnimatedLoadingSkeleton = () => {
                         className="bg-[#315dca]/20 p-3 rounded-full backdrop-blur-sm border border-[#315dca]/30"
                         variants={glowVariants}
                         animate="animate"
+                        transition={{
+                            duration: 1,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
                     >
                         <svg
                             className="w-6 h-6 text-[#315dca]"

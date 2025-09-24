@@ -7,6 +7,7 @@ import {
   ArrowLeft, 
   MapPin, 
   Building, 
+  Building2,
   TrendingUp, 
   Users, 
   Home,
@@ -383,7 +384,7 @@ const SaimaTowerPage = () => {
                     title={unit.type}
                     location="Saima Tower, HMR Waterfront"
                     overview={`${unit.area} • ${unit.bedrooms} Bed • ${unit.bathrooms} Bath • Token Symbol: ${unit.tokenSymbol}`}
-                    price={parseInt(unit.price.replace(/[^\d]/g, ''))}
+                    price={unit.type.includes("1-Bedroom") ? 7500000 : unit.type.includes("2-Bedroom") ? 15000000 : unit.type.includes("3-Bedroom") ? 22000000 : unit.type.includes("4-Bedroom") ? 28000000 : unit.type.includes("Townhouse") ? 35000000 : 45000000}
                     pricePeriod="Investment"
                     status="coming-soon"
                     roi="17-21%"

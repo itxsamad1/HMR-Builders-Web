@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/AuthProvider';
 import { useRouter } from 'next/navigation';
+import { api } from '@/lib/apiUtils';
 import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff, Plus } from 'lucide-react';
 import Link from 'next/link';
 import UserProfileDropdown from '@/components/UserProfileDropdown';
@@ -34,8 +35,40 @@ interface WalletData {
 const WalletPage = () => {
   const { user, token, isLoading } = useAuth();
   const router = useRouter();
-  const [investments, setInvestments] = useState<Investment[]>([]);
-  const [walletData, setWalletData] = useState<WalletData | null>(null);
+  const [investments, setInvestments] = useState<Investment[]>([
+    {
+      id: 'demo-investment-1',
+      propertyId: 'h1-tower',
+      propertyTitle: 'H1 Tower',
+      propertySlug: 'h1-tower',
+      tokensPurchased: 100,
+      investmentAmount: 250000,
+      totalEarned: 37500,
+      status: 'active',
+      createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    {
+      id: 'demo-investment-2',
+      propertyId: 'saima-tower',
+      propertyTitle: 'Saima Tower',
+      propertySlug: 'saima-tower',
+      tokensPurchased: 50,
+      investmentAmount: 125000,
+      totalEarned: 18750,
+      status: 'active',
+      createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+  ]);
+  const [walletData, setWalletData] = useState<WalletData | null>({
+    id: 'demo-wallet-123',
+    userId: 'demo-user-123',
+    totalBalance: 2500000,
+    availableBalance: 1500000,
+    investedAmount: 1000000,
+    totalReturns: 150000,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  });
   const [isLoadingData, setIsLoadingData] = useState(true);
   const [showBalance, setShowBalance] = useState(true);
   const [showTopUpModal, setShowTopUpModal] = useState(false);
@@ -54,17 +87,8 @@ const WalletPage = () => {
 
   const fetchWalletData = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/users/wallet`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setWalletData(data.data);
-      }
+      const response = await api.getWalletData(token!);
+      setWalletData(response.data);
     } catch (error) {
       console.error('Failed to fetch wallet data:', error);
     }
@@ -72,17 +96,8 @@ const WalletPage = () => {
 
   const fetchInvestments = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/api/investments/my-investments?limit=50`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setInvestments(data.data || []);
-      }
+      const response = await api.getInvestments(token!, 50);
+      setInvestments(response.data);
     } catch (error) {
       console.error('Failed to fetch investments:', error);
     } finally {

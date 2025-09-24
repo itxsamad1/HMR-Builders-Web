@@ -12,7 +12,8 @@ interface GridConfig {
 }
 
 const AnimatedLoadingSkeleton = () => {
-    const [windowWidth, setWindowWidth] = useState(0) // State to store window width for responsiveness
+    const [windowWidth, setWindowWidth] = useState(1200) // Default width to prevent hydration mismatch
+    const [mounted, setMounted] = useState(false)
     const controls = useAnimation() // Controls for Framer Motion animations
 
     // Dynamically calculates grid configuration based on window width
@@ -65,10 +66,13 @@ const AnimatedLoadingSkeleton = () => {
 
     // Handles window resize events and updates the window width
     useEffect(() => {
-        setWindowWidth(window.innerWidth)
-        const handleResize = () => setWindowWidth(window.innerWidth)
-        window.addEventListener('resize', handleResize)
-        return () => window.removeEventListener('resize', handleResize)
+        setMounted(true)
+        if (typeof window !== 'undefined') {
+            setWindowWidth(window.innerWidth)
+            const handleResize = () => setWindowWidth(window.innerWidth)
+            window.addEventListener('resize', handleResize)
+            return () => window.removeEventListener('resize', handleResize)
+        }
     }, [])
 
     // Updates animation path whenever the window width changes
@@ -114,6 +118,25 @@ const AnimatedLoadingSkeleton = () => {
     }
 
     const config = getGridConfig(windowWidth) // Get current grid configuration
+
+    // Prevent hydration mismatch - don't render on server
+    if (!mounted) {
+        return (
+            <div className="w-full max-w-4xl mx-auto p-6 bg-[#0a0a0a] rounded-xl shadow-2xl border border-[#333]">
+                <div className="relative overflow-hidden rounded-lg bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] p-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="bg-[#1a1a1a] rounded-lg shadow-lg border border-[#333] p-4">
+                                <div className="h-32 bg-[#333] rounded-md mb-3" />
+                                <div className="h-3 w-3/4 bg-[#333] rounded mb-2" />
+                                <div className="h-3 w-1/2 bg-[#333] rounded" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <motion.div

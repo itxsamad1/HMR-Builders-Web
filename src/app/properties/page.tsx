@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, MapPin, Building, TrendingUp, Users, Filter, Search, Home } from 'lucide-react';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { useAuth } from '@/components/AuthProvider';
 import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
 

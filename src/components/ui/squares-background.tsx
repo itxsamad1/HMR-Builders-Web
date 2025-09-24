@@ -1,3 +1,6 @@
+
+'use client'
+
 import { useRef, useEffect, useState } from "react"
 
 interface SquaresProps {

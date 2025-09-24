@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { api } from '@/lib/apiUtils';
 import { ArrowLeft, Wallet, TrendingUp, DollarSign, Building2, Eye, EyeOff, Plus } from 'lucide-react';
 import Link from 'next/link';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
 import WalletTopUp from '@/components/WalletTopUp';
 
 interface Investment {
@@ -118,6 +119,24 @@ const WalletPage = () => {
 
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
+      {/* Header */}
+      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
+        <div className="transparent-navbar rounded-2xl shadow-navbar">
+          <div className="flex items-center justify-between px-6 py-4">
+            <Link href="/" className="flex items-center space-x-3 text-white hover:text-[#315dca] transition-colors">
+              <ArrowLeft className="w-6 h-6" />
+              <span className="font-semibold">Back to Home</span>
+            </Link>
+            
+            <div className="flex items-center space-x-4">
+              <Link href="/portfolio" className="text-white hover:text-[#315dca] font-medium transition-colors">
+                Portfolio
+              </Link>
+              <UserProfileDropdown />
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
       <div className="pt-24 px-4 sm:px-6 lg:px-8 pb-12">

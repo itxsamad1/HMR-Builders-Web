@@ -19,6 +19,7 @@ import {
   Clock,
   DollarSign
 } from 'lucide-react';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { useAuth } from '@/components/AuthProvider';
 
 const HSResidencePage = () => {
@@ -109,6 +110,48 @@ const HSResidencePage = () => {
 
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
+      {/* Header */}
+      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
+        <div className="transparent-navbar rounded-2xl shadow-navbar">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-14 sm:h-16">
+            <Link href="/" className="flex items-center">
+              <Image 
+                src="/hmr-group.svg" 
+                alt="HMR Builders" 
+                width={120} 
+                height={40} 
+                className="h-8 w-auto"
+              />
+            </Link>
+            
+            <nav className="hidden md:flex items-center space-x-8">
+              <Link href="/" className="text-white/80 hover:text-white font-medium transition-colors">Home</Link>
+              <Link href="/properties" className="text-white/80 hover:text-white font-medium transition-colors">Properties</Link>
+              <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How It Works</Link>
+              <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
+              <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
+              <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserProfileDropdown />
+              ) : (
+                <>
+                  <Link href="/login" className="text-white/80 hover:text-white font-medium transition-colors">
+                    Sign In
+                  </Link>
+                  <Link href="/get-started" className="text-white bg-[#315dca] hover:bg-[#203a74] px-4 py-2 rounded-lg font-medium transition-colors">
+                    Get Started
+                  </Link>
+                </>
+              )}
+            </div>
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
       <main className="pt-20">

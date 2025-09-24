@@ -10,7 +10,6 @@ import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
 import { Squares } from '@/components/ui/squares-background';
 import { Globe } from '@/components/ui/globe';
 import { COBEOptions } from "cobe";
-import AnimatedLoadingSkeleton from '@/components/ui/animated-loading-skeleton';
 import { HyperText } from '@/components/ui/hyper-text';
 import SectionTransition from '@/components/SectionTransition';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -47,17 +46,7 @@ const GLOBE_CONFIG: COBEOptions = {
 const HomePage = () => {
   const [email, setEmail] = useState('');
   const [activeTab, setActiveTab] = useState('featured');
-  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
-
-  // Handle initial loading
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 3000); // 3 second loading animation
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const properties = [
     {
@@ -161,59 +150,30 @@ const HomePage = () => {
     { value: "25+", label: "Properties Listed" }
   ];
 
-  // Loading Screen
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-[#060606] flex flex-col items-center justify-center overflow-hidden z-50">
+
+  return (
+    <div className="min-h-screen hero-gradient overflow-x-hidden">
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
         {/* Squares Background */}
-        <div className="absolute inset-0">
+        <ParallaxSection speed={-0.3} className="absolute inset-0 bg-[#060606]">
           <Squares
             direction="diagonal"
-            speed={0.3}
-            squareSize={30}
+            speed={0.5}
+            squareSize={40}
             borderColor="#333"
             hoverFillColor="#222"
             className="w-full h-full"
           />
-        </div>
+        </ParallaxSection>
         
-        {/* Loading Content */}
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4">
-          <div className="text-center mb-8">
-           
-            
-          
-            
-         
-          </div>
-            {/* Animated Loading Skeleton - Full Width */}
-            <div className="w-full max-w-6xl">
-            <AnimatedLoadingSkeleton />
-          </div>
-         
-          
+        {/* Floating Background Elements */}
+        <ParallaxSection speed={0.2} className="absolute inset-0 -z-10">
+          <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-[#315dca]/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#203a74]/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        </ParallaxSection>
         
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen overflow-x-hidden relative">
-      {/* Global Consistent Background */}
-      <div className="fixed inset-0 bg-[#060606]">
-        <Squares
-          direction="diagonal"
-          speed={0.5}
-          squareSize={40}
-          borderColor="#333"
-          hoverFillColor="#222"
-          className="w-full h-full"
-        />
-      </div>
-
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
         <SectionTransition className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px]">
             {/* Left Content */}
@@ -346,7 +306,24 @@ const HomePage = () => {
       </section>
 
       {/* Modern Startup Features Section */}
-      <section className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
+      <section className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] overflow-hidden">
+        {/* Animated Background */}
+        <ParallaxSection speed={-0.2} className="absolute inset-0">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/80 via-[#1a1a2e]/60 to-[#16213e]/80"></div>
+        </ParallaxSection>
+        
+        <ParallaxSection speed={0.1} className="absolute inset-0">
+          <Squares
+            direction="up"
+            speed={0.2}
+            squareSize={60}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </ParallaxSection>
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <SectionTransition delay={0.2}>
@@ -482,7 +459,7 @@ const HomePage = () => {
       </section>
 
       {/* Portfolio Section */}
-      <section id="properties" className="relative py-12 sm:py-16 lg:py-20">
+      <section id="properties" className="py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionTransition delay={0.2}>
             <div className="text-center mb-12 sm:mb-16">
@@ -570,7 +547,7 @@ const HomePage = () => {
       </section>
 
       {/* Tokenization at a Glance Section */}
-      <section className="relative py-16 sm:py-20 lg:py-24">
+      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
             <div className="space-y-6 sm:space-y-8">
@@ -638,7 +615,18 @@ const HomePage = () => {
       </section>
 
       {/* How it Works Section */}
-      <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 overflow-hidden">
+      <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 bg-[#060606] overflow-hidden">
+        {/* Squares Background */}
+        <div className="absolute inset-0 bg-[#060606]">
+          <Squares
+            direction="down"
+            speed={0.3}
+            squareSize={45}
+            borderColor="#333"
+            hoverFillColor="#222"
+            className="w-full h-full"
+          />
+        </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="text-center mb-16 sm:mb-20">
              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
@@ -703,7 +691,7 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative border-t border-[#203a74] dark:border-gray-700 py-8 sm:py-12 lg:py-16">
+      <footer className="bg-[#0e1521] dark:bg-gray-900 border-t border-[#203a74] dark:border-gray-700 py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="sm:col-span-2 lg:col-span-1">

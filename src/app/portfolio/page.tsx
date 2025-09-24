@@ -23,6 +23,7 @@ import {
   Activity
 } from 'lucide-react';
 import Link from 'next/link';
+import UserProfileDropdown from '@/components/UserProfileDropdown';
 import { GradientDots } from '@/components/gradient-dots';
 import { FlickeringGrid } from '@/components/ui/flickering-grid';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -206,6 +207,49 @@ const PortfolioPage = () => {
         />
       </div>
 
+      {/* Header Navigation */}
+      <header className="relative z-50 bg-[#0f1629]/80 backdrop-blur-xl border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 bg-[#f59e0b] rounded-sm flex items-center justify-center">
+                  <span className="text-black font-bold text-sm">H</span>
+                </div>
+                <span className="text-white text-xl font-semibold">HMR</span>
+              </div>
+              
+              {/* Navigation Links */}
+              <nav className="hidden lg:flex items-center space-x-8">
+               
+                <Link href="/portfolio" className="text-[#14b8a6] font-medium border-b-2 border-[#14b8a6] pb-1">
+                  Portfolio
+                </Link>
+               
+                <Link href="/wallet" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
+                  Transactions
+                </Link>
+                <Link href="/analytics" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
+                  Analytics
+                </Link>
+                <Link href="/settings" className="text-white hover:text-[#14b8a6] font-medium transition-colors">
+                  Settings
+                </Link>
+              </nav>
+            </div>
+
+            {/* Connect Wallet Button */}
+            <div className="flex items-center space-x-4">
+              <Button className="bg-gradient-to-r from-[#1e293b] to-[#334155] hover:from-[#334155] hover:to-[#475569] text-white border border-gray-600 flex items-center space-x-2 shadow-lg shadow-gray-600/20 hover:shadow-gray-600/30 transition-all duration-300">
+                <Lock className="w-4 h-4" />
+                <span>Connect Wallet</span>
+              </Button>
+              <UserProfileDropdown />
+            </div>
+          </div>
+        </div>
+      </header>
 
       {/* Main Content */}
       <div className="relative z-10 p-6 max-w-7xl mx-auto">

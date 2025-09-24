@@ -12,6 +12,9 @@ import { Globe } from '@/components/ui/globe';
 import { COBEOptions } from "cobe";
 import AnimatedLoadingSkeleton from '@/components/ui/animated-loading-skeleton';
 import { HyperText } from '@/components/ui/hyper-text';
+import SectionTransition from '@/components/SectionTransition';
+import ParallaxSection from '@/components/ParallaxSection';
+import ParallaxText from '@/components/ParallaxText';
 
 const GLOBE_CONFIG: COBEOptions = {
   width: 800,
@@ -196,22 +199,22 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen hero-gradient overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden relative">
+      {/* Global Consistent Background */}
+      <div className="fixed inset-0 bg-[#060606]">
+        <Squares
+          direction="diagonal"
+          speed={0.5}
+          squareSize={40}
+          borderColor="#333"
+          hoverFillColor="#222"
+          className="w-full h-full"
+        />
+      </div>
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
-        {/* Squares Background */}
-        <div className="absolute inset-0 bg-[#060606]">
-          <Squares
-            direction="diagonal"
-            speed={0.5}
-            squareSize={40}
-            borderColor="#333"
-            hoverFillColor="#222"
-            className="w-full h-full"
-          />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <SectionTransition className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px]">
             {/* Left Content */}
              <div className="text-white dark:text-white space-y-4 sm:space-y-6">
@@ -339,34 +342,15 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* Background Elements */}
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-[#315dca]/5 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#203a74]/5 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        </div>
+        </SectionTransition>
       </section>
 
       {/* Modern Startup Features Section */}
-      <section className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center opacity-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/80 via-[#1a1a2e]/60 to-[#16213e]/80"></div>
-          <Squares
-            direction="up"
-            speed={0.2}
-            squareSize={60}
-            borderColor="#333"
-            hoverFillColor="#222"
-            className="w-full h-full"
-          />
-        </div>
-
+      <section className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-16 sm:mb-20">
+          <SectionTransition delay={0.2}>
+            <div className="text-center mb-16 sm:mb-20">
             <div className="inline-flex items-center bg-[#315dca]/10 border border-[#315dca]/30 rounded-full px-4 py-2 text-sm font-medium text-[#315dca] mb-6">
               <div className="w-2 h-2 bg-[#315dca] rounded-full mr-2 animate-pulse"></div>
               REVOLUTIONARY TECHNOLOGY
@@ -387,10 +371,11 @@ const HomePage = () => {
                 </div>
               </span>
             </h2>
-            <p className="text-xl sm:text-2xl text-[#dee0e5] max-w-4xl mx-auto leading-relaxed">
+            <ParallaxText speed={0.1} className="text-xl sm:text-2xl text-[#dee0e5] max-w-4xl mx-auto leading-relaxed">
               Experience the power of blockchain technology transforming traditional real estate investment
-            </p>
-          </div>
+            </ParallaxText>
+            </div>
+          </SectionTransition>
 
           {/* Modern Feature Cards with Parallax */}
           <div className="space-y-16 sm:space-y-20 lg:space-y-24">
@@ -444,7 +429,8 @@ const HomePage = () => {
                 badgeDesc: "Fully regulated platform"
               }
             ].map((feature, index) => (
-              <div key={index} className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
+              <SectionTransition key={index} delay={index * 0.2}>
+                <div className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
                 {/* Content */}
                 <div className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                   <div className="space-y-4">
@@ -488,23 +474,30 @@ const HomePage = () => {
                   </div>
 
                 </div>
-              </div>
+                </div>
+              </SectionTransition>
             ))}
           </div>
         </div>
       </section>
 
       {/* Portfolio Section */}
-      <section id="properties" className="py-12 sm:py-16 lg:py-20">
+      <section id="properties" className="relative py-12 sm:py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              A glimpse of our <span className="text-[#315dca]">tokenized portfolio</span>
-            </h2>
-          </div>
+          <SectionTransition delay={0.2}>
+            <div className="text-center mb-12 sm:mb-16">
+              <ParallaxText speed={0.2}>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                  A glimpse of our <span className="text-[#315dca]">tokenized portfolio</span>
+                </h2>
+              </ParallaxText>
+            </div>
+          </SectionTransition>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <HMRPropertyCard
+            <SectionTransition delay={0.4}>
+              <ParallaxSection speed={0.1}>
+                <HMRPropertyCard
               imageUrl="/projects/h1-tower/main.jpg"
               imageAlt="H1 Tower - Flagship Development"
               logo={<Building2 className="h-6 w-6 text-white/80" />}
@@ -519,9 +512,13 @@ const HomePage = () => {
               availableTokens={342}
               onInvest={() => window.open('/properties/h1-tower', '_blank')}
               className="h-96"
-            />
+                />
+              </ParallaxSection>
+            </SectionTransition>
             
-            <HMRPropertyCard
+            <SectionTransition delay={0.6}>
+              <ParallaxSection speed={0.1}>
+                <HMRPropertyCard
               imageUrl="/projects/saima-tower/main.jpg"
               imageAlt="Saima Tower - Ultra-Luxury Development"
               logo={<TrendingUp className="h-6 w-6 text-white/80" />}
@@ -536,9 +533,13 @@ const HomePage = () => {
               availableTokens={1000}
               onInvest={() => window.open('/properties/saima-tower', '_blank')}
               className="h-96"
-            />
+                />
+              </ParallaxSection>
+            </SectionTransition>
             
-            <HMRPropertyCard
+            <SectionTransition delay={0.8}>
+              <ParallaxSection speed={0.1}>
+                <HMRPropertyCard
               imageUrl="/projects/aa-waterfront/main.jpg"
               imageAlt="AA Waterfront - Smart Luxury Development"
               logo={<Home className="h-6 w-6 text-white/80" />}
@@ -553,19 +554,23 @@ const HomePage = () => {
               availableTokens={1000}
               onInvest={() => window.open('/properties/aa-waterfront', '_blank')}
               className="h-96"
-            />
+                />
+              </ParallaxSection>
+            </SectionTransition>
           </div>
           
-          <div className="text-center mt-12">
-            <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
-              Explore more
-            </Link>
-          </div>
+          <SectionTransition delay={1.0}>
+            <div className="text-center mt-12">
+              <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors transform hover:scale-105 transition-all duration-300">
+                Explore more
+              </Link>
+            </div>
+          </SectionTransition>
         </div>
       </section>
 
       {/* Tokenization at a Glance Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
+      <section className="relative py-16 sm:py-20 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
             <div className="space-y-6 sm:space-y-8">
@@ -633,18 +638,7 @@ const HomePage = () => {
       </section>
 
       {/* How it Works Section */}
-      <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 bg-[#060606] overflow-hidden">
-        {/* Squares Background */}
-        <div className="absolute inset-0 bg-[#060606]">
-          <Squares
-            direction="down"
-            speed={0.3}
-            squareSize={45}
-            borderColor="#333"
-            hoverFillColor="#222"
-            className="w-full h-full"
-          />
-        </div>
+      <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="text-center mb-16 sm:mb-20">
              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white mb-6">
@@ -709,7 +703,7 @@ const HomePage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0e1521] dark:bg-gray-900 border-t border-[#203a74] dark:border-gray-700 py-8 sm:py-12 lg:py-16">
+      <footer className="relative border-t border-[#203a74] dark:border-gray-700 py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             <div className="sm:col-span-2 lg:col-span-1">

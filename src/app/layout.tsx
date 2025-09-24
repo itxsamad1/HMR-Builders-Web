@@ -3,6 +3,7 @@ import { Inter, Orbitron } from 'next/font/google'
 import './globals.css'
 import SessionProvider from '@/components/SessionProvider'
 import GlobalDock from '@/components/GlobalDock'
+import SmoothScroll from '@/components/SmoothScroll'
 
 const inter = Inter({ subsets: ['latin'] })
 const orbitron = Orbitron({ subsets: ['latin'], variable: '--font-orbitron' })
@@ -34,10 +35,12 @@ export default function RootLayout({
       <head>
       </head>
       <body className={`${inter.className} ${orbitron.variable}`}>
-        <SessionProvider>
-          <GlobalDock />
-          {children}
-        </SessionProvider>
+        <SmoothScroll>
+          <SessionProvider>
+            <GlobalDock />
+            {children}
+          </SessionProvider>
+        </SmoothScroll>
       </body>
     </html>
   )

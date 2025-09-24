@@ -11,6 +11,7 @@ import { Squares } from '@/components/ui/squares-background';
 import { Globe } from '@/components/ui/globe';
 import { COBEOptions } from "cobe";
 import { HyperText } from '@/components/ui/hyper-text';
+import { LampContainer } from '@/components/ui/lamp';
 import SectionTransition from '@/components/SectionTransition';
 import ParallaxSection from '@/components/ParallaxSection';
 import ParallaxText from '@/components/ParallaxText';
@@ -538,92 +539,91 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Portfolio Section */}
-      <section id="properties" className="py-12 sm:py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <SectionTransition delay={0.2}>
-            <div className="text-center mb-12 sm:mb-16">
-              <ParallaxText speed={0.2}>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-                  A glimpse of our <span className="text-[#315dca]">tokenized portfolio</span>
-                </h2>
-              </ParallaxText>
+      {/* Portfolio Section with Lamp Effect */}
+      <section id="properties" className="relative">
+        <LampContainer className="bg-[#060606]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <SectionTransition delay={0.2}>
+              <div className="text-center mb-12 sm:mb-16">
+               
+              </div>
+            </SectionTransition>
+            
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              
+              <SectionTransition delay={0.4}>
+                <ParallaxSection speed={0.1}>
+                  <HMRPropertyCard
+                imageUrl="/projects/h1-tower/main.jpg"
+                imageAlt="H1 Tower - Flagship Development"
+                logo={<Building2 className="h-6 w-6 text-white/80" />}
+                title="H1 Tower"
+                location="HMR Waterfront, Karachi"
+                overview="The Flagship Tower of HMR Waterfront - a G+39 floors architectural masterpiece offering panoramic Arabian Sea views with world-class amenities."
+                price={2500000}
+                pricePeriod="Investment"
+                status="active"
+                roi="18-22%"
+                tokens={1000}
+                availableTokens={342}
+                onInvest={() => window.open('/properties/h1-tower', '_blank')}
+                className="h-96"
+                  />
+                </ParallaxSection>
+              </SectionTransition>
+              
+              <SectionTransition delay={0.6}>
+                <ParallaxSection speed={0.1}>
+                  <HMRPropertyCard
+                imageUrl="/projects/saima-tower/main.jpg"
+                imageAlt="Saima Tower - Ultra-Luxury Development"
+                logo={<TrendingUp className="h-6 w-6 text-white/80" />}
+                title="Saima Tower"
+                location="HMR Waterfront, Karachi"
+                overview="Ultra-luxury commercial and residential complex with state-of-the-art facilities and smart building technology."
+                price={1750000}
+                pricePeriod="Investment"
+                status="coming-soon"
+                roi="17-21%"
+                tokens={1000}
+                availableTokens={1000}
+                onInvest={() => window.open('/properties/saima-tower', '_blank')}
+                className="h-96"
+                  />
+                </ParallaxSection>
+              </SectionTransition>
+              
+              <SectionTransition delay={0.8}>
+                <ParallaxSection speed={0.1}>
+                  <HMRPropertyCard
+                imageUrl="/projects/aa-waterfront/main.jpg"
+                imageAlt="AA Waterfront - Smart Luxury Development"
+                logo={<Home className="h-6 w-6 text-white/80" />}
+                title="AA Waterfront"
+                location="HMR Waterfront, Karachi"
+                overview="Smart luxury residential development with stunning sea views, smart home technology, and premium amenities."
+                price={1750000}
+                pricePeriod="Investment"
+                status="coming-soon"
+                roi="16-20%"
+                tokens={1000}
+                availableTokens={1000}
+                onInvest={() => window.open('/properties/aa-waterfront', '_blank')}
+                className="h-96"
+                  />
+                </ParallaxSection>
+              </SectionTransition>
             </div>
-          </SectionTransition>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <SectionTransition delay={0.4}>
-              <ParallaxSection speed={0.1}>
-                <HMRPropertyCard
-              imageUrl="/projects/h1-tower/main.jpg"
-              imageAlt="H1 Tower - Flagship Development"
-              logo={<Building2 className="h-6 w-6 text-white/80" />}
-              title="H1 Tower"
-              location="HMR Waterfront, Karachi"
-              overview="The Flagship Tower of HMR Waterfront - a G+39 floors architectural masterpiece offering panoramic Arabian Sea views with world-class amenities."
-              price={2500000}
-              pricePeriod="Investment"
-              status="active"
-              roi="18-22%"
-              tokens={1000}
-              availableTokens={342}
-              onInvest={() => window.open('/properties/h1-tower', '_blank')}
-              className="h-96"
-                />
-              </ParallaxSection>
-            </SectionTransition>
             
-            <SectionTransition delay={0.6}>
-              <ParallaxSection speed={0.1}>
-                <HMRPropertyCard
-              imageUrl="/projects/saima-tower/main.jpg"
-              imageAlt="Saima Tower - Ultra-Luxury Development"
-              logo={<TrendingUp className="h-6 w-6 text-white/80" />}
-              title="Saima Tower"
-              location="HMR Waterfront, Karachi"
-              overview="Ultra-luxury commercial and residential complex with state-of-the-art facilities and smart building technology."
-              price={1750000}
-              pricePeriod="Investment"
-              status="coming-soon"
-              roi="17-21%"
-              tokens={1000}
-              availableTokens={1000}
-              onInvest={() => window.open('/properties/saima-tower', '_blank')}
-              className="h-96"
-                />
-              </ParallaxSection>
-            </SectionTransition>
-            
-            <SectionTransition delay={0.8}>
-              <ParallaxSection speed={0.1}>
-                <HMRPropertyCard
-              imageUrl="/projects/aa-waterfront/main.jpg"
-              imageAlt="AA Waterfront - Smart Luxury Development"
-              logo={<Home className="h-6 w-6 text-white/80" />}
-              title="AA Waterfront"
-              location="HMR Waterfront, Karachi"
-              overview="Smart luxury residential development with stunning sea views, smart home technology, and premium amenities."
-              price={1750000}
-              pricePeriod="Investment"
-              status="coming-soon"
-              roi="16-20%"
-              tokens={1000}
-              availableTokens={1000}
-              onInvest={() => window.open('/properties/aa-waterfront', '_blank')}
-              className="h-96"
-                />
-              </ParallaxSection>
+            <SectionTransition delay={1.0}>
+              <div className="text-center mt-12">
+                <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors transform hover:scale-105 transition-all duration-300">
+                  Explore more
+                </Link>
+              </div>
             </SectionTransition>
           </div>
-          
-          <SectionTransition delay={1.0}>
-            <div className="text-center mt-12">
-              <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors transform hover:scale-105 transition-all duration-300">
-                Explore more
-              </Link>
-            </div>
-          </SectionTransition>
-        </div>
+        </LampContainer>
       </section>
 
       {/* Tokenization at a Glance Section */}

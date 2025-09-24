@@ -11,17 +11,24 @@ import { useAuth } from '@/components/AuthProvider';
 const GlobalDock = () => {
   const pathname = usePathname();
   const { user } = useAuth();
-  const [isAtTop, setIsAtTop] = useState(true);
-  const [scrollY, setScrollY] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
+    // Ease-out cubic for smoothness
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+    // Ease-in cubic for smoothness
+    const easeIn = (t: number) => t * t * t;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
-      setIsAtTop(currentScrollY <= 10); // Consider "at top" if within 10px
+      const scrollY = window.scrollY;
+      const maxScroll = 200; // Distance over which to animate (0px to 200px)
+      
+      // Scroll Progress (using ease-out for smoother acceleration)
+      const progress = Math.min(easeOut(scrollY / maxScroll), 1);
+      setScrollProgress(progress);
     };
 
-    // Initial check
+    // Initial check to prevent pop on page load
     handleScroll();
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -67,141 +74,156 @@ const GlobalDock = () => {
     }
   ];
 
-  return (
-    <div className={`fixed z-50 transition-all duration-700 ease-out ${
-      isAtTop 
-        ? 'top-4 left-1/2 transform -translate-x-1/2' 
-        : 'top-4 left-1/2 transform -translate-x-1/2'
-    }`}>
-       <div className={`transition-all duration-700 ease-out ${
-         isAtTop 
-           ? 'w-[95vw] max-w-7xl h-16 rounded-2xl' 
-           : 'w-auto h-auto rounded-2xl'
-       }`}>
-        
-        {/* Single Transforming Dock */}
-        <div className={`bg-[#0a0a0a]/95 backdrop-blur-xl border border-[#333]/50 shadow-2xl transition-all duration-700 ease-out ${
-          isAtTop 
-            ? 'w-full h-full rounded-2xl flex items-center justify-between px-6' 
-            : 'rounded-2xl p-2'
-        }`}>
-          
-          {/* Full View Content - Only visible at top */}
-          {isAtTop && (
-            <>
-              {/* Logo/Brand */}
-              <div className="flex items-center space-x-3">
-                <img src="/hmr-group.svg" alt="HMR Group" className="w-8 h-8" />
-                <span className="text-xl font-bold text-white">HMR BUILDERS</span>
-              </div>
-              
-               {/* Navigation Links */}
-               <nav className="hidden lg:flex items-center space-x-8">
-                 {navigationItems.map((item) => (
-                   <Link
-                     key={item.href}
-                     href={item.href}
-                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap ${
-                       item.isActive 
-                         ? 'text-[#315dca] bg-[#315dca]/10' 
-                         : 'text-white/80 hover:text-white hover:bg-white/5'
-                     }`}
-                   >
-                     <item.icon className="w-4 h-4 flex-shrink-0" />
-                     <span className="text-sm font-medium">{item.label}</span>
-                   </Link>
-                 ))}
-               </nav>
-              
-               {/* Auth & CTA */}
-               <div className="flex items-center space-x-4">
-                 {user ? (
-                   <UserProfileDropdown />
-                 ) : (
-                   <Link
-                     href="/login"
-                     className="flex items-center space-x-2 px-4 py-2 text-[#315dca] hover:text-[#315dca]/80 transition-colors duration-200 whitespace-nowrap"
-                   >
-                     <Shield className="w-4 h-4 flex-shrink-0" />
-                     <span className="text-sm font-medium">Sign In</span>
-                   </Link>
-                 )}
-                 <Link
-                   href="/get-started"
-                   className="flex items-center space-x-2 px-4 py-2 bg-[#315dca] hover:bg-[#315dca]/90 text-white rounded-lg transition-colors duration-200 whitespace-nowrap"
-                 >
-                   <Zap className="w-4 h-4 flex-shrink-0" />
-                   <span className="text-sm font-medium">Get Started</span>
-                 </Link>
-               </div>
-            </>
-          )}
-          
-          {/* Collapsed Dock View - Only visible when scrolled */}
-          {!isAtTop && (
-            <StickyDock 
-              className="bg-transparent border-none shadow-none"
-              magnification={50}
-              distance={100}
-              spring={{ mass: 0.1, stiffness: 200, damping: 15 }}
-            >
-              {navigationItems.map((item) => (
-                <StickyDockItem key={item.href}>
-                  <StickyDockIcon>
-                    <Link 
-                      href={item.href} 
-                      className={`flex items-center justify-center w-full h-full transition-colors duration-200 ${
-                        item.isActive ? 'text-[#315dca]' : 'text-white/80 hover:text-white'
-                      }`}
-                    >
-                      <item.icon className="w-5 h-5" />
-                    </Link>
-                  </StickyDockIcon>
-                   <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50 whitespace-nowrap">
-                     {item.label}
-                   </StickyDockLabel>
-                </StickyDockItem>
-              ))}
-
-              {/* User Profile / Auth */}
-              <StickyDockItem>
-                <StickyDockIcon>
-                  {user ? (
-                    <div className="flex items-center justify-center w-full h-full">
-                      <UserProfileDropdown />
-                    </div>
-                  ) : (
-                    <Link 
-                      href="/login" 
-                      className="flex items-center justify-center w-full h-full text-[#315dca] hover:text-[#315dca]/80 transition-colors duration-200"
-                    >
-                      <Shield className="w-5 h-5" />
-                    </Link>
-                  )}
-                </StickyDockIcon>
-                 <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50 whitespace-nowrap">
-                   {user ? 'Profile' : 'Sign In'}
-                 </StickyDockLabel>
-              </StickyDockItem>
-
-              {/* Get Started */}
-              <StickyDockItem>
-                <StickyDockIcon>
-                  <Link 
-                    href="/get-started" 
-                    className="flex items-center justify-center w-full h-full bg-[#315dca] hover:bg-[#315dca]/90 rounded-lg transition-colors duration-200"
-                  >
-                    <Zap className="w-5 h-5" />
-                  </Link>
-                </StickyDockIcon>
-                 <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50 whitespace-nowrap">
-                   Get Started
-                 </StickyDockLabel>
-              </StickyDockItem>
-            </StickyDock>
-          )}
-        </div>
+  // Full navbar content for expanded mode
+  const fullNavContent = (
+    <div className="flex items-center justify-between w-full px-6">
+      {/* Logo/Brand - with opacity fade */}
+      <div 
+        className="flex items-center space-x-3 flex-shrink-0"
+        style={{ 
+          opacity: Math.max(0, 1 - scrollProgress * 2), // Fade out faster
+          transition: "opacity 150ms ease-out" 
+        }}
+      >
+        <img src="/hmr-group.svg" alt="HMR Group" className="w-8 h-8" />
+        <span className="text-xl font-bold text-white">HMR BUILDERS</span>
       </div>
+      
+      {/* Centered Navigation Links */}
+      <nav className="flex items-center space-x-8 flex-1 justify-center" style={{ marginLeft: '10%' }}>
+        {navigationItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap ${
+              item.isActive 
+                ? 'text-[#315dca] bg-[#315dca]/10' 
+                : 'text-white/80 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <item.icon className="w-4 h-4 flex-shrink-0" />
+            <span className="text-sm font-medium">{item.label}</span>
+          </Link>
+        ))}
+      </nav>
+      
+      {/* Auth Only - Get Started moved to dock */}
+      <div className="flex items-center flex-shrink-0">
+        {user ? (
+          <UserProfileDropdown />
+        ) : (
+          <Link
+            href="/login"
+            className="flex items-center space-x-2 px-4 py-2 text-[#315dca] hover:text-[#315dca]/80 transition-colors duration-200 whitespace-nowrap"
+          >
+            <Shield className="w-4 h-4 flex-shrink-0" />
+            <span className="text-sm font-medium">Sign In</span>
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+
+  // Easing functions for smooth transitions
+  const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+  const easeIn = (t: number) => t * t * t;
+
+  // Calculate smooth interpolated values with easing
+  const scale = 1 - easeOut(scrollProgress) * 0.05; // Slight easing for smooth shrinkage
+  const offsetY = scrollProgress * 3; // From 0px to 3px (less offset)
+  
+  // Width: Apply ease-in for smooth shrinking of width
+  const dockWidth = scrollProgress < 1 ? `${100 - easeIn(scrollProgress) * 48}vw` : 'auto';
+  const dockMaxWidth = scrollProgress < 1 ? `${1500 - easeIn(scrollProgress) * 700}px` : 'auto';
+  
+  // Opacity Fade: Fade starts later, easing out for smoothness
+  const fullNavOpacity = Math.max(0, 1 - easeOut(Math.max(0, scrollProgress - 0.2)) * 3);
+  const compactNavOpacity = Math.max(0, easeOut(Math.max(0, scrollProgress - 0.4)) * 2.5);
+  
+  // Mode Switch: Smooth transition around 50% scroll point
+  const modeSwitch = easeOut(Math.min(1, Math.max(0, (scrollProgress - 0.4) / 0.2)));
+  const isCompact = scrollProgress > 0.6; // Switch mode at 50% for smoother transition
+
+  return (
+    <div 
+      className="fixed left-1/2 z-50"
+      style={{
+        top: `${16 + offsetY}px`, // 16px (1rem) + smooth offset
+        transform: `translate(-50%, 0) scale(${scale})`,
+        transformOrigin: "50% 0%",
+        width: dockWidth,
+        maxWidth: dockMaxWidth,
+        transition: "none" // Remove transition for smooth scroll-sync
+      }}
+    >
+      <StickyDock
+        className="bg-[#0a0a0a]/95 border border-[#333]/50 shadow-2xl"
+        isCompact={isCompact}
+        fullNavContent={
+          <div style={{ opacity: fullNavOpacity, transition: "opacity 150ms ease-out" }}>
+            {fullNavContent}
+          </div>
+        }
+        magnification={50}
+        distance={100}
+        spring={{ mass: 0.1, stiffness: 200, damping: 15 }}
+        compactOpacity={compactNavOpacity}
+      >
+        {/* Navigation Items for Dock Mode */}
+        {navigationItems.map((item) => (
+          <StickyDockItem key={item.href}>
+            <StickyDockIcon>
+              <Link 
+                href={item.href} 
+                className={`flex items-center justify-center w-full h-full transition-colors duration-200 ${
+                  item.isActive ? 'text-[#315dca]' : 'text-white/80 hover:text-white'
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+              </Link>
+            </StickyDockIcon>
+            <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50 whitespace-nowrap">
+              {item.label}
+            </StickyDockLabel>
+          </StickyDockItem>
+        ))}
+
+        {/* User Profile / Auth for Dock Mode */}
+        <StickyDockItem>
+          <StickyDockIcon>
+            {user ? (
+              <div className="flex items-center justify-center w-full h-full">
+                <UserProfileDropdown />
+              </div>
+            ) : (
+              <Link 
+                href="/login" 
+                className="flex items-center justify-center w-full h-full text-[#315dca] hover:text-[#315dca]/80 transition-colors duration-200"
+              >
+                <Shield className="w-5 h-5" />
+              </Link>
+            )}
+          </StickyDockIcon>
+          <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50 whitespace-nowrap">
+            {user ? 'Profile' : 'Sign In'}
+          </StickyDockLabel>
+        </StickyDockItem>
+
+        {/* Get Started for Dock Mode - Prominent styling */}
+        <StickyDockItem>
+          <StickyDockIcon>
+            <Link 
+              href="/get-started" 
+              className="flex items-center justify-center w-full h-full bg-[#315dca] hover:bg-[#315dca]/90 rounded-lg transition-colors duration-200 shadow-lg shadow-[#315dca]/25"
+            >
+              <Zap className="w-5 h-5 text-white" />
+            </Link>
+          </StickyDockIcon>
+          <StickyDockLabel className="bg-[#315dca] text-white border border-[#315dca] whitespace-nowrap font-medium">
+            Get Started
+          </StickyDockLabel>
+        </StickyDockItem>
+      </StickyDock>
     </div>
   );
 };

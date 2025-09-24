@@ -198,111 +198,51 @@ const HomePage = () => {
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
 
-      {/* Hero Section */}
+      {/* Hero Section - Vista Inspired */}
       <section className="relative min-h-screen flex items-center pt-16 sm:pt-20 lg:pt-24 overflow-hidden">
-        {/* Squares Background */}
-        <div className="absolute inset-0 bg-[#060606]">
-          <Squares
-            direction="diagonal"
-            speed={0.5}
-            squareSize={40}
-            borderColor="#333"
-            hoverFillColor="#222"
-            className="w-full h-full"
-          />
+        {/* Clean Background */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#2a2a2a] to-[#1f1f1f]"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/90 via-transparent to-transparent"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[600px]">
             {/* Left Content */}
              <div className="text-white dark:text-white space-y-4 sm:space-y-6">
                <div className="space-y-3 sm:space-y-4">
-                 {/* Animated Status Badge */}
-                 <div className="inline-flex items-center bg-[#315dca]/20 border border-[#315dca]/30 rounded-full px-3 py-1.5 text-xs font-medium text-[#315dca] animate-pulse">
-                   <div className="w-1.5 h-1.5 bg-[#315dca] rounded-full mr-2 animate-ping"></div>
-                   <HyperText 
-                     text="LIVE PROPERTIES" 
-                     duration={1200}
-                     className="text-[#315dca] font-bold"
-                     framerProps={{
-                       initial: { opacity: 0, scale: 0.8 },
-                       animate: { opacity: 1, scale: 1 },
-                       exit: { opacity: 0, scale: 1.2 }
-                     }}
-                   />
-                 </div>
+                 {/* Vista-Style Badge */}
+                  <div className="inline-flex items-center bg-white/10 border border-white/20 rounded-sm px-4 py-2 text-xs font-medium text-white/90 uppercase tracking-wider">
+                    <Building2 className="w-3 h-3 text-white/90 mr-2" />
+                    TRUSTED REAL ESTATE PARTNER
+                  </div>
                  
-                 {/* Main Hero Title with HyperText */}
-                 <h1 className="text-xxxl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold leading-tight">
-                   <div className="mb-2">
-                     <HyperText 
-                       text="MORE TOKENIZED" 
-                       duration={1500}
-                       className="text-white font-bold"
-                       framerProps={{
-                         initial: { opacity: 0, y: 20 },
-                         animate: { opacity: 1, y: 0 },
-                         exit: { opacity: 0, y: -20 }
-                       }}
-                     />
-                   </div>
-                   <div className="text-[#315dca]">
-                     <HyperText 
-                       text="PROPERTIES COMING SOON!" 
-                       duration={1800}
-                       className="text-[#315dca] font-bold"
-                       framerProps={{
-                         initial: { opacity: 0, scale: 0.9 },
-                         animate: { opacity: 1, scale: 1 },
-                         exit: { opacity: 0, scale: 1.1 }
-                       }}
-                     />
-                   </div>
+                 {/* Vista-Style Clean Title */}
+                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight text-white">
+                   Premium Pakistani
+                   <br />
+                   <span className="font-normal">Real Estate</span>
                  </h1>
                  
-                 <p className="text-sm sm:text-base lg:text-lg text-[#dee0e5] dark:text-gray-300 leading-relaxed max-w-xl">
-                   Start investing in premium Pakistani real estate from just 
-                   <span className="inline-block mx-1">
-                     <HyperText 
-                       text="PKR 1 MILLION" 
-                       duration={2000}
-                       className="text-[#315dca] font-bold"
-                       framerProps={{
-                         initial: { opacity: 0, scale: 0.8 },
-                         animate: { opacity: 1, scale: 1 },
-                         exit: { opacity: 0, scale: 1.2 }
-                       }}
-                     />
-                   </span>
-                   . Fractional ownership made simple.
+                 <p className="text-lg text-white/80 leading-relaxed max-w-2xl font-light">
+                   HMR Builders is a privately owned developer pursuing opportunities in Pakistan's most prestigious markets. Founded with a vision to democratize premium real estate, our portfolio spans luxury waterfront properties, commercial developments, and residential towers across Pakistan's prime locations.
                  </p>
                </div>
               
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                <a href="/get-started" className="group bg-[#315dca] hover:bg-[#203a74] text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center">
-                  Get started
-                  <div className="ml-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                    <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                  </div>
-                </a>
-                
-                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 text-xs sm:text-sm text-[#dee0e5] dark:text-gray-300">
-                  <div className="flex items-center">
-                    <Shield className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5" />
-                    SECP Regulated
-                  </div>
-                  <div className="flex items-center">
-                    <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-[#315dca] mr-1.5" />
-                    15-20% Returns
-                  </div>
-                </div>
-              </div>
+               <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
+                 <Link href="/properties" className="inline-flex items-center bg-white text-black px-8 py-3 text-sm font-medium uppercase tracking-wider hover:bg-white/90 transition-colors">
+                   Available Properties
+                 </Link>
+                 <Link href="/get-started" className="inline-flex items-center border border-white/20 text-white px-8 py-3 text-sm font-medium uppercase tracking-wider hover:bg-white/10 transition-colors">
+                   Contact Us
+                 </Link>
+               </div>
             </div>
 
-            {/* Right Content - Globe */}
+            {/* Right Content - Property Showcase */}
             <div className="relative mt-6 sm:mt-8 lg:mt-0 flex items-center justify-center">
               <div className="relative w-full max-w-lg h-96 lg:h-[500px] group">
-                {/* Subtle glow effect behind globe */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#315dca]/10 to-transparent rounded-full blur-3xl scale-110"></div>
+                {/* Real estate glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#d4af37]/20 to-[#b8941f]/10 rounded-full blur-3xl scale-110"></div>
                 
                 <Globe 
                   className="w-full h-full relative z-10"
@@ -317,24 +257,29 @@ const HomePage = () => {
                       { location: [25.3960, 68.3578], size: 0.06 }, // Hyderabad, Pakistan
                       { location: [30.1798, 71.4925], size: 0.05 }, // Multan, Pakistan
                     ],
-                    markerColor: [49 / 255, 93 / 255, 202 / 255], // HMR blue
-                    glowColor: [49 / 255, 93 / 255, 202 / 255],
-                    baseColor: [0.05, 0.05, 0.1],
+                    markerColor: [212 / 255, 175 / 255, 55 / 255], // Real estate gold
+                    glowColor: [212 / 255, 175 / 255, 55 / 255],
+                    baseColor: [0.1, 0.08, 0.06],
                     diffuse: 0.8,
-                    mapBrightness: 3,
-                    dark: 0.1,
+                    mapBrightness: 2,
+                    dark: 0.2,
                   }}
                 />
                 
-                {/* Floating stats overlay */}
-                <div className="absolute top-4 left-4 bg-black/20 backdrop-blur-sm rounded-lg p-3 border border-white/10">
-                  <div className="text-white text-sm font-medium">Pakistan</div>
-                  <div className="text-[#315dca] text-xs">5 Cities</div>
+                {/* Property stats overlay */}
+                <div className="absolute top-4 left-4 bg-[#2c1810]/80 backdrop-blur-sm rounded-lg p-3 border border-[#d4af37]/30">
+                  <div className="text-[#f5f1eb] text-sm font-medium">Pakistan</div>
+                  <div className="text-[#d4af37] text-xs">Prime Locations</div>
                 </div>
                 
-                <div className="absolute bottom-4 right-4 bg-black/20 backdrop-blur-sm rounded-lg p-3 border border-white/10">
-                  <div className="text-white text-sm font-medium">Global</div>
-                  <div className="text-[#315dca] text-xs">Expansion</div>
+                <div className="absolute bottom-4 right-4 bg-[#2c1810]/80 backdrop-blur-sm rounded-lg p-3 border border-[#d4af37]/30">
+                  <div className="text-[#f5f1eb] text-sm font-medium">PKR 2.5B+</div>
+                  <div className="text-[#d4af37] text-xs">Portfolio Value</div>
+                </div>
+                
+                <div className="absolute top-1/2 -right-4 bg-[#2c1810]/80 backdrop-blur-sm rounded-lg p-3 border border-[#d4af37]/30 transform -translate-y-1/2">
+                  <div className="text-[#f5f1eb] text-sm font-medium">15-20%</div>
+                  <div className="text-[#d4af37] text-xs">Annual Returns</div>
                 </div>
               </div>
             </div>
@@ -348,160 +293,116 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Modern Startup Features Section */}
-      <section className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#16213e] overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3')] bg-cover bg-center opacity-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a0a]/80 via-[#1a1a2e]/60 to-[#16213e]/80"></div>
-          <Squares
-            direction="up"
-            speed={0.2}
-            squareSize={60}
-            borderColor="#333"
-            hoverFillColor="#222"
-            className="w-full h-full"
-          />
-        </div>
+       {/* Vista-Style Features Section */}
+       <section className="relative py-20 sm:py-24 lg:py-32 bg-white">
+         <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-16 sm:mb-20">
-            <div className="inline-flex items-center bg-[#315dca]/10 border border-[#315dca]/30 rounded-full px-4 py-2 text-sm font-medium text-[#315dca] mb-6">
-              <div className="w-2 h-2 bg-[#315dca] rounded-full mr-2 animate-pulse"></div>
-              REVOLUTIONARY TECHNOLOGY
-            </div>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
-              The Future of <span className=" text-transparent bg-clip-text bg-gradient-to-r from-[#315dca] to-[#14b8a6]">
-                <div className="flex justify-center w-full">
-                  <HyperText 
-                    text="REAL ESTATE" 
-                    duration={2000}
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-[#315dca] to-[#14b8a6] font-bold text-center"
-                    framerProps={{
-                      initial: { opacity: 0, scale: 0.8 },
-                      animate: { opacity: 1, scale: 1 },
-                      exit: { opacity: 0, scale: 1.2 }
-                    }}
-                  />
-                </div>
-              </span>
-            </h2>
-            <p className="text-xl sm:text-2xl text-[#dee0e5] max-w-4xl mx-auto leading-relaxed">
-              Experience the power of blockchain technology transforming traditional real estate investment
-            </p>
-          </div>
-
-          {/* Modern Feature Cards with Parallax */}
-          <div className="space-y-16 sm:space-y-20 lg:space-y-24">
-            {[
-              {
-                title: "Fractional Ownership",
-                description: "Break down barriers to premium real estate. Own a piece of luxury Pakistani properties starting from just PKR 1 Million through our innovative tokenization platform.",
-                image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "Modern real estate investment",
-                badge: "Start from PKR 1M",
-                badgeDesc: "Minimum investment threshold"
-              },
-              {
-                title: "Blockchain Security",
-                description: "Your investments are secured by cutting-edge blockchain technology. Every transaction is transparent, immutable, and verifiable on the blockchain.",
-                image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=2036&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "Blockchain technology",
-                badge: "100% Transparent",
-                badgeDesc: "All transactions on blockchain"
-              },
-              {
-                title: "Global Accessibility",
-                description: "Invest in Pakistani real estate from anywhere in the world. Our platform is designed for the global Pakistani diaspora and international investors.",
-                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "Global investment platform",
-                badge: "Worldwide Access",
-                badgeDesc: "Invest from anywhere, anytime"
-              },
-              {
-                title: "High Returns",
-                description: "Earn 15-20% annual returns through rental income and property appreciation. Our carefully selected properties offer exceptional growth potential.",
-                image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "High returns investment",
-                badge: "15-20% Returns",
-                badgeDesc: "Annual expected returns"
-              },
-              {
-                title: "Liquidity & Trading",
-                description: "Trade your property tokens on our secondary market anytime. Full liquidity with transparent pricing and instant settlements.",
-                image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "Trading platform",
-                badge: "Instant Trading",
-                badgeDesc: "24/7 secondary market"
-              },
-              {
-                title: "SECP Regulated",
-                description: "Fully compliant with Pakistani regulations. Our platform is licensed and regulated by the Securities and Exchange Commission of Pakistan.",
-                image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3",
-                alt: "Regulated platform",
-                badge: "SECP Licensed",
-                badgeDesc: "Fully regulated platform"
-              }
-            ].map((feature, index) => (
-              <div key={index} className={`grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center ${index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''}`}>
-                {/* Content */}
-                <div className={`space-y-6 sm:space-y-8 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                  <div className="space-y-4">
-                    <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
-                      {feature.title}
-                    </h3>
-                    <p className="text-lg sm:text-xl text-[#dee0e5] leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-4">
-                    <div className="bg-[#315dca]/10 border border-[#315dca]/30 rounded-full px-4 py-2 text-sm font-medium text-[#315dca]">
-                      {feature.badge}
-                    </div>
-                    <div className="bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm font-medium text-white/80">
-                      {feature.badgeDesc}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Image */}
-                <div className={`relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl overflow-hidden group ${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
-                  <img 
-                    src={feature.image}
-                    alt={feature.alt}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  
-                  {/* Floating elements for parallax effect */}
-                  <div className="absolute top-8 right-8 w-16 h-16 bg-[#315dca]/20 rounded-full blur-xl animate-pulse"></div>
-                  <div className="absolute bottom-8 left-8 w-24 h-24 bg-[#14b8a6]/20 rounded-full blur-xl animate-pulse" style={{animationDelay: '1s'}}></div>
-                  
-                  {/* Overlay content */}
-                  <div className="absolute bottom-6 left-6 right-6">
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 transform transition-transform duration-300 group-hover:translate-y-[-4px]">
-                      <h4 className="text-white font-bold text-lg mb-2">{feature.badge}</h4>
-                      <p className="text-white/80 text-sm">{feature.badgeDesc}</p>
-                    </div>
-                  </div>
-
-                </div>
+          {/* Vista-Style Three Pillars */}
+          <div className="grid md:grid-cols-3 gap-16 md:gap-20">
+            
+            {/* Investing with Purpose */}
+            <div className="text-center md:text-left">
+              <div className="mb-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3" 
+                  alt="Purpose" 
+                  className="w-full h-64 object-cover rounded-sm"
+                />
               </div>
-            ))}
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">purpose</div>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Investing with<br />
+                <span className="font-normal">purpose</span>
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Throughout our history, we've watched Pakistan's markets rise, fall and evolve – shaping the experience that guides our current investment philosophy. We invest creatively yet with discipline, seeking assets with compelling value and growth potential in Pakistan's most prestigious locations.
+              </p>
+            </div>
+
+            {/* Delivering on Details */}
+            <div className="text-center md:text-left">
+              <div className="mb-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3" 
+                  alt="Details" 
+                  className="w-full h-64 object-cover rounded-sm"
+                />
+              </div>
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">details</div>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Delivering on<br />
+                <span className="font-normal">details</span>
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                We thrive off solving complex problems. Our vertically integrated team drives projects through every stage of the development process, blending rich internal expertise with an extensive industry network. Drawing on our deep experience, we integrate lasting architecture with conscious functionality.
+              </p>
+            </div>
+
+            {/* Relationships Matter */}
+            <div className="text-center md:text-left">
+              <div className="mb-8">
+                <img 
+                  src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2075&auto=format&fit=crop&ixlib=rb-4.0.3" 
+                  alt="Relationships" 
+                  className="w-full h-64 object-cover rounded-sm"
+                />
+              </div>
+              <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">relationships</div>
+              <h2 className="text-3xl md:text-4xl font-light text-gray-900 mb-6">
+                Relationships<br />
+                <span className="font-normal">are what matter</span>
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                We believe every good deal is founded on a great partnership. Our partnerships are built on trust, honesty and committed collaboration – many of them standing strong for decades. Championing transparency, we deliver on our promises and remain reachable 24/7.
+              </p>
+            </div>
+
+          </div>
+          
+          {/* Vista-Style Process Section */}
+          <div className="mt-24 pt-16 border-t border-gray-200">
+            <div className="text-center mb-16">
+              <h2 className="text-2xl font-light text-gray-900 mb-8">
+                We execute every project with a focus on costs, schedules, quality, and market-tailored solutions.
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-5 gap-8 text-center">
+              <div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-2">Property</div>
+                <div className="font-light text-gray-900">Selection & Due Diligence</div>
+              </div>
+              <div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-2">Legal</div>
+                <div className="font-light text-gray-900">Framework & Compliance</div>
+              </div>
+              <div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-2">Investment</div>
+                <div className="font-light text-gray-900">Structure & Planning</div>
+              </div>
+              <div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-2">Portfolio</div>
+                <div className="font-light text-gray-900">Management & Growth</div>
+              </div>
+              <div>
+                <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-2">Returns</div>
+                <div className="font-light text-gray-900">Distribution & Reporting</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Portfolio Section */}
-      <section id="properties" className="py-12 sm:py-16 lg:py-20">
+      {/* Featured Projects - Vista Style */}
+      <section id="properties" className="py-20 sm:py-24 lg:py-32 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              A glimpse of our <span className="text-[#315dca]">tokenized portfolio</span>
-            </h2>
-          </div>
+           <div className="text-center mb-16">
+             <div className="text-xs font-medium text-gray-500 uppercase tracking-widest mb-4">solutions</div>
+             <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-8">
+               Featured Projects
+             </h2>
+           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             <HMRPropertyCard
@@ -556,81 +457,35 @@ const HomePage = () => {
             />
           </div>
           
-          <div className="text-center mt-12">
-            <Link href="/properties" className="inline-block bg-[#315dca] hover:bg-[#203a74] text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
-              Explore more
-            </Link>
-          </div>
+           <div className="text-center mt-16">
+             <Link href="/properties" className="inline-flex items-center bg-white text-black border border-gray-300 px-8 py-3 text-sm font-medium uppercase tracking-wider hover:bg-gray-50 transition-colors">
+               Available Properties
+             </Link>
+           </div>
         </div>
       </section>
 
-      {/* Tokenization at a Glance Section */}
-      <section className="py-16 sm:py-20 lg:py-24 bg-[#0e1521]/30 dark:bg-gray-900/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 sm:gap-16 items-center">
-            <div className="space-y-6 sm:space-y-8">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white dark:text-white">
-                Tokenization at a <span className="text-[#315dca]">glance</span>
-              </h2>
-              <div className="space-y-4 text-[#dee0e5] dark:text-gray-300 text-lg leading-relaxed">
-                <p>
-                  Real estate tokenization transforms physical properties into digital tokens on the blockchain. 
-                  Each token represents fractional ownership of the underlying asset, making premium real estate 
-                  accessible to everyone.
-                </p>
-                <p>
-                  With HMR Builders, you can invest in luxury Pakistani properties starting from just PKR 1 Million, 
-                  earn rental income, and benefit from property appreciation - all while maintaining full transparency 
-                  and liquidity through our secure platform.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="/get-started" className="bg-[#315dca] hover:bg-[#203a74] text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105">
-                  Enter the future of Pakistani real estate from just PKR 1 Million
-                </a>
-              </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl">
-              <div className="text-center mb-6">
-                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6">What is a token?</h3>
-                <div className="relative rounded-2xl overflow-hidden">
-                  <video 
-                    className="w-full h-auto rounded-2xl"
-                    preload="auto"
-                    autoPlay
-                    loop
-                    playsInline
-                    muted
-                    onLoadedMetadata={(e) => e.currentTarget.muted = true}
-                  >
-                    <source src="/what_is_token.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              </div>
-              
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                <div className="text-center">
-                  <p className="text-base leading-relaxed mb-3">
-                    A token is a digital unit of ownership stored on a blockchain.
-                  </p>
-                  <p className="text-sm leading-relaxed">
-                    For example, in real estate, a property can be divided into 1,000,000 tokens, and each token represents a fraction of ownership. Buying 10,000 tokens would give you 1% ownership of the property.
-                  </p>
-                </div>
-              </div>
-              
-              <button className="w-full mt-6 bg-[#203a74] hover:bg-[#315dca] text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
-                Learn more
-                <div className="ml-2 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+       {/* Vista-Style CTA Section */}
+       <section className="py-20 sm:py-24 lg:py-32 bg-white">
+         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+           <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-8">
+             Find your<br />
+             <span className="font-normal">ideal space</span>
+           </h2>
+           <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
+             See what's available or contact us for personalized assistance
+           </p>
+           
+           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+             <Link href="/properties" className="inline-flex items-center bg-black text-white px-8 py-3 text-sm font-medium uppercase tracking-wider hover:bg-gray-800 transition-colors">
+               Available Properties
+             </Link>
+             <Link href="/get-started" className="inline-flex items-center border border-gray-300 text-gray-900 px-8 py-3 text-sm font-medium uppercase tracking-wider hover:bg-gray-50 transition-colors">
+               Contact Us
+             </Link>
+           </div>
+         </div>
+       </section>
 
       {/* How it Works Section */}
       <section id="how-it-works" className="relative py-20 sm:py-24 lg:py-28 bg-[#060606] overflow-hidden">

@@ -39,15 +39,22 @@ body {
 
 @layer base {
   :root {
-    /* HMR Dark Theme (Default) - Clean White/Blue/Black */
-    --background: 0 0% 100%; /* #0e1521 - Clean dark blue */
-    --foreground: 0 0% 3.9%; /* #ffffff - Pure white */
+    /* HMR Real Estate Theme - Warm Gold/Brown/Cream */
+    --background: 0 0% 100%; /* Clean background */
+    --foreground: 0 0% 3.9%; /* Dark text */
     --card: 0 0% 100%; /* white for property cards */
-    --card-foreground: 0 0% 3.9%; /* #0e1521 for card text */
-    --popover: 0 0% 100%; /* #0e1521 */
-    --popover-foreground: 0 0% 3.9%; /* #ffffff */
-    --primary: 0 0% 9%; /* #315dca - HMR blue */
-    --primary-foreground: 0 0% 98%; /* white */
+    --card-foreground: 0 0% 3.9%; /* dark text for cards */
+    --popover: 0 0% 100%; /* popover background */
+    --popover-foreground: 0 0% 3.9%; /* popover text */
+    --primary: 43 74% 52%; /* #d4af37 - Real estate gold */
+    --primary-foreground: 0 0% 98%; /* white text on gold */
+    
+    /* Vista-Inspired Color Palette */
+    --vista-dark: 0 0% 10%; /* #1a1a1a */
+    --vista-gray: 0 0% 16%; /* #2a2a2a */
+    --vista-light-gray: 0 0% 85%; /* #d9d9d9 */
+    --vista-accent: 0 0% 95%; /* #f2f2f2 */
+    --vista-text: 0 0% 20%; /* #333333 */
     --secondary: 0 0% 96.1%; /* #203a74 - HMR darker blue */
     --secondary-foreground: 0 0% 9%; /* white */
     --muted: 0 0% 96.1%; /* #64748b - Clean gray */
@@ -201,7 +208,7 @@ body {
 
 @layer components {
   .hero-gradient {
-    background: #060606;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 25%, #1f1f1f 50%, #1a1a1a 100%);
     position: relative;
   }
 
@@ -367,10 +374,10 @@ body {
   }
 
   .transparent-navbar {
-    background: rgba(6, 6, 6, 0.9);
+    background: rgba(26, 26, 26, 0.95);
     backdrop-filter: blur(20px);
-    border: 1px solid #333;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   .light .transparent-navbar {

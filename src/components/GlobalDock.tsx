@@ -53,25 +53,25 @@ const GlobalDock = () => {
 
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
-      <StickyDock 
-        className="bg-[#0a0a0a]/95 backdrop-blur-xl border border-[#333]/50 shadow-2xl"
-        magnification={50}
-        distance={100}
-        spring={{ mass: 0.1, stiffness: 200, damping: 15 }}
-      >
+    <StickyDock
+      className="bg-white/95 backdrop-blur-xl border border-gray-200 shadow-lg"
+      magnification={50}
+      distance={100}
+      spring={{ mass: 0.1, stiffness: 200, damping: 15 }}
+    >
         {navigationItems.map((item) => (
           <StickyDockItem key={item.href}>
             <StickyDockIcon>
               <Link 
                 href={item.href} 
                 className={`flex items-center justify-center w-full h-full transition-colors duration-200 ${
-                  item.isActive ? 'text-[#315dca]' : 'text-white/80 hover:text-white'
+                  item.isActive ? 'text-black' : 'text-gray-600 hover:text-black'
                 }`}
               >
                 <item.icon className="w-5 h-5" />
               </Link>
             </StickyDockIcon>
-            <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50">
+            <StickyDockLabel className="bg-white/95 text-gray-900 border border-gray-200 shadow-sm">
               {item.label}
             </StickyDockLabel>
           </StickyDockItem>
@@ -103,12 +103,12 @@ const GlobalDock = () => {
           <StickyDockIcon>
             <Link 
               href="/get-started" 
-              className="flex items-center justify-center w-full h-full bg-[#315dca] hover:bg-[#315dca]/90 rounded-lg transition-colors duration-200"
+              className="flex items-center justify-center w-full h-full bg-black hover:bg-gray-800 rounded-lg transition-colors duration-200"
             >
-              <Zap className="w-5 h-5 text-white" />
+              <Building2 className="w-5 h-5 text-white" />
             </Link>
           </StickyDockIcon>
-          <StickyDockLabel className="bg-[#0a0a0a]/95 text-white border border-[#333]/50">
+          <StickyDockLabel className="bg-black/95 text-white border border-gray-700 shadow-sm">
             Get Started
           </StickyDockLabel>
         </StickyDockItem>

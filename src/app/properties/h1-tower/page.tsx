@@ -22,7 +22,6 @@ import {
   Clock,
   DollarSign
 } from 'lucide-react';
-import UserProfileDropdown from '@/components/UserProfileDropdown';
 import BuyTokenDialog from '@/components/BuyTokenDialog';
 import { useAuth } from '@/components/AuthProvider';
 import { HMRPropertyCard } from '@/components/ui/hmr-property-card';
@@ -140,59 +139,6 @@ const H1TowerPage = () => {
 
   return (
     <div className="min-h-screen hero-gradient overflow-x-hidden">
-      {/* Header */}
-      <header className="fixed top-2 left-2 right-2 sm:left-4 sm:right-4 lg:left-8 lg:right-8 z-50">
-        <div className="transparent-navbar rounded-2xl shadow-navbar">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-14 sm:h-16">
-              <Link href="/" className="flex items-center">
-                <Image 
-                  src="/hmr-group.svg" 
-                  alt="HMR Group" 
-                  width={32} 
-                  height={32}
-                  className="mr-2 sm:w-10 sm:h-10"
-                />
-                <div className="text-base sm:text-lg lg:text-xl font-bold text-white">
-                  HMR <span className="text-[#315dca]">BUILDERS</span>
-                </div>
-              </Link>
-
-              {/* Navigation Links */}
-              <nav className="hidden md:flex items-center space-x-8">
-                <Link href="/" className="text-white/80 hover:text-white font-medium transition-colors">Home</Link>
-                <Link href="/properties" className="text-white font-medium">Properties</Link>
-                <Link href="/how-it-works" className="text-white/80 hover:text-white font-medium transition-colors">How it Works</Link>
-                <Link href="/about" className="text-white/80 hover:text-white font-medium transition-colors">About</Link>
-                <Link href="/faqs" className="text-white/80 hover:text-white font-medium transition-colors">FAQs</Link>
-                <Link href="/media" className="text-white/80 hover:text-white font-medium transition-colors">Media</Link>
-              </nav>
-
-              <div className="flex items-center space-x-4">
-                {user ? (
-                  <UserProfileDropdown />
-                ) : (
-                  <>
-                    <Link
-                      href="/login"
-                      className="text-white/80 hover:text-white font-medium transition-colors"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      href="/get-started"
-                      className="bg-[#315dca] hover:bg-[#24246c] text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 transform hover:scale-105"
-                    >
-                      Get Started
-                    </Link>
-                  </>
-                )}
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Hero Section with Image Gallery */}
       <section className="pt-20 sm:pt-24 lg:pt-28 pb-8">
